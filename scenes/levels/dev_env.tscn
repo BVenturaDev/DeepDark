@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://cmugi8il1ln2l"]
+[gd_scene load_steps=2 format=3 uid="uid://cmugi8il1ln2l"]
+
+[ext_resource type="PackedScene" uid="uid://c22ahfk2dg3k6" path="res://scenes/entities/submarine.tscn" id="1_8jp3a"]
 
 [node name="DevEnv" type="Node3D"]
+
+[node name="Submarine" parent="." instance=ExtResource("1_8jp3a")]

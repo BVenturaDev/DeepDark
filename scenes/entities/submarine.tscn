@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://c22ahfk2dg3k6"]
+
+[ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
+[ext_resource type="Material" uid="uid://bcy3miek1y1dy" path="res://materials/entities/submarine/sub_glass.tres" id="2_qn868"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
+material = ExtResource("1_e21wt")
+flip_faces = true
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_i6t8q"]
+material = ExtResource("2_qn868")
+height = 0.5
+is_hemisphere = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_xjcyq"]
+material = ExtResource("1_e21wt")
+height = 0.5
+is_hemisphere = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3e0nu"]
+height = 3.0
+
+[node name="Submarine" type="CharacterBody3D"]
+
+[node name="MeshInstante_Tube" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+ignore_occlusion_culling = true
+mesh = SubResource("CylinderMesh_47y4j")
+
+[node name="MeshInstance_Glass" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.99, 0, 0)
+mesh = SubResource("SphereMesh_i6t8q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.99, 0, 0)
+mesh = SubResource("SphereMesh_xjcyq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_3e0nu")
