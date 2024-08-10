@@ -21,14 +21,14 @@ void fragment()
 	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 0.01;
 }"
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_88sqh"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_2atop"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_375h2"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_1xnl0")
-shader_parameter/screen_tex = SubResource("ViewportTexture_88sqh")
+shader_parameter/screen_tex = SubResource("ViewportTexture_2atop")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_y7p4j"]
 material = SubResource("ShaderMaterial_375h2")
@@ -64,7 +64,7 @@ offset_right = 53.0
 offset_bottom = 23.0
 scale = Vector2(4, 4)
 theme_override_font_sizes/font_size = 9
-text = "Screen"
+text = "Port"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -80,9 +80,9 @@ grow_vertical = 2
 [node name="Node3DCameras" type="Node3D" parent="SubViewport"]
 
 [node name="Camera3DPort" type="Camera3D" parent="SubViewport/Node3DCameras"]
+current = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DPort"]
-visible = false
 shadow_enabled = true
 spot_range = 200.0
 

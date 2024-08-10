@@ -144,7 +144,7 @@ shape = SubResource("BoxShape3D_8dfk3")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.22734e-08, 0, -0.967103)
 
 [node name="Node3DCameras" parent="Interior/Screen/SubViewport" index="1"]
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0.967103, 0, 1.06581e-14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.967103, 0, 2.4869e-14)
 
 [node name="Camera3DPort" parent="Interior/Screen/SubViewport/Node3DCameras" index="0"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.01, 0, 0)
