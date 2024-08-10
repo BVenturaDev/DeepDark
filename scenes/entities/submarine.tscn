@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=10 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
 [ext_resource type="Material" uid="uid://bcy3miek1y1dy" path="res://materials/entities/submarine/sub_glass.tres" id="2_qn868"]
@@ -6,6 +6,11 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
 material = ExtResource("1_e21wt")
 flip_faces = true
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dthu4"]
+material = ExtResource("1_e21wt")
 cap_top = false
 cap_bottom = false
 
@@ -22,21 +27,69 @@ is_hemisphere = true
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3e0nu"]
 height = 3.0
 
-[node name="Submarine" type="CharacterBody3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_8dfk3"]
+size = Vector3(2.03418, 0.0556641, 1.00694)
 
-[node name="MeshInstante_Tube" type="MeshInstance3D" parent="."]
+[sub_resource type="BoxShape3D" id="BoxShape3D_nqfmp"]
+size = Vector3(1.12193, 0.0556641, 1.00694)
+
+[node name="Submarine" type="CharacterBody3D"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 0, 0, 0)
+
+[node name="MeshInstanteTube" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 ignore_occlusion_culling = true
 mesh = SubResource("CylinderMesh_47y4j")
 
-[node name="MeshInstance_Glass" type="MeshInstance3D" parent="."]
+[node name="MeshInstanteHull" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+ignore_occlusion_culling = true
+mesh = SubResource("CylinderMesh_dthu4")
+
+[node name="MeshInstanceGlass" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.99, 0, 0)
 mesh = SubResource("SphereMesh_i6t8q")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstanceRear" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.99, 0, 0)
 mesh = SubResource("SphereMesh_xjcyq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_3e0nu")
+
+[node name="Interior" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShapeFloor" type="CollisionShape3D" parent="Interior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.527186, 0)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="CollisionShapeBow" type="CollisionShape3D" parent="Interior"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -1.02404, 0, -8.72546e-10)
+shape = SubResource("BoxShape3D_nqfmp")
+
+[node name="CollisionShapeStern" type="CollisionShape3D" parent="Interior"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.02326, 0, 1.82164e-08)
+shape = SubResource("BoxShape3D_nqfmp")
+
+[node name="CollisionShapeRoof" type="CollisionShape3D" parent="Interior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.538503, -0.00495672)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="CollisionShapePort" type="CollisionShape3D" parent="Interior"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.532)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="CollisionShapeStarboard" type="CollisionShape3D" parent="Interior"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.529)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.108488, 0.444193, -4.74217e-09)
+light_color = Color(0.396181, 0.552826, 0.694586, 1)
+light_energy = 0.5
+distance_fade_enabled = true
+distance_fade_begin = 1.0
+distance_fade_length = 3.0
