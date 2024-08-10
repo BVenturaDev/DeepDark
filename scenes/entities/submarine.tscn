@@ -1,10 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=23 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
 [ext_resource type="Material" uid="uid://bcy3miek1y1dy" path="res://materials/entities/submarine/sub_glass.tres" id="2_qn868"]
 [ext_resource type="Material" uid="uid://cbij6u086jog0" path="res://materials/entities/submarine/sub_console.tres" id="3_mvo7a"]
 [ext_resource type="PackedScene" uid="uid://ilhuhfajpb2p" path="res://scenes/entities/player.tscn" id="5_hxsbj"]
+[ext_resource type="Script" path="res://src/entities/screen.gd" id="6_j56df"]
+[ext_resource type="Material" uid="uid://gisbr8fpgcmb" path="res://materials/entities/submarine/screen_crt_shader.tres" id="7_a4lqr"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
 material = ExtResource("1_e21wt")
@@ -46,6 +48,37 @@ size = Vector3(2.03418, 0.0556641, 1.00694)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nqfmp"]
 size = Vector3(1.12193, 0.0556641, 1.00694)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lut70"]
+material = ExtResource("3_mvo7a")
+size = Vector3(0.1, 0.75, 1)
+
+[sub_resource type="Shader" id="Shader_1xnl0"]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode unshaded;
+
+uniform sampler2D screen_tex;
+
+void fragment()
+{
+	ALBEDO = texture(screen_tex, vec2(1.0 - UV.y, 1.0 - UV.x)).rgb;
+	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 0.01;
+}"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_asw4n"]
+viewport_path = NodePath("Interior/Screen/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m31kd"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_1xnl0")
+shader_parameter/screen_tex = SubResource("ViewportTexture_asw4n")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nfq5l"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_m31kd")
+size = Vector2(0.7, 0.95)
 
 [node name="Submarine" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -104,7 +137,7 @@ collision_mask = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000600696, 0.134641, -2.62581e-11)
 mesh = SubResource("BoxMesh_bklx0")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Interior/Node3DInterior/Node3DControlConsole"]
+[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/Node3DInterior/Node3DControlConsole"]
 transform = Transform3D(0.891837, -0.452357, 4.72795e-09, 0.452357, 0.891837, -1.97732e-08, 4.72795e-09, 1.97732e-08, 1, -0.0254803, 0.345574, 1.11378e-09)
 mesh = SubResource("BoxMesh_xlp7x")
 
@@ -135,6 +168,55 @@ shape = SubResource("BoxShape3D_8dfk3")
 [node name="CollisionShapeStarboard" type="CollisionShape3D" parent="Interior"]
 transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, -1.058)
 shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="Screen" type="Node3D" parent="Interior"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.18199e-08, 0, -0.956727)
+script = ExtResource("6_j56df")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Interior/Screen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0375602, 0, 0)
+mesh = SubResource("BoxMesh_lut70")
+
+[node name="MeshInstanceScreen" type="MeshInstance3D" parent="Interior/Screen"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0890678, 0, 0)
+mesh = SubResource("PlaneMesh_nfq5l")
+
+[node name="SubViewport" type="SubViewport" parent="Interior/Screen"]
+handle_input_locally = false
+size = Vector2i(950, 700)
+render_target_update_mode = 4
+
+[node name="ScreenControl" type="Control" parent="Interior/Screen/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Interior/Screen/SubViewport/ScreenControl"]
+material = ExtResource("7_a4lqr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Node3DCameras" type="Node3D" parent="Interior/Screen/SubViewport"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0.956727, 0, 0)
+
+[node name="Camera3DPort" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.992643, 0, 1.05797e-14)
+current = true
+
+[node name="Camera3DStarboard" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+
+[node name="Camera3DStern" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+
+[node name="Camera3DFloor" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+
+[node name="Camera3DRoof" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
 
 [node name="Player" parent="." instance=ExtResource("5_hxsbj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)

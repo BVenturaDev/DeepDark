@@ -7,6 +7,7 @@ var mouse_sens = 0.002
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+# Input Mode Captured
 var mouse_mode = true
 
 func _ready():
@@ -29,8 +30,6 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	
-	
 
 func _input(event):  		
 	if event is InputEventMouseMotion && mouse_mode:

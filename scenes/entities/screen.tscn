@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://dedrie567uqc2"]
+
+[ext_resource type="Material" uid="uid://cbij6u086jog0" path="res://materials/entities/submarine/sub_console.tres" id="1_3cgnm"]
+[ext_resource type="Script" path="res://src/entities/screen.gd" id="1_6syly"]
+[ext_resource type="Material" uid="uid://gisbr8fpgcmb" path="res://materials/entities/submarine/screen_crt_shader.tres" id="3_nfrr3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lut70"]
+material = ExtResource("1_3cgnm")
+size = Vector3(0.1, 0.75, 1)
+
+[sub_resource type="Shader" id="Shader_1xnl0"]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode unshaded;
+
+uniform sampler2D screen_tex;
+
+void fragment()
+{
+	ALBEDO = texture(screen_tex, vec2(1.0 - UV.y, 1.0 - UV.x)).rgb;
+	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 0.01;
+}"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_k4a80"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_375h2"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_1xnl0")
+shader_parameter/screen_tex = SubResource("ViewportTexture_k4a80")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y7p4j"]
+material = SubResource("ShaderMaterial_375h2")
+size = Vector2(0.7, 0.95)
+
+[node name="Screen" type="Node3D"]
+script = ExtResource("1_6syly")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0375602, 0, 0)
+mesh = SubResource("BoxMesh_lut70")
+
+[node name="MeshInstanceScreen" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0890678, 0, 0)
+mesh = SubResource("PlaneMesh_y7p4j")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(950, 700)
+render_target_update_mode = 4
+
+[node name="ScreenControl" type="Control" parent="SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/ScreenControl"]
+material = ExtResource("3_nfrr3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Node3DCameras" type="Node3D" parent="SubViewport"]
+
+[node name="Camera3DPort" type="Camera3D" parent="SubViewport/Node3DCameras"]
+current = true
+
+[node name="Camera3DStarboard" type="Camera3D" parent="SubViewport/Node3DCameras"]
+
+[node name="Camera3DStern" type="Camera3D" parent="SubViewport/Node3DCameras"]
+
+[node name="Camera3DFloor" type="Camera3D" parent="SubViewport/Node3DCameras"]
+
+[node name="Camera3DRoof" type="Camera3D" parent="SubViewport/Node3DCameras"]
