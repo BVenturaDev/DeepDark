@@ -21,14 +21,14 @@ void fragment()
 	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 0.01;
 }"
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_k4a80"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_88sqh"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_375h2"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_1xnl0")
-shader_parameter/screen_tex = SubResource("ViewportTexture_k4a80")
+shader_parameter/screen_tex = SubResource("ViewportTexture_88sqh")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_y7p4j"]
 material = SubResource("ShaderMaterial_375h2")
@@ -58,7 +58,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="SubViewport/ScreenControl"]
+[node name="Label" type="Label" parent="SubViewport/ScreenControl"]
+layout_mode = 1
+offset_right = 53.0
+offset_bottom = 23.0
+scale = Vector2(4, 4)
+theme_override_font_sizes/font_size = 9
+text = "Screen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRectCRT" type="ColorRect" parent="SubViewport/ScreenControl"]
 material = ExtResource("3_nfrr3")
 layout_mode = 1
 anchors_preset = 15
@@ -70,12 +80,37 @@ grow_vertical = 2
 [node name="Node3DCameras" type="Node3D" parent="SubViewport"]
 
 [node name="Camera3DPort" type="Camera3D" parent="SubViewport/Node3DCameras"]
-current = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DPort"]
+visible = false
+shadow_enabled = true
+spot_range = 200.0
 
 [node name="Camera3DStarboard" type="Camera3D" parent="SubViewport/Node3DCameras"]
+current = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DStarboard"]
+visible = false
+shadow_enabled = true
+spot_range = 200.0
 
 [node name="Camera3DStern" type="Camera3D" parent="SubViewport/Node3DCameras"]
 
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DStern"]
+visible = false
+shadow_enabled = true
+spot_range = 200.0
+
 [node name="Camera3DFloor" type="Camera3D" parent="SubViewport/Node3DCameras"]
 
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DFloor"]
+visible = false
+shadow_enabled = true
+spot_range = 200.0
+
 [node name="Camera3DRoof" type="Camera3D" parent="SubViewport/Node3DCameras"]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DRoof"]
+visible = false
+shadow_enabled = true
+spot_range = 200.0

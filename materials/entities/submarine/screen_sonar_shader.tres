@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://caii8n3gkv3ry"]
+
+[ext_resource type="Shader" path="res://shaders/sonar_shader.gdshader" id="1_bk44i"]
+
+[resource]
+shader = ExtResource("1_bk44i")
+shader_parameter/line_color = Color(0, 0.4, 0, 1)
+shader_parameter/beam_color = Color(0.5, 1, 0.5, 1)
+shader_parameter/trail_color = Color(0, 0.5, 0, 1)
+shader_parameter/blip_color = Color(0.5, 1, 0.5, 1)
+shader_parameter/show_edges = false
+shader_parameter/range_lines = 4.0
+shader_parameter/sector_lines = 4.0
+shader_parameter/line_width = 0.01
+shader_parameter/beam_angle = 0.2
+shader_parameter/beam_width = 0.003
+shader_parameter/trail_width = 0.5
+shader_parameter/blip_size = 0.1
+shader_parameter/blip_softness = 0.4
+shader_parameter/blip_presistence = 2.0
+shader_parameter/blip_position = Vector2(0.5, 0.5)

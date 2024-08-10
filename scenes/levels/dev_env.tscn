@@ -12,7 +12,22 @@
 transform = Transform3D(1, 0, 0, 0, 0.283948, -0.95884, 0, 0.95884, 0.283948, 1.12976, 0, -7.99315)
 mesh = SubResource("TorusMesh_wl2ws")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.851771, -0.12134)
-light_energy = 0.5
-omni_range = 16.2815
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.914678, -0.404185, 0, 0.404185, 0.914678, 1.18143, 12.4052, -0.547951)
+mesh = SubResource("TorusMesh_wl2ws")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.252146, -0.406313, 0.878255, 0.266674, 0.901613, 0.340558, -0.930219, 0.148338, 0.335691, -1.3661, -10.8526, -0.00445223)
+mesh = SubResource("TorusMesh_wl2ws")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.941661, 0.312406, 0.125209, 0.045117, -0.251493, 0.966807, 0.333526, 0.916054, 0.222727, 8.50684, 0, 2.00776)
+mesh = SubResource("TorusMesh_wl2ws")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.941661, 0.312406, 0.125209, 0.140269, 0.0261142, 0.989769, 0.30594, 0.94959, -0.0684117, -0.734938, 0, 14.6338)
+mesh = SubResource("TorusMesh_wl2ws")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.208357, 0.868442, 0.449885, 0.0391736, 0.452201, -0.891056, -0.977268, 0.203281, 0.060199, -10.637, 3.08983, -3.00279)
+mesh = SubResource("TorusMesh_wl2ws")

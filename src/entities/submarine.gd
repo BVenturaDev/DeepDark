@@ -7,6 +7,7 @@ const TURN_SPEED = 0.5
 const MAX_SPEED = 20.0
 
 @onready var player = $Player
+@onready var headlights = $SpotLight3DHeadlight
 
 func _physics_process(delta):
 	if Input.is_action_pressed("sub_left"):
@@ -32,3 +33,7 @@ func _physics_process(delta):
 	velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
 	velocity.z = clampf(velocity.z, -MAX_SPEED, MAX_SPEED)
 	move_and_slide()
+
+func _input(event):
+	if event.is_action_pressed("sub_lights"):
+		headlights.set_visible(!headlights.visible)

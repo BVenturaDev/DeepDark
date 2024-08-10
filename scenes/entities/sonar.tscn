@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddf2i5yx54j38"]
+
+[ext_resource type="Material" uid="uid://cbij6u086jog0" path="res://materials/entities/submarine/sub_console.tres" id="2_xdl32"]
+[ext_resource type="Material" uid="uid://gisbr8fpgcmb" path="res://materials/entities/submarine/screen_crt_shader.tres" id="3_j3l0v"]
+[ext_resource type="Material" uid="uid://caii8n3gkv3ry" path="res://materials/entities/submarine/screen_sonar_shader.tres" id="3_n00mb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lut70"]
+material = ExtResource("2_xdl32")
+size = Vector3(0.1, 0.75, 1)
+
+[sub_resource type="Shader" id="Shader_775js"]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode unshaded;
+
+uniform sampler2D screen_tex;
+
+void fragment()
+{
+	ALBEDO = texture(screen_tex, vec2(1.0 - UV.y, 1.0 - UV.x)).rgb;
+	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 0.01;
+}"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rnwg2"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5p4e7"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_775js")
+shader_parameter/screen_tex = SubResource("ViewportTexture_rnwg2")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y7p4j"]
+material = SubResource("ShaderMaterial_5p4e7")
+size = Vector2(0.7, 0.95)
+
+[node name="SonarScreen" type="Node3D"]
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0375602, 0, 0)
+mesh = SubResource("BoxMesh_lut70")
+
+[node name="MeshInstanceScreen" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0890678, 0, 0)
+mesh = SubResource("PlaneMesh_y7p4j")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(950, 700)
+render_target_update_mode = 4
+
+[node name="ScreenControl" type="Control" parent="SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRectSonar" type="ColorRect" parent="SubViewport/ScreenControl"]
+material = ExtResource("3_n00mb")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRectCRT" type="ColorRect" parent="SubViewport/ScreenControl"]
+material = ExtResource("3_j3l0v")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
