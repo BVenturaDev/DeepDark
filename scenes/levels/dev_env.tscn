@@ -1,8 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmugi8il1ln2l"]
+[gd_scene load_steps=6 format=3 uid="uid://cmugi8il1ln2l"]
 
 [ext_resource type="PackedScene" uid="uid://c22ahfk2dg3k6" path="res://scenes/entities/submarine.tscn" id="1_8jp3a"]
+[ext_resource type="Environment" uid="uid://d0hatdbql1sul" path="res://environments/cave_environment.tres" id="2_ysy44"]
+[ext_resource type="CylinderMesh" uid="uid://4vg0jktxep0t" path="res://assets/meshes/cave/cave_mesh.tres" id="3_n8g6l"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_wl2ws"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x8ci7"]
+size = Vector3(1, 80, 200)
 
 [node name="DevEnv" type="Node3D"]
 
@@ -31,3 +36,55 @@ mesh = SubResource("TorusMesh_wl2ws")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.208357, 0.868442, 0.449885, 0.0391736, 0.452201, -0.891056, -0.977268, 0.203281, 0.060199, -10.637, 3.08983, -3.00279)
 mesh = SubResource("TorusMesh_wl2ws")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_ysy44")
+
+[node name="Cave" type="Node3D" parent="."]
+
+[node name="CaveWall" type="StaticBody3D" parent="Cave"]
+
+[node name="MeshInstance3DCaveWall" type="MeshInstance3D" parent="Cave/CaveWall"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("3_n8g6l")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cave/CaveWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 0)
+shape = SubResource("BoxShape3D_x8ci7")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Cave/CaveWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 0)
+shape = SubResource("BoxShape3D_x8ci7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Cave/CaveWall"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 40, 0)
+shape = SubResource("BoxShape3D_x8ci7")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Cave/CaveWall"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -40, 0)
+shape = SubResource("BoxShape3D_x8ci7")
+
+[node name="CaveWall2" type="StaticBody3D" parent="Cave"]
+transform = Transform3D(1, 0, 0, 0, 0.861142, -0.508365, 0, 0.508365, 0.861142, 3.36063, 42.6174, -164.443)
+
+[node name="MeshInstance3DCaveWall" type="MeshInstance3D" parent="Cave/CaveWall2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("3_n8g6l")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cave/CaveWall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 0)
+shape = SubResource("BoxShape3D_x8ci7")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Cave/CaveWall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 0)
+shape = SubResource("BoxShape3D_x8ci7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Cave/CaveWall2"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 40, 0)
+shape = SubResource("BoxShape3D_x8ci7")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Cave/CaveWall2"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -40, 0)
+shape = SubResource("BoxShape3D_x8ci7")

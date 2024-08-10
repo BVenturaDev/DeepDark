@@ -1,0 +1,17 @@
+[gd_resource type="Environment" format=3 uid="uid://d0hatdbql1sul"]
+
+[resource]
+resource_local_to_scene = true
+background_energy_multiplier = 0.0
+ambient_light_energy = 0.0
+ssr_enabled = true
+ssao_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+fog_light_color = Color(0.0406919, 0.106947, 0.20332, 1)
+fog_sun_scatter = 1.0
+fog_density = 0.1504
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.1342
+volumetric_fog_albedo = Color(0.0093692, 0.10755, 0.202062, 1)
+volumetric_fog_emission_energy = 0.0

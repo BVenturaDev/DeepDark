@@ -18,17 +18,17 @@ uniform sampler2D screen_tex;
 void fragment()
 {
 	ALBEDO = texture(screen_tex, vec2(UV.y, 1.0 - UV.x)).rgb;
-	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 0.01;
+	EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb;
 }"
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_b1pyx"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_e2asp"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_375h2"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_1xnl0")
-shader_parameter/screen_tex = SubResource("ViewportTexture_b1pyx")
+shader_parameter/screen_tex = SubResource("ViewportTexture_e2asp")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_y7p4j"]
 material = SubResource("ShaderMaterial_375h2")
@@ -115,3 +115,14 @@ spot_range = 200.0
 visible = false
 shadow_enabled = true
 spot_range = 200.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.167091, 0, 0)
+light_color = Color(0.400698, 0.400698, 0.400698, 1)
+light_energy = 0.25
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 1.0
+distance_fade_shadow = 3.0
+distance_fade_length = 3.0
+omni_range = 3.0

@@ -91,14 +91,6 @@ collision_mask = 2
 [node name="Node3DInterior" type="Node3D" parent="Interior"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Interior/Node3DInterior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.108488, 0.444193, -4.74217e-09)
-light_color = Color(0.396181, 0.552826, 0.694586, 1)
-light_energy = 0.5
-distance_fade_enabled = true
-distance_fade_begin = 1.0
-distance_fade_length = 3.0
-
 [node name="Node3DControlConsole" type="StaticBody3D" parent="Interior/Node3DInterior"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.834657, -0.485203, 3.6484e-08)
 collision_layer = 2
