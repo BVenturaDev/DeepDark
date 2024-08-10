@@ -82,6 +82,9 @@ size = Vector2(0.7, 0.95)
 
 [node name="Submarine" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+motion_mode = 1
+platform_floor_layers = 4294967042
+platform_wall_layers = 2
 script = ExtResource("1_0nxjb")
 
 [node name="Node3DMeshes" type="Node3D" parent="."]
@@ -204,7 +207,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Node3DCameras" type="Node3D" parent="Interior/Screen/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.956727, 0, -2.13163e-14)
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0.956727, 0, -3.19744e-14)
 
 [node name="Camera3DPort" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65737, 0, 1.05797e-14)

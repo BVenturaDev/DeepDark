@@ -1,41 +1,27 @@
 extends CharacterBody3D
 
-const SPEED = 2.0
-const STOP_SPEED = 2.0
-const TURN_SPEED = 10.0
+const SPEED = 300.0
+const ASCENT_SPEED = 50.0
+const STOP_SPEED = 10.0
+const TURN_SPEED = 1.0
 
 @onready var player = $Player
 
-func _init():
-	pass
-	"""
-	velocity.x = randf_range(-5.0, 5.0)
-	velocity.y = randf_range(-5.0, 5.0)
-	velocity.z = randf_range(-5.0, 5.0)
-	print(velocity)
-	"""
-
 func _physics_process(delta):
-	var direction = global_transform.basis.get_euler() * Vector3.FORWARD
-	if Input.is_action_pressed("sub_forward"):
-		direction.z -= 1
-	if Input.is_action_pressed("sub_back"):
-		direction.z += 1
-	if Input.is_action_pressed("sub_down"):
-		direction.y -= 1
-	if Input.is_action_pressed("sub_up"):
-		direction.y += 1
 	if Input.is_action_pressed("sub_left"):
-		rotation_degrees.y -= TURN_SPEED * delta
+		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta)
 	if Input.is_action_pressed("sub_right"):
-		rotation_degrees.y += TURN_SPEED * delta
-	direction = direction.normalized()
-	velocity += direction * SPEED * delta
-	velocity.x = clampf(velocity.x, -3.0, 3.0)
-	velocity.y = clampf(velocity.y, -3.0, 3.0)
-	velocity.z = clampf(velocity.z, -3.0, 3.0)
+		rotate_object_local(Vector3(0.0, 1.0, 0.0), TURN_SPEED * delta)
 	
-	velocity.x = move_toward(velocity.x, 0, SPEED / STOP_SPEED * delta)
-	velocity.y = move_toward(velocity.y, 0, SPEED / STOP_SPEED * delta)
-	velocity.z = move_toward(velocity.z, 0, SPEED / STOP_SPEED * delta)
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir = Input.get_vector("sub_down", "sub_up", "sub_forward", "sub_back")
+	var direction = (global_transform.basis * Vector3(0.0, input_dir.x, input_dir.y)).normalized()
+	if direction:
+		velocity.z = direction.z * SPEED * delta
+		velocity.y = direction.y * ASCENT_SPEED * delta
+	else:
+		velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)
+		velocity.z = move_toward(velocity.z, 0, STOP_SPEED * delta)
+		
 	move_and_slide()
