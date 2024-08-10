@@ -31,12 +31,15 @@ func _activate_cam(in_cam_num):
 	if cameras[in_cam_num]:
 		# Turn on Camera
 		cameras[in_cam_num].current = true
-		# Turn on light
-		cameras[in_cam_num].get_child(0).visible = true
 		# Set Label
 		label.text = camera_labels[in_cam_num]
 
 func _input(event):
+	# "k" key
+	if event.is_action_pressed("cam_light"):
+		# Toggle light
+		cameras[cam_num].get_child(0).set_visible(!cameras[cam_num].get_child(0).visible)
+	
 	# "," key
 	if event.is_action_pressed("previous_camera"):
 		# Turn off current camera
