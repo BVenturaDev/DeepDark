@@ -62,7 +62,7 @@ uniform sampler2D screen_tex;
 
 void fragment()
 {
-	ALBEDO = texture(screen_tex, vec2(1.0 - UV.y, 1.0 - UV.x)).rgb;
+	ALBEDO = texture(screen_tex, vec2(UV.y, 1.0 - UV.x)).rgb;
 	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 0.01;
 }"
 
@@ -204,19 +204,23 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Node3DCameras" type="Node3D" parent="Interior/Screen/SubViewport"]
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0.956727, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.956727, 0, -2.13163e-14)
 
 [node name="Camera3DPort" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.992643, 0, 1.05797e-14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65737, 0, 1.05797e-14)
 current = true
 
 [node name="Camera3DStarboard" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.480328, 0, 0)
 
 [node name="Camera3DStern" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.987707, 0, 1.61415)
 
 [node name="Camera3DFloor" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.961563, -0.615903, 0)
 
 [node name="Camera3DRoof" type="Camera3D" parent="Interior/Screen/SubViewport/Node3DCameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.961143, 0.699584, 0)
 
 [node name="Player" parent="." instance=ExtResource("5_hxsbj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)
