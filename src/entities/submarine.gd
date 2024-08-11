@@ -9,12 +9,15 @@ const MAX_SPEED = 20.0
 @onready var player = $Player
 @onready var headlights = $Headlights
 
+var input_dir = Vector2()
+
 func _physics_process(delta):
+	
 	if Input.is_action_pressed("sub_left"):
 		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta)
 	if Input.is_action_pressed("sub_right"):
 		rotate_object_local(Vector3(0.0, 1.0, 0.0), TURN_SPEED * delta)
-	
+		
 	if Input.is_action_pressed("sub_back"):
 		velocity += transform.basis.x * SPEED * delta
 	if Input.is_action_pressed("sub_forward"):
@@ -24,6 +27,10 @@ func _physics_process(delta):
 		velocity -= transform.basis.y * ASCENT_SPEED * delta
 	if Input.is_action_pressed("sub_up"):
 		velocity += transform.basis.y * ASCENT_SPEED * delta
+		
+	if input_dir:
+		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta * input_dir.x)
+		velocity -= transform.basis.x * SPEED * delta * input_dir.y
 	else:
 		velocity.x = move_toward(velocity.x, 0, STOP_SPEED * delta)
 		velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)

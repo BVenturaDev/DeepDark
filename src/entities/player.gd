@@ -5,8 +5,11 @@ extends CharacterBody3D
 const SPEED = 150.0
 const STOP_SPEED = 50.0
 var mouse_sens = 0.002
+var mouse_drag_coords = Vector2()
+var mouse_clicked = false
 var interacting = false
 var last_target
+var sub
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -16,6 +19,7 @@ var mouse_mode = true
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	sub = get_tree().get_root().get_child(0).get_node("Submarine")
 	
 func _physics_process(delta):
 	# Check for Interaction
@@ -23,14 +27,16 @@ func _physics_process(delta):
 		var target = InteractCast.get_collider()
 		if target.is_in_group("interactable"):
 			if not target.targeted:
+				# Valid Target
 				interacting = true
 				target.change_targeted(true)
 				last_target = target
 	else:
+		# No Valid target
 		if last_target:
 			last_target.change_targeted(false)
 		interacting = false
-
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -48,13 +54,38 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func _input(event):  		
-	if event is InputEventMouseMotion && mouse_mode:
+func _input(event):
+	# Handle Click
+	if Input.is_action_just_pressed("click"):
+		mouse_clicked = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
+		mouse_drag_coords = get_viewport().get_mouse_position()
+	elif Input.is_action_just_released("click"):
+		mouse_clicked = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		sub.input_dir = Vector2()
+		if last_target and last_target.has_method("tilt_controller"):
+			last_target.tilt_controller(Vector2())
+	# Handle Mouse Move
+	if event is InputEventMouseMotion and mouse_mode and not mouse_clicked:
 		rotation.y -= event.relative.x * mouse_sens
 		$Camera3D.rotation.x -= event.relative.y * mouse_sens
 		$Camera3D.rotation.x = clamp($Camera3D.rotation.x, deg_to_rad(-60.0), deg_to_rad(60.0))
 		$Camera3D.rotation.z = 0.0
-	elif event.is_action_pressed("ui_escape"):
+	# Mouse is moving a controller
+	elif event is InputEventMouseMotion and mouse_clicked and interacting:
+		if last_target and last_target.has_method("tilt_controller"):
+			var tilt = Vector2()
+			var mouse_pos = get_viewport().get_mouse_position()
+			tilt.y = (mouse_drag_coords.y - mouse_pos.y) / mouse_drag_coords.y
+			tilt.x = (mouse_drag_coords.x - mouse_pos.x) / -mouse_drag_coords.x
+			tilt.x = clampf(tilt.x, -1.0, 1.0)
+			tilt.y = clampf(tilt.y, -1.0, 1.0)
+			sub.input_dir = tilt
+			last_target.tilt_controller(tilt)
+	
+	# Escape Key Changes Mouse Mode
+	if event.is_action_pressed("ui_escape"):
 		if mouse_mode:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			mouse_mode = false
