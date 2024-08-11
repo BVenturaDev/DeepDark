@@ -1,3 +1,5 @@
 https://godotshaders.com/shader/vhs-and-crt-monitor-effect/
 
 https://godotshaders.com/shader/radar-with-trace-blip/
+
+https://godotshaders.com/shader/pixel-perfect-outline-shader/
