@@ -46,4 +46,7 @@ func _physics_process(delta):
 
 func _input(event):
 	if event.is_action_pressed("sub_lights"):
-		headlights.set_visible(!headlights.visible)
+		toggle_headlights()
+
+func toggle_headlights():
+	headlights.set_visible(!headlights.visible)

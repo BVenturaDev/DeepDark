@@ -1,0 +1,158 @@
+[gd_scene load_steps=11 format=3 uid="uid://daedlhkk5touc"]
+
+[ext_resource type="Material" uid="uid://c8d8fxdr6u8b3" path="res://materials/entities/control_stick/control_stick_base.tres" id="1_27d45"]
+[ext_resource type="Script" path="res://src/entities/buttons/headlights_button.gd" id="1_snmkk"]
+[ext_resource type="Material" uid="uid://5hf3w6468g8l" path="res://materials/entities/control_stick/button.tres" id="2_60ae4"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pl67x"]
+material = ExtResource("1_27d45")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xl247"]
+material = ExtResource("2_60ae4")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tm4yu"]
+height = 0.1
+radius = 0.1
+
+[sub_resource type="Animation" id="Animation_ftxsj"]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstanceButton:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstanceButton:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.0220212, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstanceButton:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_0c26v"]
+resource_name = "press_button"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstanceButton:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4, 0.6, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstanceButton:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0.0220212, -0.25, 0, 0.25, 0, 0.00746092, -0.25, 0, 0.25, 0, 0.00746092, -0.25, 0, 0.25, 0, 0.022, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4, 0.6, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstanceButton:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4, 0.6, 1)
+}
+
+[sub_resource type="Animation" id="Animation_6op6v"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstanceButton:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstanceButton:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.00746092, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstanceButton:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ka5ia"]
+_data = {
+"RESET": SubResource("Animation_6op6v"),
+"idle": SubResource("Animation_ftxsj"),
+"press_button": SubResource("Animation_0c26v")
+}
+
+[node name="button" type="StaticBody3D" groups=["interactable"]]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_snmkk")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_pl67x")
+
+[node name="MeshInstanceButton" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
+mesh = SubResource("CylinderMesh_xl247")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
+shape = SubResource("CylinderShape3D_tm4yu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ka5ia")
+}

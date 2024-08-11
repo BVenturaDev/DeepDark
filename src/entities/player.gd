@@ -63,6 +63,8 @@ func _input(event):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if last_target and last_target.has_method("tilt_controller"):
 			last_target.tilt_controller(Vector2())
+		elif last_target and last_target.has_method("press_button"):
+			last_target.press_button()
 	# Handle Mouse Move
 	if event is InputEventMouseMotion and mouse_mode and not mouse_clicked:
 		rotation.y -= event.relative.x * mouse_sens
