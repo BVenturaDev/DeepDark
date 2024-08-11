@@ -9,7 +9,6 @@ var mouse_drag_coords = Vector2()
 var mouse_clicked = false
 var interacting = false
 var last_target
-var sub
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,11 +18,10 @@ var mouse_mode = true
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	sub = get_tree().get_root().get_child(0).get_node("Submarine")
 	
 func _physics_process(delta):
 	# Check for Interaction
-	if InteractCast.is_colliding() and InteractCast.get_collider():
+	if InteractCast.is_colliding() and InteractCast.get_collider() and not interacting:
 		var target = InteractCast.get_collider()
 		if target.is_in_group("interactable"):
 			if not target.targeted:
@@ -63,7 +61,6 @@ func _input(event):
 	elif Input.is_action_just_released("click"):
 		mouse_clicked = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		sub.input_dir = Vector2()
 		if last_target and last_target.has_method("tilt_controller"):
 			last_target.tilt_controller(Vector2())
 	# Handle Mouse Move
@@ -81,7 +78,6 @@ func _input(event):
 			tilt.x = (mouse_drag_coords.x - mouse_pos.x) / -mouse_drag_coords.x
 			tilt.x = clampf(tilt.x, -1.0, 1.0)
 			tilt.y = clampf(tilt.y, -1.0, 1.0)
-			sub.input_dir = tilt
 			last_target.tilt_controller(tilt)
 	
 	# Escape Key Changes Mouse Mode

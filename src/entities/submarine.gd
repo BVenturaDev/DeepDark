@@ -10,6 +10,7 @@ const MAX_SPEED = 20.0
 @onready var headlights = $Headlights
 
 var input_dir = Vector2()
+var ascent_normal = 0.0
 
 func _physics_process(delta):
 	
@@ -31,6 +32,8 @@ func _physics_process(delta):
 	if input_dir:
 		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta * input_dir.x)
 		velocity -= transform.basis.x * SPEED * delta * input_dir.y
+	elif ascent_normal != 0.0:
+		velocity += transform.basis.y * ASCENT_SPEED * delta * ascent_normal
 	else:
 		velocity.x = move_toward(velocity.x, 0, STOP_SPEED * delta)
 		velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)

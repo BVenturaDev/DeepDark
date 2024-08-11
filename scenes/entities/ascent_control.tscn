@@ -1,8 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://bts1wjevjq4hc"]
+[gd_scene load_steps=23 format=3 uid="uid://bahc3m2a6mh32"]
 
-[ext_resource type="Script" path="res://src/entities/control_stick.gd" id="1_okx1a"]
+[ext_resource type="Script" path="res://src/entities/ascent_control.gd" id="1_ob4be"]
 
-[sub_resource type="Shader" id="Shader_clbbd"]
+[sub_resource type="Shader" id="Shader_6tkru"]
 code = "shader_type spatial;
 render_mode cull_front, unshaded;
 
@@ -31,27 +31,27 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n2pry"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_23r5n"]
 resource_local_to_scene = true
 render_priority = 0
-shader = SubResource("Shader_clbbd")
+shader = SubResource("Shader_6tkru")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 shader_parameter/is_targeted = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7vp3a"]
-next_pass = SubResource("ShaderMaterial_n2pry")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mqw5p"]
+next_pass = SubResource("ShaderMaterial_23r5n")
 albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_asdoo"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_7vp3a")
+material = SubResource("StandardMaterial3D_mqw5p")
 size = Vector3(0.1, 0.05, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5pauc"]
 size = Vector3(0.25, 0.3, 0.25)
 
-[sub_resource type="Shader" id="Shader_wy2vf"]
+[sub_resource type="Shader" id="Shader_42uym"]
 code = "shader_type spatial;
 render_mode cull_front, unshaded;
 
@@ -80,25 +80,25 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xiqfr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_opw1q"]
 resource_local_to_scene = true
 render_priority = 0
-shader = SubResource("Shader_wy2vf")
+shader = SubResource("Shader_42uym")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 shader_parameter/is_targeted = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecx3c"]
-next_pass = SubResource("ShaderMaterial_xiqfr")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbvb5"]
+next_pass = SubResource("ShaderMaterial_opw1q")
 albedo_color = Color(0.103744, 0.103744, 0.103744, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_yybb0"]
-material = SubResource("StandardMaterial3D_ecx3c")
+material = SubResource("StandardMaterial3D_jbvb5")
 top_radius = 0.01
 bottom_radius = 0.01
 height = 0.1
 
-[sub_resource type="Shader" id="Shader_2n2ba"]
+[sub_resource type="Shader" id="Shader_ia27p"]
 code = "shader_type spatial;
 render_mode cull_front, unshaded;
 
@@ -127,24 +127,25 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ybuu1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fcoc"]
 resource_local_to_scene = true
 render_priority = 0
-shader = SubResource("Shader_2n2ba")
+shader = SubResource("Shader_ia27p")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 shader_parameter/is_targeted = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lu5x4"]
-next_pass = SubResource("ShaderMaterial_ybuu1")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0c4j"]
+next_pass = SubResource("ShaderMaterial_0fcoc")
 albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_4r1s2"]
-material = SubResource("StandardMaterial3D_lu5x4")
-radius = 0.025
-height = 0.05
+[sub_resource type="CylinderMesh" id="CylinderMesh_bppr5"]
+material = SubResource("StandardMaterial3D_m0c4j")
+top_radius = 0.015
+bottom_radius = 0.015
+height = 0.125
 
-[sub_resource type="Animation" id="Animation_44ikr"]
+[sub_resource type="Animation" id="Animation_u8gwv"]
 resource_name = "tilt_forward"
 length = 0.001
 tracks/0/type = "bezier"
@@ -155,7 +156,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(-0.785398, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "bezier"
@@ -177,11 +178,11 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.785398, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_f3kqg"]
+[sub_resource type="Animation" id="Animation_35m02"]
 resource_name = "tilt_back"
 length = 0.001
 tracks/0/type = "bezier"
@@ -192,43 +193,6 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TiltControl:rotation:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TiltControl:rotation:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-0.785398, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_epm0h"]
-resource_name = "tilt_left"
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TiltControl:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0.785398, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
@@ -255,44 +219,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_b216y"]
-resource_name = "tilt_right"
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TiltControl:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-0.785398, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TiltControl:rotation:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TiltControl:rotation:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_hnxkq"]
+[sub_resource type="Animation" id="Animation_nboam"]
 resource_name = "tilt_neutral"
 length = 0.001
 tracks/0/type = "bezier"
@@ -329,46 +256,34 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_eyrw1"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_migux"]
 _data = {
-"tilt_back": SubResource("Animation_f3kqg"),
-"tilt_forward": SubResource("Animation_44ikr"),
-"tilt_left": SubResource("Animation_epm0h"),
-"tilt_neutral": SubResource("Animation_hnxkq"),
-"tilt_right": SubResource("Animation_b216y")
+"tilt_back": SubResource("Animation_35m02"),
+"tilt_forward": SubResource("Animation_u8gwv"),
+"tilt_neutral": SubResource("Animation_nboam")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r088g"]
-animation = &"tilt_back"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4s6ah"]
-animation = &"tilt_forward"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0xrog"]
-animation = &"tilt_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_55gl4"]
-animation = &"tilt_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m6qne"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uyu6m"]
 animation = &"tilt_neutral"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ial3j"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_r088g")
-blend_point_0/pos = Vector2(0, -1)
-blend_point_1/node = SubResource("AnimationNodeAnimation_4s6ah")
-blend_point_1/pos = Vector2(0, 1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_0xrog")
-blend_point_2/pos = Vector2(1, 0)
-blend_point_3/node = SubResource("AnimationNodeAnimation_55gl4")
-blend_point_3/pos = Vector2(-1, 0)
-blend_point_4/node = SubResource("AnimationNodeAnimation_m6qne")
-blend_point_4/pos = Vector2(0, 0)
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c5l5x"]
+animation = &"tilt_forward"
 
-[node name="ControlStick" type="StaticBody3D" groups=["interactable"]]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8my7e"]
+animation = &"tilt_back"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_xt0lh"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_uyu6m")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_c5l5x")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_8my7e")
+blend_point_2/pos = -1.0
+
+[node name="AscentControl" type="StaticBody3D" groups=["interactable"]]
 collision_layer = 8
 collision_mask = 8
-script = ExtResource("1_okx1a")
+script = ExtResource("1_ob4be")
 
 [node name="MeshInstance3DPad" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_asdoo")
@@ -378,22 +293,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.112705, 0)
 shape = SubResource("BoxShape3D_5pauc")
 
 [node name="TiltControl" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999999, -0.00117928, 0, 0.00117928, 0.999999, 0, 0, 0)
 
 [node name="MeshInstanceStick" type="MeshInstance3D" parent="TiltControl"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0516827, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.035, 0.0359893, 0)
 mesh = SubResource("CylinderMesh_yybb0")
 
-[node name="MeshInstanceBall" type="MeshInstance3D" parent="TiltControl"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0991174, 0)
-mesh = SubResource("SphereMesh_4r1s2")
+[node name="MeshInstanceStick2" type="MeshInstance3D" parent="TiltControl"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035, 0.0359893, 0)
+mesh = SubResource("CylinderMesh_yybb0")
+
+[node name="MeshInstanceStick3" type="MeshInstance3D" parent="TiltControl"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.0898954, 0)
+mesh = SubResource("CylinderMesh_bppr5")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_eyrw1")
+"": SubResource("AnimationLibrary_migux")
 }
-autoplay = "tilt_neutral"
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeBlendSpace2D_ial3j")
+tree_root = SubResource("AnimationNodeBlendSpace1D_xt0lh")
 anim_player = NodePath("../AnimationPlayer")
-parameters/blend_position = Vector2(0.1456, -0.480176)
+parameters/blend_position = -0.0015015

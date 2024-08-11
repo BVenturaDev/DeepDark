@@ -1,7 +1,15 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c8d8fxdr6u8b3"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://c8d8fxdr6u8b3"]
 
-[ext_resource type="Material" uid="uid://b4haeeweoax2f" path="res://materials/entities/outline_shader.tres" id="1_oetnt"]
+[ext_resource type="Shader" path="res://shaders/outline_shader.gdshader" id="1_rr71a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_awupi"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_rr71a")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
 
 [resource]
-next_pass = ExtResource("1_oetnt")
+next_pass = SubResource("ShaderMaterial_awupi")
 albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
