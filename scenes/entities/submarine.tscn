@@ -1,11 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=19 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
 [ext_resource type="Material" uid="uid://bcy3miek1y1dy" path="res://materials/entities/submarine/sub_glass.tres" id="2_qn868"]
 [ext_resource type="Material" uid="uid://cbij6u086jog0" path="res://materials/entities/submarine/sub_console.tres" id="3_mvo7a"]
+[ext_resource type="PackedScene" uid="uid://bts1wjevjq4hc" path="res://scenes/entities/control_stick.tscn" id="5_51deg"]
 [ext_resource type="PackedScene" uid="uid://ilhuhfajpb2p" path="res://scenes/entities/player.tscn" id="5_hxsbj"]
 [ext_resource type="PackedScene" uid="uid://dedrie567uqc2" path="res://scenes/entities/screen.tscn" id="5_s7gew"]
+[ext_resource type="PackedScene" uid="uid://ddf2i5yx54j38" path="res://scenes/entities/sonar.tscn" id="6_8w5aq"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
 material = ExtResource("1_e21wt")
@@ -101,12 +103,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000600696, 0.134641, -2.625
 mesh = SubResource("BoxMesh_bklx0")
 
 [node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/Node3DInterior/Node3DControlConsole"]
-transform = Transform3D(0.891837, -0.452357, 4.72795e-09, 0.452357, 0.891837, -1.97732e-08, 4.72795e-09, 1.97732e-08, 1, -0.0254803, 0.345574, 1.11378e-09)
+transform = Transform3D(0.891007, -0.453991, 0, 0.453991, 0.891007, 0, 0, 0, 1, -0.0254803, 0.345574, 1.11378e-09)
 mesh = SubResource("BoxMesh_xlp7x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/Node3DInterior/Node3DControlConsole"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.237898, 0)
 shape = SubResource("BoxShape3D_x6j71")
+
+[node name="ControlStick" parent="Interior/Node3DInterior/Node3DControlConsole" instance=ExtResource("5_51deg")]
+transform = Transform3D(0.474611, 0.880196, 0, -0.880196, 0.474611, 0, 0, 0, 1, 0.00635505, 0.364075, 0.106151)
 
 [node name="CollisionShapeFloor" type="CollisionShape3D" parent="Interior"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1.05437, 0)
@@ -153,11 +158,22 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.971
 [node name="Camera3DRoof" parent="Interior/Screen/SubViewport/Node3DCameras" index="4"]
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -0.971, 1.038, 0)
 
+[node name="SonarScreen" parent="Interior" instance=ExtResource("6_8w5aq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0.967)
+
 [node name="Player" parent="." instance=ExtResource("5_hxsbj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)
 
-[node name="SpotLight3DHeadlight" type="SpotLight3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.573133, 0.819462, 0, 0.819462, 0.573133, -1, 2.50524e-08, -3.58198e-08, -2.09996, -1.02865, 9.1792e-08)
+[node name="Headlights" type="Node3D" parent="."]
+
+[node name="SpotLight3DHeadlight" type="SpotLight3D" parent="Headlights"]
+transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, -2.09996, -1.02865, 9.1792e-08)
+light_energy = 10.0
+shadow_enabled = true
+spot_range = 200.0
+
+[node name="SpotLight3DHeadlight2" type="SpotLight3D" parent="Headlights"]
+transform = Transform3D(-4.37114e-08, 0.258819, 0.965926, 0, 0.965926, -0.258819, -1, -1.13133e-08, -4.2222e-08, -2.1, 1.029, 0)
 light_energy = 10.0
 shadow_enabled = true
 spot_range = 200.0

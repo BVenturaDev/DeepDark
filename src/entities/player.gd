@@ -1,8 +1,12 @@
 extends CharacterBody3D
 
+@onready var InteractCast = $Camera3D/RayCast3D
+
 const SPEED = 150.0
 const STOP_SPEED = 50.0
 var mouse_sens = 0.002
+var interacting = false
+var last_target
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -14,6 +18,19 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 func _physics_process(delta):
+	# Check for Interaction
+	if InteractCast.is_colliding() and InteractCast.get_collider():
+		var target = InteractCast.get_collider()
+		if target.is_in_group("interactable"):
+			if not target.targeted:
+				interacting = true
+				target.change_targeted(true)
+				last_target = target
+	else:
+		if last_target:
+			last_target.change_targeted(false)
+		interacting = false
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta

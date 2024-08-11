@@ -7,7 +7,7 @@ const TURN_SPEED = 0.5
 const MAX_SPEED = 20.0
 
 @onready var player = $Player
-@onready var headlights = $SpotLight3DHeadlight
+@onready var headlights = $Headlights
 
 func _physics_process(delta):
 	if Input.is_action_pressed("sub_left"):
