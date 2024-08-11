@@ -8,6 +8,7 @@ ssr_enabled = true
 ssao_enabled = true
 sdfgi_enabled = true
 sdfgi_use_occlusion = true
+glow_enabled = true
 fog_light_color = Color(0.0406919, 0.106947, 0.20332, 1)
 fog_sun_scatter = 1.0
 fog_density = 0.1504
