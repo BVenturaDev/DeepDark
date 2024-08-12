@@ -819,7 +819,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.227
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.967103, 0, 2.4869e-14)
 
 [node name="Camera3DPort" parent="Interior/Screen/SubViewport/Node3DCameras" index="0"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.01, 0, 0)
+transform = Transform3D(4.37114e-08, 0, 1, 0, 1, 0, 1, 0, -4.37114e-08, -2.01, 0, 0)
 
 [node name="Camera3DStarboard" parent="Interior/Screen/SubViewport/Node3DCameras" index="1"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.10028, 0, 4.38336e-09)
