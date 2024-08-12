@@ -40,7 +40,7 @@ func _ping_sonar():
 				if cur_view == 1:
 					sonar_shader.get("shader_parameter/blip_positions").append(Vector2(ping_pos.x, ping_pos.y))
 				if cur_view == 2:
-					sonar_shader.get("shader_parameter/blip_positions").append(Vector2(ping_pos.x, ping_pos.z))
+					sonar_shader.get("shader_parameter/blip_positions").append(Vector2(ping_pos.z, -ping_pos.x))
 
 func previous_view():
 	if cur_view == 0:
