@@ -9,11 +9,10 @@ var targeted = false
 func press_button():
 	if SystemGlobal.sub:
 		anim.play("press_button")
-		SystemGlobal.sub.toggle_headlights()
+		SystemGlobal.screen.previous_cam()
 	
 func change_targeted(is_targeted):
 	if targeted != is_targeted:
 		targeted = is_targeted
 		base.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
 		button.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
-

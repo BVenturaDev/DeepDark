@@ -1,17 +1,97 @@
-[gd_scene load_steps=11 format=3 uid="uid://daedlhkk5touc"]
+[gd_scene load_steps=15 format=3 uid="uid://daedlhkk5touc"]
 
-[ext_resource type="Material" uid="uid://c8d8fxdr6u8b3" path="res://materials/entities/control_stick/control_stick_base.tres" id="1_27d45"]
 [ext_resource type="Script" path="res://src/entities/buttons/headlights_button.gd" id="1_snmkk"]
-[ext_resource type="Material" uid="uid://5hf3w6468g8l" path="res://materials/entities/control_stick/button.tres" id="2_60ae4"]
+
+[sub_resource type="Shader" id="Shader_xkl1j"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uak0i"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_xkl1j")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jh5wr"]
+next_pass = SubResource("ShaderMaterial_uak0i")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_pl67x"]
-material = ExtResource("1_27d45")
+material = SubResource("StandardMaterial3D_jh5wr")
 top_radius = 0.05
 bottom_radius = 0.05
 height = 0.025
 
+[sub_resource type="Shader" id="Shader_6xqtt"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vhgef"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_6xqtt")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33r5f"]
+next_pass = SubResource("ShaderMaterial_vhgef")
+albedo_color = Color(0.12, 0.8, 0.29, 1)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_xl247"]
-material = ExtResource("2_60ae4")
+material = SubResource("StandardMaterial3D_33r5f")
 top_radius = 0.04
 bottom_radius = 0.04
 height = 0.02
@@ -19,6 +99,42 @@ height = 0.02
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tm4yu"]
 height = 0.1
 radius = 0.1
+
+[sub_resource type="Animation" id="Animation_6op6v"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstanceButton:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstanceButton:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.00746092, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstanceButton:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_ftxsj"]
 resource_name = "idle"
@@ -91,42 +207,6 @@ tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.4, 0.6, 1)
-}
-
-[sub_resource type="Animation" id="Animation_6op6v"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstanceButton:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstanceButton:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.00746092, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MeshInstanceButton:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ka5ia"]

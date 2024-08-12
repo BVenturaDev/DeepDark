@@ -19,7 +19,7 @@ uniform sampler2D screen_tex;
 void fragment()
 {
 	ALBEDO = texture(screen_tex, vec2(1.0 - UV.y, 1.0 - UV.x)).rgb;
-	EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 4.0;
+	//EMISSION = texture(screen_tex, vec2(UV.x, 1.0 - UV.y)).rgb * 4.0;
 }"
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0fsin"]
@@ -92,9 +92,8 @@ grow_vertical = 2
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.167091, 0, 0)
-visible = false
-light_color = Color(0.400698, 0.400698, 0.400698, 1)
-light_energy = 0.25
+light_color = Color(0.686275, 1, 0.686275, 1)
+light_energy = 0.15
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 1.0

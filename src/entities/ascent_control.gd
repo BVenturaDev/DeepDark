@@ -7,7 +7,6 @@ extends StaticBody3D
 @onready var anim = $AnimationTree
 
 var targeted = false
-var sub
 
 func change_targeted(is_targeted):
 	if targeted != is_targeted:
@@ -19,9 +18,9 @@ func change_targeted(is_targeted):
 
 func tilt_controller(pos):
 	anim.set("parameters/blend_position", pos.y)
-	sub.ascent_normal = pos.y
+	if SystemGlobal.sub:
+		SystemGlobal.sub.ascent_normal = pos.y
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	sub = get_tree().get_root().get_child(0).get_node("Submarine")
 	tilt_controller(Vector2())

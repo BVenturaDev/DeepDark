@@ -12,22 +12,25 @@ const MAX_SPEED = 20.0
 var input_dir = Vector2()
 var ascent_normal = 0.0
 
+func _ready():
+	SystemGlobal.sub = self
+
 func _physics_process(delta):
-	
-	if Input.is_action_pressed("sub_left"):
-		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta)
-	if Input.is_action_pressed("sub_right"):
-		rotate_object_local(Vector3(0.0, 1.0, 0.0), TURN_SPEED * delta)
-		
-	if Input.is_action_pressed("sub_back"):
-		velocity += transform.basis.x * SPEED * delta
-	if Input.is_action_pressed("sub_forward"):
-		velocity -= transform.basis.x * SPEED * delta
-		
-	if Input.is_action_pressed("sub_down"):
-		velocity -= transform.basis.y * ASCENT_SPEED * delta
-	if Input.is_action_pressed("sub_up"):
-		velocity += transform.basis.y * ASCENT_SPEED * delta
+	if SystemGlobal.DEBUG_MODE:
+		if Input.is_action_pressed("sub_left"):
+			rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta)
+		if Input.is_action_pressed("sub_right"):
+			rotate_object_local(Vector3(0.0, 1.0, 0.0), TURN_SPEED * delta)
+			
+		if Input.is_action_pressed("sub_back"):
+			velocity += transform.basis.x * SPEED * delta
+		if Input.is_action_pressed("sub_forward"):
+			velocity -= transform.basis.x * SPEED * delta
+			
+		if Input.is_action_pressed("sub_down"):
+			velocity -= transform.basis.y * ASCENT_SPEED * delta
+		if Input.is_action_pressed("sub_up"):
+			velocity += transform.basis.y * ASCENT_SPEED * delta
 		
 	if input_dir:
 		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta * input_dir.x)
@@ -45,7 +48,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _input(event):
-	if event.is_action_pressed("sub_lights"):
+	if event.is_action_pressed("sub_lights") and SystemGlobal.DEBUG_MODE:
 		toggle_headlights()
 
 func toggle_headlights():

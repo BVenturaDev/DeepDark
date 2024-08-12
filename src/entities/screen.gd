@@ -8,6 +8,8 @@ var cam_num = 0
 @onready var label = $SubViewport/ScreenControl/Label
 
 func _ready():
+	SystemGlobal.screen = self
+	
 	# Setup Screen
 	$MeshInstanceScreen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
 	
@@ -34,29 +36,39 @@ func _activate_cam(in_cam_num):
 		# Set Label
 		label.text = camera_labels[in_cam_num]
 
-func _input(event):
-	# "k" key
-	if event.is_action_pressed("cam_light"):
+func toggle_light():
+	if cameras[cam_num]:
 		# Toggle light
 		cameras[cam_num].get_child(0).set_visible(!cameras[cam_num].get_child(0).visible)
-	
-	# "," key
-	if event.is_action_pressed("previous_camera"):
-		# Turn off current camera
-		_deactivate_cam(cam_num)
-		# Decrease cam_num or reset
-		if cam_num == 0:
-			cam_num = cameras.size() - 1
-		else:
-			cam_num -= 1
-		_activate_cam(cam_num)
-	# "." key
-	elif event.is_action_pressed("next_camera"):
-		# Turn off current camera
-		_deactivate_cam(cam_num)
-		# Increase cam_num or reset
-		if cam_num == cameras.size() - 1:
-			cam_num = 0
-		else:
-			cam_num += 1
-		_activate_cam(cam_num)
+
+func previous_cam():
+	# Turn off current camera
+	_deactivate_cam(cam_num)
+	# Decrease cam_num or reset
+	if cam_num == 0:
+		cam_num = cameras.size() - 1
+	else:
+		cam_num -= 1
+	_activate_cam(cam_num)
+
+func next_cam():
+	# Turn off current camera
+	_deactivate_cam(cam_num)
+	# Increase cam_num or reset
+	if cam_num == cameras.size() - 1:
+		cam_num = 0
+	else:
+		cam_num += 1
+	_activate_cam(cam_num)
+
+func _input(event):
+	if SystemGlobal.DEBUG_MODE:
+		# "k" key
+		if event.is_action_pressed("cam_light"):
+			toggle_light()
+		# "," key
+		if event.is_action_pressed("previous_camera"):
+			previous_cam()
+		# "." key
+		elif event.is_action_pressed("next_camera"):
+			next_cam()
