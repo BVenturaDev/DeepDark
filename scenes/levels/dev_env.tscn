@@ -43,6 +43,8 @@ environment = ExtResource("2_ysy44")
 [node name="Cave" type="Node3D" parent="."]
 
 [node name="CaveWall" type="StaticBody3D" parent="Cave"]
+collision_layer = 5
+collision_mask = 5
 
 [node name="MeshInstance3DCaveWall" type="MeshInstance3D" parent="Cave/CaveWall"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -67,6 +69,8 @@ shape = SubResource("BoxShape3D_x8ci7")
 
 [node name="CaveWall2" type="StaticBody3D" parent="Cave"]
 transform = Transform3D(1, 0, 0, 0, 0.861142, -0.508365, 0, 0.508365, 0.861142, 3.36063, 42.6174, -164.443)
+collision_layer = 5
+collision_mask = 5
 
 [node name="MeshInstance3DCaveWall" type="MeshInstance3D" parent="Cave/CaveWall2"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -91,6 +95,8 @@ shape = SubResource("BoxShape3D_x8ci7")
 
 [node name="CaveWall3" type="StaticBody3D" parent="Cave"]
 transform = Transform3D(1, 0, 0, 0, 0.55, -0.835165, 0, 0.835165, 0.55, 3.36063, 163.729, -291.571)
+collision_layer = 5
+collision_mask = 5
 
 [node name="MeshInstance3DCaveWall" type="MeshInstance3D" parent="Cave/CaveWall3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)

@@ -75,7 +75,7 @@ offset_right = 53.0
 offset_bottom = 23.0
 scale = Vector2(4, 4)
 theme_override_font_sizes/font_size = 9
-text = "Top"
+text = "Side"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -88,15 +88,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SonarCasts" type="Node3D" parent="."]
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.167091, 0, 0)
 light_color = Color(0.686275, 1, 0.686275, 1)
-light_energy = 0.15
+light_energy = 0.1
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 1.0
 distance_fade_shadow = 3.0
 distance_fade_length = 3.0
 omni_range = 3.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true

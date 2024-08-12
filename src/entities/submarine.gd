@@ -14,6 +14,7 @@ var ascent_normal = 0.0
 
 func _ready():
 	SystemGlobal.sub = self
+	SystemGlobal.sonar_casts = $SonarCasts
 
 func _physics_process(delta):
 	if SystemGlobal.DEBUG_MODE:
@@ -31,7 +32,13 @@ func _physics_process(delta):
 			velocity -= transform.basis.y * ASCENT_SPEED * delta
 		if Input.is_action_pressed("sub_up"):
 			velocity += transform.basis.y * ASCENT_SPEED * delta
-		
+	
+	if is_on_ceiling():
+		velocity.z = -0.1
+	
+	if is_on_floor():
+		velocity.z = 0.1
+	
 	if input_dir:
 		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta * input_dir.x)
 		velocity -= transform.basis.x * SPEED * delta * input_dir.y

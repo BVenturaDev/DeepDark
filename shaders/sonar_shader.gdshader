@@ -18,7 +18,7 @@ uniform float trail_width : hint_range(0.0, 1.0) = 0.5;
 uniform float blip_size : hint_range(0.0, 0.5) = 0.1;
 uniform float blip_softness : hint_range(0.0, 1.0) = 0.4;
 uniform float blip_presistence : hint_range(1.0, 5.0) = 2.0;
-uniform vec2[64] blip_positions;
+uniform vec2[576] blip_positions;
 uniform int num_blips;
 
 float greater_than(float x, float y) {

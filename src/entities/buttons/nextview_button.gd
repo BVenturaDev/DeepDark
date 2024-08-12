@@ -7,9 +7,9 @@ extends StaticBody3D
 var targeted = false
 
 func press_button():
-	if SystemGlobal.screen:
+	if SystemGlobal.sonar:
 		anim.play("press_button")
-		SystemGlobal.screen.next_cam()
+		SystemGlobal.sonar.next_view()
 	
 func change_targeted(is_targeted):
 	if targeted != is_targeted:

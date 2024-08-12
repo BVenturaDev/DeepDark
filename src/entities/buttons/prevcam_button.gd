@@ -7,7 +7,7 @@ extends StaticBody3D
 var targeted = false
 
 func press_button():
-	if SystemGlobal.sub:
+	if SystemGlobal.screen:
 		anim.play("press_button")
 		SystemGlobal.screen.previous_cam()
 	

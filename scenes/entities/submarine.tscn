@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=73 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" path="res://src/entities/buttons/camlights_button.gd" id="8_s51yn"]
 [ext_resource type="Script" path="res://src/entities/buttons/nextcam_button.gd" id="9_lmccr"]
 [ext_resource type="Script" path="res://src/entities/buttons/prevcam_button.gd" id="10_tj3o4"]
+[ext_resource type="Script" path="res://src/entities/buttons/nextview_button.gd" id="13_757uo"]
+[ext_resource type="Script" path="res://src/entities/buttons/prevview_button.gd" id="14_hg5x1"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
 material = ExtResource("1_e21wt")
@@ -37,6 +39,12 @@ is_hemisphere = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3e0nu"]
 height = 3.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8dfk3"]
+size = Vector3(2.03418, 0.0556641, 1.00694)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nqfmp"]
+size = Vector3(1.12193, 0.0556641, 1.00694)
 
 [sub_resource type="BoxMesh" id="BoxMesh_bklx0"]
 material = ExtResource("3_mvo7a")
@@ -458,15 +466,197 @@ top_radius = 0.04
 bottom_radius = 0.04
 height = 0.02
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8dfk3"]
-size = Vector3(2.03418, 0.0556641, 1.00694)
+[sub_resource type="Shader" id="Shader_gpsr2"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nqfmp"]
-size = Vector3(1.12193, 0.0556641, 1.00694)
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6f3c0"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_gpsr2")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6k7n1"]
+next_pass = SubResource("ShaderMaterial_6f3c0")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2sw6d"]
+material = SubResource("StandardMaterial3D_6k7n1")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="Shader" id="Shader_h31pt"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0v3q"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_h31pt")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7pwo"]
+next_pass = SubResource("ShaderMaterial_t0v3q")
+albedo_color = Color(1.19364e-05, 0.733223, 0.937206, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ttd0f"]
+material = SubResource("StandardMaterial3D_h7pwo")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
+
+[sub_resource type="Shader" id="Shader_wovxk"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dgu5v"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_wovxk")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrtu7"]
+next_pass = SubResource("ShaderMaterial_dgu5v")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_85hun"]
+material = SubResource("StandardMaterial3D_nrtu7")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="Shader" id="Shader_4iyrq"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7txuk"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_4iyrq")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rl2vs"]
+next_pass = SubResource("ShaderMaterial_7txuk")
+albedo_color = Color(1.19364e-05, 0.733223, 0.937206, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_d6cng"]
+material = SubResource("StandardMaterial3D_rl2vs")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
 
 [node name="Submarine" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-motion_mode = 1
+floor_stop_on_slope = false
 platform_floor_layers = 4294967042
 platform_wall_layers = 2
 script = ExtResource("1_0nxjb")
@@ -504,127 +694,6 @@ shape = SubResource("CapsuleShape3D_3e0nu")
 collision_layer = 2
 collision_mask = 2
 
-[node name="Node3DInterior" type="Node3D" parent="Interior"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="Node3DControlConsole" type="StaticBody3D" parent="Interior/Node3DInterior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.834657, -0.485203, 3.6484e-08)
-collision_layer = 2
-collision_mask = 2
-
-[node name="MeshInstanceConsolePost" type="MeshInstance3D" parent="Interior/Node3DInterior/Node3DControlConsole"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000600696, 0.134641, -2.62581e-11)
-mesh = SubResource("BoxMesh_bklx0")
-
-[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/Node3DInterior/Node3DControlConsole"]
-transform = Transform3D(0.891007, -0.453991, 0, 0.453991, 0.891007, 0, 0, 0, 1, -0.0254803, 0.345574, 1.11378e-09)
-mesh = SubResource("BoxMesh_xlp7x")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/Node3DInterior/Node3DControlConsole"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.237898, 0)
-shape = SubResource("BoxShape3D_x6j71")
-
-[node name="ControlStick" parent="Interior/Node3DInterior/Node3DControlConsole" instance=ExtResource("5_51deg")]
-transform = Transform3D(0.474611, 0.880196, 0, -0.880196, 0.474611, 0, 0, 0, 1, 0.00857186, 0.359963, 0.121063)
-
-[node name="AscentControl" parent="Interior/Node3DInterior/Node3DControlConsole" instance=ExtResource("6_8pn0w")]
-transform = Transform3D(-4.37114e-08, 0.880014, 0.474948, 0, 0.474948, -0.880014, -1, -3.84666e-08, -2.07607e-08, 0.00800002, 0.361, -0.0379669)
-
-[node name="Button" parent="Interior/Node3DInterior/Node3DControlConsole" instance=ExtResource("7_ebixw")]
-transform = Transform3D(0.226108, 0.445954, 0, -0.445954, 0.226108, 0, 0, 0, 0.5, 0.0213453, 0.368571, -0.159815)
-
-[node name="ScreenButtonPanel" type="StaticBody3D" parent="Interior/Node3DInterior"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.392982, 0, -0.51374)
-collision_layer = 2
-collision_mask = 2
-
-[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/Node3DInterior/ScreenButtonPanel"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("BoxMesh_0yeuf")
-skeleton = NodePath("../../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/Node3DInterior/ScreenButtonPanel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024826, 0, 0)
-shape = SubResource("BoxShape3D_whfks")
-
-[node name="CamLightButton" type="StaticBody3D" parent="Interior/Node3DInterior/ScreenButtonPanel" groups=["interactable"]]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.0513291, -2.24367e-09, 0)
-collision_layer = 8
-collision_mask = 8
-script = ExtResource("8_s51yn")
-
-[node name="MeshInstanceBase" type="MeshInstance3D" parent="Interior/Node3DInterior/ScreenButtonPanel/CamLightButton"]
-mesh = SubResource("CylinderMesh_nofn3")
-
-[node name="MeshInstanceButton" type="MeshInstance3D" parent="Interior/Node3DInterior/ScreenButtonPanel/CamLightButton"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
-mesh = SubResource("CylinderMesh_y5jo7")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/Node3DInterior/ScreenButtonPanel/CamLightButton"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
-shape = SubResource("CylinderShape3D_tm4yu")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Interior/Node3DInterior/ScreenButtonPanel/CamLightButton"]
-libraries = {
-"": SubResource("AnimationLibrary_ka5ia")
-}
-
-[node name="NextCam_Button" parent="Interior/Node3DInterior/ScreenButtonPanel" instance=ExtResource("7_ebixw")]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.0513291, -2.24367e-09, 0.095367)
-script = ExtResource("9_lmccr")
-
-[node name="MeshInstanceBase" parent="Interior/Node3DInterior/ScreenButtonPanel/NextCam_Button" index="0"]
-mesh = SubResource("CylinderMesh_1sye5")
-
-[node name="MeshInstanceButton" parent="Interior/Node3DInterior/ScreenButtonPanel/NextCam_Button" index="1"]
-mesh = SubResource("CylinderMesh_lwh3m")
-
-[node name="PrevioustCam_Button2" type="StaticBody3D" parent="Interior/Node3DInterior/ScreenButtonPanel" groups=["interactable"]]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.051, 0, -0.095)
-collision_layer = 8
-collision_mask = 8
-script = ExtResource("10_tj3o4")
-
-[node name="MeshInstanceBase" type="MeshInstance3D" parent="Interior/Node3DInterior/ScreenButtonPanel/PrevioustCam_Button2"]
-mesh = SubResource("CylinderMesh_lxj3d")
-
-[node name="MeshInstanceButton" type="MeshInstance3D" parent="Interior/Node3DInterior/ScreenButtonPanel/PrevioustCam_Button2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
-mesh = SubResource("CylinderMesh_et26b")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/Node3DInterior/ScreenButtonPanel/PrevioustCam_Button2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
-shape = SubResource("CylinderShape3D_tm4yu")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Interior/Node3DInterior/ScreenButtonPanel/PrevioustCam_Button2"]
-libraries = {
-"": SubResource("AnimationLibrary_ka5ia")
-}
-
-[node name="Screen" parent="Interior/Node3DInterior" instance=ExtResource("5_s7gew")]
-transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, -2.11367e-08, 0, -0.483552)
-
-[node name="Node3DCameras" parent="Interior/Node3DInterior/Screen/SubViewport" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.967103, 0, 2.4869e-14)
-
-[node name="Camera3DPort" parent="Interior/Node3DInterior/Screen/SubViewport/Node3DCameras" index="0"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.01, 0, 0)
-
-[node name="Camera3DStarboard" parent="Interior/Node3DInterior/Screen/SubViewport/Node3DCameras" index="1"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.10028, 0, 4.38336e-09)
-
-[node name="Camera3DStern" parent="Interior/Node3DInterior/Screen/SubViewport/Node3DCameras" index="2"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.970696, 0, 3.11236)
-
-[node name="Camera3DFloor" parent="Interior/Node3DInterior/Screen/SubViewport/Node3DCameras" index="3"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.971, -1.03799, 4.53718e-08)
-
-[node name="Camera3DRoof" parent="Interior/Node3DInterior/Screen/SubViewport/Node3DCameras" index="4"]
-transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -0.971, 1.038, 0)
-
-[node name="SonarScreen" parent="Interior/Node3DInterior" instance=ExtResource("6_8w5aq")]
-transform = Transform3D(-2.18557e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.18557e-08, 0, 0, 0.4835)
-
 [node name="CollisionShapeFloor" type="CollisionShape3D" parent="Interior"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1.05437, 0)
 shape = SubResource("BoxShape3D_8dfk3")
@@ -649,6 +718,170 @@ shape = SubResource("BoxShape3D_8dfk3")
 transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, -1.058)
 shape = SubResource("BoxShape3D_8dfk3")
 
+[node name="Node3DControlConsole" type="StaticBody3D" parent="Interior"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -1.66931, -0.970406, 7.2968e-08)
+collision_layer = 2
+collision_mask = 2
+
+[node name="MeshInstanceConsolePost" type="MeshInstance3D" parent="Interior/Node3DControlConsole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000600696, 0.134641, -2.62581e-11)
+mesh = SubResource("BoxMesh_bklx0")
+
+[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/Node3DControlConsole"]
+transform = Transform3D(0.891007, -0.453991, 0, 0.453991, 0.891007, 0, 0, 0, 1, -0.0254803, 0.345574, 1.11378e-09)
+mesh = SubResource("BoxMesh_xlp7x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/Node3DControlConsole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.237898, 0)
+shape = SubResource("BoxShape3D_x6j71")
+
+[node name="ControlStick" parent="Interior/Node3DControlConsole" instance=ExtResource("5_51deg")]
+transform = Transform3D(0.474611, 0.880196, 0, -0.880196, 0.474611, 0, 0, 0, 1, 0.00857186, 0.359963, 0.121063)
+
+[node name="AscentControl" parent="Interior/Node3DControlConsole" instance=ExtResource("6_8pn0w")]
+transform = Transform3D(-4.37114e-08, 0.880014, 0.474948, 0, 0.474948, -0.880014, -1, -3.84666e-08, -2.07607e-08, 0.00800002, 0.361, -0.0379669)
+
+[node name="Button" parent="Interior/Node3DControlConsole" instance=ExtResource("7_ebixw")]
+transform = Transform3D(0.226108, 0.445954, 0, -0.445954, 0.226108, 0, 0, 0, 0.5, 0.0213453, 0.368571, -0.159815)
+
+[node name="ScreenButtonPanel" type="StaticBody3D" parent="Interior"]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -0.785964, 0, -1.02748)
+collision_layer = 2
+collision_mask = 2
+
+[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/ScreenButtonPanel"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_0yeuf")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/ScreenButtonPanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024826, 0, 0)
+shape = SubResource("BoxShape3D_whfks")
+
+[node name="CamLightButton" type="StaticBody3D" parent="Interior/ScreenButtonPanel" groups=["interactable"]]
+transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.0513291, -2.24367e-09, 0)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("8_s51yn")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Interior/ScreenButtonPanel/CamLightButton"]
+mesh = SubResource("CylinderMesh_nofn3")
+
+[node name="MeshInstanceButton" type="MeshInstance3D" parent="Interior/ScreenButtonPanel/CamLightButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
+mesh = SubResource("CylinderMesh_y5jo7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/ScreenButtonPanel/CamLightButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
+shape = SubResource("CylinderShape3D_tm4yu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interior/ScreenButtonPanel/CamLightButton"]
+libraries = {
+"": SubResource("AnimationLibrary_ka5ia")
+}
+
+[node name="NextCam_Button" parent="Interior/ScreenButtonPanel" instance=ExtResource("7_ebixw")]
+transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.0513291, -2.24367e-09, 0.095367)
+script = ExtResource("9_lmccr")
+
+[node name="MeshInstanceBase" parent="Interior/ScreenButtonPanel/NextCam_Button" index="0"]
+mesh = SubResource("CylinderMesh_1sye5")
+
+[node name="MeshInstanceButton" parent="Interior/ScreenButtonPanel/NextCam_Button" index="1"]
+mesh = SubResource("CylinderMesh_lwh3m")
+
+[node name="PrevioustCam_Button" type="StaticBody3D" parent="Interior/ScreenButtonPanel" groups=["interactable"]]
+transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.051, 0, -0.095)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("10_tj3o4")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Interior/ScreenButtonPanel/PrevioustCam_Button"]
+mesh = SubResource("CylinderMesh_lxj3d")
+
+[node name="MeshInstanceButton" type="MeshInstance3D" parent="Interior/ScreenButtonPanel/PrevioustCam_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
+mesh = SubResource("CylinderMesh_et26b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/ScreenButtonPanel/PrevioustCam_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
+shape = SubResource("CylinderShape3D_tm4yu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interior/ScreenButtonPanel/PrevioustCam_Button"]
+libraries = {
+"": SubResource("AnimationLibrary_ka5ia")
+}
+
+[node name="Screen" parent="Interior" instance=ExtResource("5_s7gew")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.22734e-08, 0, -0.967103)
+
+[node name="Node3DCameras" parent="Interior/Screen/SubViewport" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.967103, 0, 2.4869e-14)
+
+[node name="Camera3DPort" parent="Interior/Screen/SubViewport/Node3DCameras" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.01, 0, 0)
+
+[node name="Camera3DStarboard" parent="Interior/Screen/SubViewport/Node3DCameras" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.10028, 0, 4.38336e-09)
+
+[node name="Camera3DStern" parent="Interior/Screen/SubViewport/Node3DCameras" index="2"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.970696, 0, 3.11236)
+
+[node name="Camera3DFloor" parent="Interior/Screen/SubViewport/Node3DCameras" index="3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.971, -1.03799, 4.53718e-08)
+
+[node name="Camera3DRoof" parent="Interior/Screen/SubViewport/Node3DCameras" index="4"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -0.971, 1.038, 0)
+
+[node name="SonarScreen" parent="Interior" instance=ExtResource("6_8w5aq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0.967)
+
+[node name="SonarButtonPanel" type="StaticBody3D" parent="Interior"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -0.786, 0, 1.027)
+collision_layer = 2
+collision_mask = 2
+
+[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/SonarButtonPanel"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_0yeuf")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/SonarButtonPanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024826, 0, 0)
+shape = SubResource("BoxShape3D_whfks")
+
+[node name="NextView_Button" parent="Interior/SonarButtonPanel" instance=ExtResource("7_ebixw")]
+transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.051, 0, 0.075)
+script = ExtResource("13_757uo")
+
+[node name="MeshInstanceBase" parent="Interior/SonarButtonPanel/NextView_Button" index="0"]
+mesh = SubResource("CylinderMesh_2sw6d")
+
+[node name="MeshInstanceButton" parent="Interior/SonarButtonPanel/NextView_Button" index="1"]
+mesh = SubResource("CylinderMesh_ttd0f")
+
+[node name="PrevioustView_Button" type="StaticBody3D" parent="Interior/SonarButtonPanel" groups=["interactable"]]
+transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.051, 0, -0.075)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("14_hg5x1")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Interior/SonarButtonPanel/PrevioustView_Button"]
+mesh = SubResource("CylinderMesh_85hun")
+
+[node name="MeshInstanceButton" type="MeshInstance3D" parent="Interior/SonarButtonPanel/PrevioustView_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
+mesh = SubResource("CylinderMesh_d6cng")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/SonarButtonPanel/PrevioustView_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
+shape = SubResource("CylinderShape3D_tm4yu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interior/SonarButtonPanel/PrevioustView_Button"]
+libraries = {
+"": SubResource("AnimationLibrary_ka5ia")
+}
+
 [node name="Player" parent="." instance=ExtResource("5_hxsbj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)
 
@@ -658,15 +891,1381 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, -2.09996, -1.02865, 9.1792e-08)
 light_energy = 10.0
 shadow_enabled = true
-spot_range = 200.0
+spot_range = 400.0
 
 [node name="SpotLight3DHeadlight2" type="SpotLight3D" parent="Headlights"]
 transform = Transform3D(-4.37114e-08, 0.258819, 0.965926, 0, 0.965926, -0.258819, -1, -1.13133e-08, -4.2222e-08, -2.1, 1.029, 0)
 light_energy = 10.0
 shadow_enabled = true
-spot_range = 200.0
+spot_range = 400.0
 
 [node name="SonarCasts" type="Node3D" parent="."]
+visible = false
 
-[editable path="Interior/Node3DInterior/ScreenButtonPanel/NextCam_Button"]
-[editable path="Interior/Node3DInterior/Screen"]
+[node name="x" type="Node3D" parent="SonarCasts"]
+
+[node name="RayCast3D" type="RayCast3D" parent="SonarCasts/x"]
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D13" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -1, 7.45058e-08, 0, -7.45058e-08, -1, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z2" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z3" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z4" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z5" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z6" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z7" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z8" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z9" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z10" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z11" type="Node3D" parent="SonarCasts"]
+transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[editable path="Interior/ScreenButtonPanel/NextCam_Button"]
+[editable path="Interior/Screen"]
+[editable path="Interior/SonarButtonPanel/NextView_Button"]
