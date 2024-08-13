@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmugi8il1ln2l"]
+[gd_scene load_steps=9 format=3 uid="uid://cmugi8il1ln2l"]
 
 [ext_resource type="PackedScene" uid="uid://c22ahfk2dg3k6" path="res://scenes/entities/submarine.tscn" id="1_8jp3a"]
 [ext_resource type="Environment" uid="uid://d0hatdbql1sul" path="res://environments/cave_environment.tres" id="2_ysy44"]
 [ext_resource type="CylinderMesh" uid="uid://4vg0jktxep0t" path="res://assets/meshes/cave/cave_mesh.tres" id="3_n8g6l"]
 [ext_resource type="Material" uid="uid://bwnn2vmdsmpx8" path="res://materials/environment/cave_wall.tres" id="4_w7vti"]
+[ext_resource type="PackedScene" uid="uid://dkdkdm5lup5vo" path="res://assets/models/entities/eel/exports/eel.glb" id="5_uyfxm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x8ci7"]
 size = Vector3(1, 80, 200)
@@ -146,3 +147,6 @@ shape = SubResource("CylinderShape3D_hcj8o")
 transform = Transform3D(1, 2.98023e-08, 0, 0, 1, -1.49012e-08, 2.98023e-08, -2.98023e-08, 1, 0, 11.6306, 0)
 mesh = SubResource("CylinderMesh_3vat2")
 skeleton = NodePath("../..")
+
+[node name="eel" parent="." instance=ExtResource("5_uyfxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.66033, 0, -40.866)

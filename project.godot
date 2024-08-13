@@ -23,6 +23,10 @@ SystemGlobal="*res://src/globals/system_global.gd"
 
 window/stretch/aspect="expand"
 
+[filesystem]
+
+import/fbx/enabled=false
+
 [input]
 
 move_forward={
