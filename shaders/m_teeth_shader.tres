@@ -1,0 +1,84 @@
+[gd_resource type="VisualShader" load_steps=13 format=3 uid="uid://bdgn376mia3tv"]
+
+[ext_resource type="Texture2D" uid="uid://b43a137p8jgrd" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Base_color.png" id="1_l47ij"]
+[ext_resource type="Texture2D" uid="uid://cbtb88gkvegog" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Metallic.png" id="2_5ld0a"]
+[ext_resource type="Texture2D" uid="uid://dvqoky1pqqv4r" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Opacity.png" id="3_jgvqm"]
+[ext_resource type="Texture2D" uid="uid://cg2sxqyq3531x" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Roughness.png" id="4_df6cb"]
+[ext_resource type="Texture2D" uid="uid://dgdfedxyeb001" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Mixed_AO.png" id="5_l704u"]
+[ext_resource type="Texture2D" uid="uid://d3q8ovha572uq" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Normal_OpenGL.png" id="6_53vbv"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_csokq"]
+texture = ExtResource("1_l47ij")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_ig0o0"]
+texture = ExtResource("2_5ld0a")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_2rup7"]
+texture = ExtResource("3_jgvqm")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_s5d4f"]
+texture = ExtResource("4_df6cb")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_ouxk5"]
+texture = ExtResource("5_l704u")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_r8ljj"]
+texture = ExtResource("6_53vbv")
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D tex_frg_2;
+uniform sampler2D tex_frg_3;
+uniform sampler2D tex_frg_5;
+uniform sampler2D tex_frg_6;
+uniform sampler2D tex_frg_7;
+
+
+
+void fragment() {
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, UV);
+
+
+// Texture2D:3
+	vec4 n_out3p0 = texture(tex_frg_3, UV);
+
+
+// Texture2D:5
+	vec4 n_out5p0 = texture(tex_frg_5, UV);
+
+
+// Texture2D:6
+	vec4 n_out6p0 = texture(tex_frg_6, UV);
+
+
+// Texture2D:7
+	vec4 n_out7p0 = texture(tex_frg_7, UV);
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+	METALLIC = n_out3p0.x;
+	ROUGHNESS = n_out5p0.x;
+	AO = n_out6p0.x;
+	NORMAL = vec3(n_out7p0.xyz);
+
+
+}
+"
+graph_offset = Vector2(-193.033, 80.2183)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_csokq")
+nodes/fragment/2/position = Vector2(-40, 20)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_ig0o0")
+nodes/fragment/3/position = Vector2(-40, 500)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_2rup7")
+nodes/fragment/4/position = Vector2(-40, 260)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture_s5d4f")
+nodes/fragment/5/position = Vector2(-40, 740)
+nodes/fragment/6/node = SubResource("VisualShaderNodeTexture_ouxk5")
+nodes/fragment/6/position = Vector2(-40, 980)
+nodes/fragment/7/node = SubResource("VisualShaderNodeTexture_r8ljj")
+nodes/fragment/7/position = Vector2(-40, 1220)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 3, 0, 0, 2, 5, 0, 0, 3, 6, 0, 0, 6, 7, 0, 0, 8)

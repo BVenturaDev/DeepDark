@@ -1,0 +1,23 @@
+[gd_resource type="StandardMaterial3D" load_steps=7 format=3 uid="uid://cus1by3k00xvd"]
+
+[ext_resource type="Texture2D" uid="uid://cpg74qkiejqbh" path="res://assets/models/entities/eel/exports/textures/gills/M_Gills_Base_color.png" id="1_tmsjo"]
+[ext_resource type="Texture2D" uid="uid://dsfj0ap2t6ndk" path="res://assets/models/entities/eel/exports/textures/gills/M_Gills_Height.png" id="2_fryhx"]
+[ext_resource type="Texture2D" uid="uid://cisgsj0slb6wg" path="res://assets/models/entities/eel/exports/textures/gills/M_Gills_Mixed_AO.png" id="2_tjcux"]
+[ext_resource type="Texture2D" uid="uid://c8b8m5beo2jr2" path="res://assets/models/entities/eel/exports/textures/gills/M_Gills_Metallic.png" id="3_q8rca"]
+[ext_resource type="Texture2D" uid="uid://cqiprem6ysrbf" path="res://assets/models/entities/eel/exports/textures/gills/M_Gills_Normal_OpenGL.png" id="4_hs8tm"]
+[ext_resource type="Texture2D" uid="uid://yejfnhf6q27i" path="res://assets/models/entities/eel/exports/textures/gills/M_Gills_Roughness.png" id="5_e1ilc"]
+
+[resource]
+albedo_texture = ExtResource("1_tmsjo")
+metallic = 1.0
+metallic_texture = ExtResource("3_q8rca")
+roughness_texture = ExtResource("5_e1ilc")
+normal_enabled = true
+normal_texture = ExtResource("4_hs8tm")
+ao_enabled = true
+ao_texture = ExtResource("2_tjcux")
+heightmap_scale = 1.0
+heightmap_flip_tangent = true
+heightmap_flip_binormal = true
+heightmap_texture = ExtResource("2_fryhx")
+heightmap_flip_texture = true

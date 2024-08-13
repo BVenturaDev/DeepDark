@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bo25jpiqxcdv2"]
+
+[ext_resource type="Shader" uid="uid://bdgn376mia3tv" path="res://shaders/m_teeth_shader.tres" id="1_s7623"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_s7623")

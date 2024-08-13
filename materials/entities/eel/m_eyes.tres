@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://ylkusbsfv7n5"]
+
+[ext_resource type="Texture2D" uid="uid://cvw3kfe7ue2c1" path="res://assets/models/entities/eel/exports/textures/eyes/M_Eyes_Base_color.png" id="1_5wnk5"]
+[ext_resource type="Texture2D" uid="uid://bqht2ukxt431x" path="res://assets/models/entities/eel/exports/textures/eyes/M_Eyes_Mixed_AO.png" id="2_j0d26"]
+[ext_resource type="Texture2D" uid="uid://dvpmsq3e4wbxe" path="res://assets/models/entities/eel/exports/textures/eyes/M_Eyes_Metallic.png" id="3_7vkkd"]
+[ext_resource type="Texture2D" uid="uid://bictq048tltr3" path="res://assets/models/entities/eel/exports/textures/eyes/M_Eyes_Normal_OpenGL.png" id="4_iwf5q"]
+[ext_resource type="Texture2D" uid="uid://py8rnk7lat0t" path="res://assets/models/entities/eel/exports/textures/eyes/M_Eyes_Roughness.png" id="5_6ce8k"]
+
+[resource]
+albedo_texture = ExtResource("1_5wnk5")
+metallic = 1.0
+metallic_texture = ExtResource("3_7vkkd")
+roughness_texture = ExtResource("5_6ce8k")
+normal_enabled = true
+normal_texture = ExtResource("4_iwf5q")
+ao_enabled = true
+ao_texture = ExtResource("2_j0d26")
