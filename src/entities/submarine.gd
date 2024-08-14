@@ -1,10 +1,10 @@
 extends CharacterBody3D
 
-const SPEED = 2.0
+const SPEED = 1.0
 const ASCENT_SPEED = 1.5
-const STOP_SPEED = 1.0
+const STOP_SPEED = 1.5
 const TURN_SPEED = 0.5
-const MAX_SPEED = 20.0
+const MAX_SPEED = 15.0
 
 @onready var player = $Player
 @onready var headlights = $Headlights

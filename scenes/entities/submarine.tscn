@@ -887,14 +887,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.
 
 [node name="Headlights" type="Node3D" parent="."]
 
-[node name="SpotLight3DHeadlight" type="SpotLight3D" parent="Headlights"]
-transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, -2.09996, -1.02865, 9.1792e-08)
-light_energy = 10.0
-shadow_enabled = true
-spot_range = 400.0
-
 [node name="SpotLight3DHeadlight2" type="SpotLight3D" parent="Headlights"]
-transform = Transform3D(-4.37114e-08, 0.258819, 0.965926, 0, 0.965926, -0.258819, -1, -1.13133e-08, -4.2222e-08, -2.1, 1.029, 0)
+transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, -2.1, 1.029, 0)
 light_energy = 10.0
 shadow_enabled = true
 spot_range = 400.0

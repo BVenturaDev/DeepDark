@@ -34,7 +34,7 @@ func _activate_cam(in_cam_num):
 		# Turn on Camera
 		cameras[in_cam_num].current = true
 		# Set Label
-		label.text = camera_labels[in_cam_num]
+		label.text = "Camera:\n" + camera_labels[in_cam_num]
 
 func toggle_light():
 	if cameras[cam_num]:

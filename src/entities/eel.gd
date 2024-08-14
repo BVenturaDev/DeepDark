@@ -13,8 +13,8 @@ func _ready():
 func _process(delta):
 	if not anim.is_playing():
 		if track1:
-			anim.play("idle")
+			anim.play("swim")
 			track1 = false
 		else:
-			anim.play("idle_2")
+			anim.play("swim_2")
 			track1 = true
