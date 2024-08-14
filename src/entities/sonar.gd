@@ -4,6 +4,7 @@ extends Node3D
 @onready var sonar_shader = $SubViewport/ScreenControl/ColorRectSonar.material
 @onready var timer = $Timer
 @onready var label = $SubViewport/ScreenControl/Label
+@onready var sub_gui = $SubViewport/ScreenControl/Center/GUIScale
 
 var cur_pings = []
 var ping_distance = 20.0
@@ -43,19 +44,23 @@ func _ping_sonar():
 					sonar_shader.get("shader_parameter/blip_positions").append(Vector2(ping_pos.z, -ping_pos.x))
 
 func previous_view():
+	sub_gui.get_child(cur_view).visible = false
 	if cur_view == 0:
 		cur_view = view_angles.size() - 1
 	else:
 		cur_view -= 1
 	label.text = view_angles[cur_view]
+	sub_gui.get_child(cur_view).visible = true
 	_ping_sonar()
 
 func next_view():
+	sub_gui.get_child(cur_view).visible = false
 	if cur_view == view_angles.size() - 1:
 		cur_view = 0
 	else:
 		cur_view += 1
 	label.text = view_angles[cur_view]
+	sub_gui.get_child(cur_view).visible = true
 	_ping_sonar()
 
 func _input(event):

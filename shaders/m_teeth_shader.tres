@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=13 format=3 uid="uid://bdgn376mia3tv"]
+[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://bdgn376mia3tv"]
 
 [ext_resource type="Texture2D" uid="uid://b43a137p8jgrd" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Base_color.png" id="1_l47ij"]
 [ext_resource type="Texture2D" uid="uid://cbtb88gkvegog" path="res://assets/models/entities/eel/exports/textures/teeth/M_Teeth_Metallic.png" id="2_5ld0a"]
@@ -25,6 +25,10 @@ texture = ExtResource("5_l704u")
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_r8ljj"]
 texture = ExtResource("6_53vbv")
 
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_cckc7"]
+default_input_values = [0, 0.0, 1, 0.5]
+operator = 2
+
 [resource]
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
@@ -46,6 +50,11 @@ void fragment() {
 	vec4 n_out3p0 = texture(tex_frg_3, UV);
 
 
+// FloatOp:8
+	float n_in8p1 = 0.50000;
+	float n_out8p0 = n_out3p0.x * n_in8p1;
+
+
 // Texture2D:5
 	vec4 n_out5p0 = texture(tex_frg_5, UV);
 
@@ -60,7 +69,7 @@ void fragment() {
 
 // Output:0
 	ALBEDO = vec3(n_out2p0.xyz);
-	METALLIC = n_out3p0.x;
+	METALLIC = n_out8p0;
 	ROUGHNESS = n_out5p0.x;
 	AO = n_out6p0.x;
 	NORMAL = vec3(n_out7p0.xyz);
@@ -68,7 +77,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-193.033, 80.2183)
+nodes/fragment/0/position = Vector2(600, 140)
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_csokq")
 nodes/fragment/2/position = Vector2(-40, 20)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_ig0o0")
@@ -81,4 +90,6 @@ nodes/fragment/6/node = SubResource("VisualShaderNodeTexture_ouxk5")
 nodes/fragment/6/position = Vector2(-40, 980)
 nodes/fragment/7/node = SubResource("VisualShaderNodeTexture_r8ljj")
 nodes/fragment/7/position = Vector2(-40, 1220)
-nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 3, 0, 0, 2, 5, 0, 0, 3, 6, 0, 0, 6, 7, 0, 0, 8)
+nodes/fragment/8/node = SubResource("VisualShaderNodeFloatOp_cckc7")
+nodes/fragment/8/position = Vector2(240, 220)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 5, 0, 0, 3, 6, 0, 0, 6, 7, 0, 0, 8, 3, 0, 8, 0, 8, 0, 0, 2)
