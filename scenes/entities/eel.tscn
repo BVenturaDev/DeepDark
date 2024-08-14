@@ -41,7 +41,6 @@ bones/9/rotation = Quaternion(0.00389126, -0.000537706, -0.159591, 0.987176)
 bones/10/rotation = Quaternion(0.00521291, -7.05742e-05, -0.0867984, 0.996212)
 bones/11/rotation = Quaternion(-0.00188199, 8.94075e-19, 3.17364e-19, 0.999998)
 bones/12/rotation = Quaternion(0.703892, 1.23372e-18, -1.56604e-16, 0.710307)
-bones/12/scale = Vector3(1, 1, 1)
 bones/13/rotation = Quaternion(-0.692829, -8.59621e-08, 8.25916e-08, 0.721102)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(0.710833, 3.01255e-19, -1.57097e-16, 0.703361)
@@ -53,10 +52,8 @@ bones/18/scale = Vector3(1, 1, 1)
 bones/19/rotation = Quaternion(-0.697671, 2.58382e-18, 1.54942e-16, 0.716418)
 bones/20/rotation = Quaternion(0.709263, -8.40359e-08, -8.45507e-08, 0.704944)
 bones/21/rotation = Quaternion(-0.709219, -8.5418e-22, 1.56953e-16, 0.704989)
-bones/21/scale = Vector3(1, 1, 1)
 bones/22/rotation = Quaternion(0.705878, 2.45337e-18, -1.56584e-16, 0.708334)
 bones/23/rotation = Quaternion(-0.703465, 8.47257e-08, -8.38595e-08, 0.71073)
-bones/23/scale = Vector3(1, 1, 1)
 bones/24/rotation = Quaternion(0.706378, 4.92815e-18, 2.85624e-18, 0.707834)
 bones/25/rotation = Quaternion(-0.707272, 8.4274e-08, -8.43133e-08, 0.706942)
 bones/26/rotation = Quaternion(0.723343, 8.23127e-08, 8.62292e-08, 0.690489)
@@ -75,18 +72,18 @@ bones/34/scale = Vector3(0.337303, 0.337303, 0.337296)
 bones/35/scale = Vector3(1, 0.777617, 1)
 
 [node name="eel_teeth_bottom" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="0"]
-transform = Transform3D(0.999896, 0.00706119, 0.0112383, -4.42378e-08, -0.604864, 0.628494, -0.0144484, 0.48867, 0.777741, 1.97199e-06, 5.90808e-08, -1.51631e-08)
+transform = Transform3D(0.999896, 0.00706119, 0.0112383, -5.86845e-08, -0.604865, 0.628495, -0.0144484, 0.48867, 0.777741, 1.972e-06, 5.95464e-08, -1.48721e-08)
 
 [node name="eel_eyes" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="1"]
-transform = Transform3D(0.337268, -0.00487348, 7.567e-10, -1.4938e-08, 9.72301e-07, 0.337303, -0.00487348, -0.337268, -1.0021e-06, 1.97371e-06, -5.23869e-10, 1.03988e-07)
+transform = Transform3D(0.337268, -0.00487348, 1.10595e-09, -1.98099e-08, 6.70552e-07, 0.337304, -0.00487348, -0.337268, -1.30385e-06, 1.97371e-06, -3.49246e-10, 1.0342e-07)
 
 [node name="eel_teeth_top" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="2"]
-transform = Transform3D(0.999896, 2.09548e-09, 0.0144484, -4.42938e-08, 0.777635, -2.92063e-06, -0.0144484, -2.28733e-06, 0.999896, 1.97371e-06, -5.23869e-10, 1.03988e-07)
+transform = Transform3D(0.999896, 2.79397e-09, 0.0144484, -5.87288e-08, 0.777634, -2.02656e-06, -0.0144484, -2.98023e-06, 0.999896, 1.97371e-06, -3.49246e-10, 1.0342e-07)
 
 [node name="AnimationPlayer" parent="eel_mesh" index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_r7nns")
 }
-blend_times = [&"idle", &"idle", 1.0, &"idle", &"attack", 1.0, &"idle", &"default_pose", 1.0, &"idle", &"swim_2", 1.0, &"idle", &"swim", 1.0, &"idle", &"idle_2", 1.0, &"attack", &"idle", 1.0, &"attack", &"attack", 1.0, &"attack", &"default_pose", 1.0, &"attack", &"swim_2", 1.0, &"attack", &"swim", 1.0, &"attack", &"idle_2", 1.0, &"default_pose", &"idle", 1.0, &"default_pose", &"attack", 1.0, &"default_pose", &"default_pose", 1.0, &"default_pose", &"swim_2", 1.0, &"default_pose", &"swim", 1.0, &"default_pose", &"idle_2", 1.0, &"swim_2", &"idle", 1.0, &"swim_2", &"attack", 1.0, &"swim_2", &"default_pose", 1.0, &"swim_2", &"swim_2", 0.75, &"swim_2", &"swim", 0.75, &"swim_2", &"idle_2", 1.0, &"swim", &"idle", 1.0, &"swim", &"attack", 1.0, &"swim", &"default_pose", 1.0, &"swim", &"swim_2", 0.75, &"swim", &"swim", 0.75, &"swim", &"idle_2", 1.0, &"idle_2", &"idle", 1.0, &"idle_2", &"attack", 1.0, &"idle_2", &"default_pose", 1.0, &"idle_2", &"swim_2", 1.0, &"idle_2", &"swim", 1.0, &"idle_2", &"idle_2", 1.0]
+blend_times = [&"swim", &"swim", 0.75, &"swim", &"attack", 1.0, &"swim", &"default_pose", 1.0, &"swim", &"swim_2", 0.75, &"swim", &"idle_2", 1.0, &"swim", &"idle", 1.0, &"attack", &"swim", 1.0, &"attack", &"attack", 1.0, &"attack", &"default_pose", 1.0, &"attack", &"swim_2", 1.0, &"attack", &"idle_2", 1.0, &"attack", &"idle", 1.0, &"default_pose", &"swim", 1.0, &"default_pose", &"attack", 1.0, &"default_pose", &"default_pose", 1.0, &"default_pose", &"swim_2", 1.0, &"default_pose", &"idle_2", 1.0, &"default_pose", &"idle", 1.0, &"swim_2", &"swim", 0.75, &"swim_2", &"attack", 1.0, &"swim_2", &"default_pose", 1.0, &"swim_2", &"swim_2", 0.75, &"swim_2", &"idle_2", 1.0, &"swim_2", &"idle", 1.0, &"idle_2", &"swim", 1.0, &"idle_2", &"attack", 1.0, &"idle_2", &"default_pose", 1.0, &"idle_2", &"swim_2", 1.0, &"idle_2", &"idle_2", 1.0, &"idle_2", &"idle", 1.0, &"idle", &"swim", 1.0, &"idle", &"attack", 1.0, &"idle", &"default_pose", 1.0, &"idle", &"swim_2", 1.0, &"idle", &"idle_2", 1.0, &"idle", &"idle", 1.0]
 
 [editable path="eel_mesh"]
