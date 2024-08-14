@@ -656,6 +656,7 @@ height = 0.02
 
 [node name="Submarine" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+collision_mask = 17
 floor_stop_on_slope = false
 platform_floor_layers = 4294967042
 platform_wall_layers = 2
