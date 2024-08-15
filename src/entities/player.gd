@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var water = $Water
 @onready var anim = $Water/AnimationPlayer
 @onready var lose_label = $Water/LoseLabel
+@onready var light = $Camera3D/SpotLight3D
 
 const SPEED = 150.0
 const STOP_SPEED = 50.0
@@ -89,6 +90,8 @@ func _input(event):
 			mouse_clicked = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 			mouse_drag_coords = get_viewport().get_mouse_position()
+			if last_target and last_target.has_method("hold_button"):
+				last_target.hold_button()
 		elif Input.is_action_just_released("click"):
 			mouse_clicked = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -96,6 +99,8 @@ func _input(event):
 				last_target.tilt_controller(Vector2())
 			elif last_target and last_target.has_method("press_button"):
 				last_target.press_button()
+			if last_target and last_target.has_method("release_button"):
+				last_target.release_button()
 		# Handle Mouse Move
 		if event is InputEventMouseMotion and mouse_mode and not mouse_clicked:
 			rotation.y -= event.relative.x * mouse_sens
@@ -124,6 +129,12 @@ func _input(event):
 				no_clip = true
 				col.disabled = true
 		
+		if event.is_action_pressed("find_eel") and SystemGlobal.DEBUG_MODE and no_clip:
+			if SystemGlobal.eels:
+				global_position = SystemGlobal.eels[0].global_position
+		
+		if event.is_action_pressed("no_clip_light") and SystemGlobal.DEBUG_MODE and no_clip:
+			light.visible = !light.visible
 		# Escape Key Changes Mouse Mode
 		if event.is_action_pressed("ui_escape"):
 			if mouse_mode:

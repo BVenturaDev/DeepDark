@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=78 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://src/entities/buttons/prevcam_button.gd" id="10_tj3o4"]
 [ext_resource type="Script" path="res://src/entities/buttons/nextview_button.gd" id="13_757uo"]
 [ext_resource type="Script" path="res://src/entities/buttons/prevview_button.gd" id="14_hg5x1"]
+[ext_resource type="PackedScene" uid="uid://dqt4kqokshrvb" path="res://scenes/entities/engine.tscn" id="15_02jxa"]
 [ext_resource type="Material" uid="uid://bncivlph843gf" path="res://materials/entities/submarine/sub_water.tres" id="16_4flog"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
@@ -895,7 +896,7 @@ libraries = {
 "": SubResource("AnimationLibrary_ka5ia")
 }
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Interior"]
+[node name="Engine" parent="Interior" instance=ExtResource("15_02jxa")]
 
 [node name="Player" parent="." instance=ExtResource("5_hxsbj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)

@@ -27,6 +27,7 @@ var is_in_aggro_range = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	SystemGlobal.eels.append(self)
 	timer.connect("timeout", _on_timer_timeout)
 	nav_timer.connect("timeout", _on_nav_timer_timeout)
 
@@ -104,7 +105,7 @@ func _process(delta):
 		if is_hunting and SystemGlobal.sub and not just_attacked:
 			swim_target = SystemGlobal.sub.global_position
 		velocity = (global_position.direction_to(swim_target) * SPEED * delta)
-		velocity += offset_dir * 1.0 * delta
+		velocity += offset_dir * 10.0 * delta
 		_has_arrived_at_target()
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED * delta)
@@ -124,7 +125,7 @@ func _navcast():
 				var cast_dist = (global_position - cast.get_collision_point()).length()
 				if cast_dist > dist:
 					dist = cast_dist
-					offset_dir = (global_position - cast.get_collision_point()).normalized()
+					offset_dir = -(global_position - cast.get_collision_point()).normalized()
 	
 func _on_timer_timeout():
 	if is_hunting and SystemGlobal.sub:
@@ -145,5 +146,6 @@ func _on_animation_player_animation_finished(anim_name):
 func _on_area_3d_body_entered(body):
 	if body == SystemGlobal.sub and is_hunting and not just_attacked:
 		_attack()
+	#elif velocity.length() < 1.0:
 	else:
 		go_to_random_location(SWIM_DISTANCE)

@@ -173,6 +173,11 @@ current = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 collision_mask = 8
 
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D"]
+visible = false
+light_energy = 10.0
+spot_range = 400.0
+
 [node name="Water" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15

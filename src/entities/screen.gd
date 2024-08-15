@@ -9,14 +9,15 @@ var is_light_on = false
 @onready var label = $SubViewport/ScreenControl/Label
 
 func _ready():
-	SystemGlobal.screen = self
-	
-	# Setup Screen
-	$MeshInstanceScreen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
-	
-	# Activate Cameras
-	cameras.append_array($SubViewport/Node3DCameras.get_children())
-	_activate_cam(0)
+	if not Engine.is_editor_hint():
+		SystemGlobal.screen = self
+		
+		# Setup Screen
+		$MeshInstanceScreen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
+		
+		# Activate Cameras
+		cameras.append_array($SubViewport/Node3DCameras.get_children())
+		_activate_cam(0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

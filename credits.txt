@@ -7,3 +7,5 @@ https://godotshaders.com/shader/pixel-perfect-outline-shader/
 https://github.com/godot-jolt/godot-jolt
 
 https://www.youtube.com/watch?v=0MHY2TDeMLM
+
+https://godotshaders.com/shader/water-shader/

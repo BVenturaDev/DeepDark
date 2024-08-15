@@ -39,7 +39,7 @@ func _calc_leaks(delta):
 	if leaks > 0:
 		water_level += WATER_SPEED * leaks * delta
 	elif water_level > 0.0:
-		water_level -= WATER_SPEED * leaks * delta
+		water_level -= WATER_SPEED * delta
 	water_level = clampf(water_level, 0.0, 1.0)
 	water.position.y = (WATER_HEIGHT * water_level) - 1.0
 		
@@ -83,7 +83,7 @@ func _physics_process(delta):
 	
 	velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
 	velocity.z = clampf(velocity.z, -MAX_SPEED, MAX_SPEED)
-	velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
+	velocity.y = clampf(velocity.y, -MAX_SPEED / 2.0, MAX_SPEED / 2.0)
 	move_and_slide()
 
 func _input(event):

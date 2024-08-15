@@ -28,7 +28,7 @@ void fragment()
 [sub_resource type="ViewportTexture" id="ViewportTexture_0fsin"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5p4e7"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_17i03"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_775js")
@@ -36,7 +36,7 @@ shader_parameter/screen_tex = SubResource("ViewportTexture_0fsin")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_y7p4j"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_5p4e7")
+material = SubResource("ShaderMaterial_17i03")
 size = Vector2(0.7, 0.95)
 
 [node name="SonarScreen" type="Node3D"]
