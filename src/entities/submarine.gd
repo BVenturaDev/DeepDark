@@ -5,20 +5,44 @@ const ASCENT_SPEED = 0.5
 const STOP_SPEED = 1.5
 const TURN_SPEED = 0.5
 const MAX_SPEED = 10.0
+const WATER_HEIGHT = 2.0
+const WATER_SPEED = 0.025
+const SINK_SPEED = 5.0
 
 @onready var player = $Player
 @onready var headlights = $Headlights
 @onready var eel_timer = $Eel_Update_Timer
+@onready var water = $Water
 
 var input_dir = Vector2()
 var ascent_normal = 0.0
 
 var eels_in_range = []
 
+var leaks = 0.0
+var water_level = 0.0
+
 func _ready():
 	SystemGlobal.sub = self
 	SystemGlobal.sonar_casts = $SonarCasts
 
+func _calc_leaks(delta):
+	if water_level > 0:
+		if water_level >= 0.59:
+			SystemGlobal.player.is_under_water = true
+		else:
+			SystemGlobal.player.is_under_water = false
+		water.visible = true
+	else:
+		water.visible = false
+	
+	if leaks > 0:
+		water_level += WATER_SPEED * leaks * delta
+	elif water_level > 0.0:
+		water_level -= WATER_SPEED * leaks * delta
+	water_level = clampf(water_level, 0.0, 1.0)
+	water.position.y = (WATER_HEIGHT * water_level) - 1.0
+		
 func _physics_process(delta):
 	if SystemGlobal.DEBUG_MODE:
 		if Input.is_action_pressed("sub_left"):
@@ -36,6 +60,8 @@ func _physics_process(delta):
 		if Input.is_action_pressed("sub_up"):
 			velocity += transform.basis.y * ASCENT_SPEED * delta
 	
+	_calc_leaks(delta)
+	
 	if is_on_ceiling():
 		velocity.z = -0.1
 	
@@ -51,10 +77,13 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, STOP_SPEED * delta)
 		velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)
 		velocity.z = move_toward(velocity.z, 0, STOP_SPEED * delta)
-		
+	
+	if water_level > 0:
+		velocity.y += -SINK_SPEED * water_level * delta
+	
 	velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
-	velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
 	velocity.z = clampf(velocity.z, -MAX_SPEED, MAX_SPEED)
+	velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
 	move_and_slide()
 
 func _input(event):

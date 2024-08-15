@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=77 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://src/entities/buttons/prevcam_button.gd" id="10_tj3o4"]
 [ext_resource type="Script" path="res://src/entities/buttons/nextview_button.gd" id="13_757uo"]
 [ext_resource type="Script" path="res://src/entities/buttons/prevview_button.gd" id="14_hg5x1"]
+[ext_resource type="Material" uid="uid://bncivlph843gf" path="res://materials/entities/submarine/sub_water.tres" id="16_4flog"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
 material = ExtResource("1_e21wt")
@@ -660,6 +661,10 @@ radius = 100.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_tq4ii"]
 radius = 20.0
 
+[sub_resource type="QuadMesh" id="QuadMesh_vw7sp"]
+material = ExtResource("16_4flog")
+size = Vector2(3.99, 2)
+
 [node name="Submarine" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 collision_layer = 17
@@ -889,6 +894,8 @@ shape = SubResource("CylinderShape3D_tm4yu")
 libraries = {
 "": SubResource("AnimationLibrary_ka5ia")
 }
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Interior"]
 
 [node name="Player" parent="." instance=ExtResource("5_hxsbj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)
@@ -2285,6 +2292,11 @@ shape = SubResource("SphereShape3D_tq4ii")
 [node name="Eel_Update_Timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1, 0)
+visible = false
+mesh = SubResource("QuadMesh_vw7sp")
 
 [connection signal="body_entered" from="LightArea3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="LightArea3D" to="." method="_on_area_3d_body_exited"]

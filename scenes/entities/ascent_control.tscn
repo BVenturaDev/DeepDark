@@ -49,7 +49,7 @@ material = SubResource("StandardMaterial3D_mqw5p")
 size = Vector3(0.1, 0.05, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5pauc"]
-size = Vector3(0.25, 0.3, 0.25)
+size = Vector3(0.15, 0.2, 0.15)
 
 [sub_resource type="Shader" id="Shader_42uym"]
 code = "shader_type spatial;
@@ -289,7 +289,7 @@ script = ExtResource("1_ob4be")
 mesh = SubResource("BoxMesh_asdoo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.112705, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0215375, 0)
 shape = SubResource("BoxShape3D_5pauc")
 
 [node name="TiltControl" type="Node3D" parent="."]

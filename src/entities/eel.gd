@@ -83,7 +83,10 @@ func _has_arrived_at_target():
 
 func _attack():
 	print ("Attack")
+	just_attacked = true
 	set_anim_state(2)
+	if SystemGlobal.sub:
+		SystemGlobal.sub.leaks += 1.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -136,7 +139,6 @@ func _on_nav_timer_timeout():
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "attack":
 		is_hunting = false
-		just_attacked = true
 		go_to_random_location(ATTACK_SWIM_DISTANCE)
 
 

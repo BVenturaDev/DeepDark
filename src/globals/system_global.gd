@@ -6,3 +6,4 @@ var sub
 var sonar
 var sonar_casts
 var screen
+var player

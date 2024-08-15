@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bncivlph843gf"]
+
+[ext_resource type="Shader" path="res://shaders/sub_water.gdshader" id="1_vseng"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vseng")
+shader_parameter/albedo = Color(0.103082, 0.399339, 0.596799, 1)
+shader_parameter/albedo2 = Color(0.258379, 0.475388, 0.567211, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 1.0
+shader_parameter/wave_direction = Vector2(2, 0)
+shader_parameter/wave_direction2 = Vector2(0, 1)
+shader_parameter/time_scale = 0.025
+shader_parameter/noise_scale = 10.0
+shader_parameter/height_scale = 0.15
+shader_parameter/color_deep = Color(0.123109, 0.521958, 0.643972, 1)
+shader_parameter/color_shallow = Color(0.273916, 0.657258, 0.735252, 1)
+shader_parameter/beers_law = 2.0
+shader_parameter/depth_offset = -0.75
+shader_parameter/edge_scale = 0.25
+shader_parameter/near = 1.0
+shader_parameter/far = 100.0
+shader_parameter/edge_color = Color(0.886909, 0.950341, 0.988601, 1)
