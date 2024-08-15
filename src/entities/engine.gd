@@ -16,8 +16,8 @@ func release_button():
 
 func _physics_process(delta):
 	if SystemGlobal.sub:
-		label.text = "Leaks: " + str(snapped(SystemGlobal.sub.leaks, 0.01))
-	
+		label.text = "Leaks: " + str(snapped(SystemGlobal.sub.leaks, 0.01)) + "\nFlood: " + str(snapped(SystemGlobal.sub.water_level * 100, 0.1)) + "%"
+		
 	if SystemGlobal.sub and held_button:
 		if SystemGlobal.sub.leaks > 0:
 			SystemGlobal.sub.leaks -= REPAIR_SPEED * delta

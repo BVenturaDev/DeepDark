@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 const SPEED = 200.0
-const TURN_SPEED = 1.0
+const TURN_SPEED = 2.0
 const MAX_SPEED = 200.0
 const SWIM_DISTANCE = 40.0
 const ATTACK_SWIM_DISTANCE = 100.0
@@ -35,11 +35,11 @@ func go_to_random_location(distance):
 	var has_target = false
 	while not has_target:
 		var new_pos = Vector3()
-		new_pos.x = randf_range(global_position.x - distance, global_position.x + SWIM_DISTANCE)
-		new_pos.y = randf_range(global_position.y - distance, global_position.y + SWIM_DISTANCE)
-		new_pos.z = randf_range(global_position.z - distance, global_position.z + SWIM_DISTANCE)
+		new_pos.x = randf_range(global_position.x - distance, global_position.x + distance)
+		new_pos.y = randf_range(global_position.y - distance, global_position.y + distance)
+		new_pos.z = randf_range(global_position.z - distance, global_position.z + distance)
 		
-		nav.target_position = -(global_position - new_pos)
+		nav.target_position = -(nav.to_local(global_position) - nav.to_local(new_pos))
 		nav.force_raycast_update()
 		if not nav.is_colliding():
 			print(new_pos)
@@ -84,6 +84,7 @@ func _has_arrived_at_target():
 
 func _attack():
 	print ("Attack")
+	look_at(global_transform.origin + (global_position - swim_target).normalized(), Vector3.UP)
 	just_attacked = true
 	set_anim_state(2)
 	if SystemGlobal.sub:
@@ -93,7 +94,6 @@ func _attack():
 func _process(delta):
 	if not anim.is_playing():
 		_handle_anim_state()
-
 	
 	if (is_swimming or is_hunting) and swim_target != Vector3():
 		var tar_rot = Quaternion(basis.orthonormalized())
@@ -105,16 +105,26 @@ func _process(delta):
 		if is_hunting and SystemGlobal.sub and not just_attacked:
 			swim_target = SystemGlobal.sub.global_position
 		velocity = (global_position.direction_to(swim_target) * SPEED * delta)
-		velocity += offset_dir * 10.0 * delta
+		velocity += offset_dir * 50.0 * delta
 		_has_arrived_at_target()
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED * delta)
-		velocity.y = move_toward(velocity.y, 0, SPEED * delta)
-		velocity.z = move_toward(velocity.z, 0, SPEED * delta)
+		if not just_attacked:
+			velocity.x = move_toward(velocity.x, 0, SPEED * delta)
+			velocity.y = move_toward(velocity.y, 0, SPEED * delta)
+			velocity.z = move_toward(velocity.z, 0, SPEED * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED * 10.0 * delta)
+			velocity.y = move_toward(velocity.y, 0, SPEED * 10.0 * delta)
+			velocity.z = move_toward(velocity.z, 0, SPEED * 10.0 * delta)
 		
-	velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
-	velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
-	velocity.z = clampf(velocity.z, -MAX_SPEED, MAX_SPEED)
+	if not just_attacked:
+		velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
+		velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
+		velocity.z = clampf(velocity.z, -MAX_SPEED, MAX_SPEED)
+	else:
+		velocity.x = clampf(velocity.x, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
+		velocity.y = clampf(velocity.y, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
+		velocity.z = clampf(velocity.z, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
 	move_and_slide()
 
 func _navcast():
@@ -147,5 +157,5 @@ func _on_area_3d_body_entered(body):
 	if body == SystemGlobal.sub and is_hunting and not just_attacked:
 		_attack()
 	#elif velocity.length() < 1.0:
-	else:
-		go_to_random_location(SWIM_DISTANCE)
+	#elif not is_hunting:
+		#go_to_random_location(SWIM_DISTANCE)

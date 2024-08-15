@@ -657,7 +657,7 @@ bottom_radius = 0.04
 height = 0.02
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rymwy"]
-radius = 100.0
+radius = 200.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tq4ii"]
 radius = 20.0
@@ -910,7 +910,6 @@ shadow_enabled = true
 spot_range = 400.0
 
 [node name="SonarCasts" type="Node3D" parent="."]
-visible = false
 
 [node name="x" type="Node3D" parent="SonarCasts"]
 

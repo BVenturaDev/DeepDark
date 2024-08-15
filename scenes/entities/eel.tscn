@@ -25,9 +25,9 @@ _data = {
 radius = 0.73572
 height = 10.6717
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jfens"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0aoyy"]
 radius = 0.73572
-height = 10.6717
+height = 11.0541
 
 [node name="Eel" type="CharacterBody3D" groups=["eels"]]
 collision_layer = 133
@@ -163,7 +163,7 @@ enabled = false
 bone_name = "spine11"
 
 [node name="Jigglebone spine1_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="16"]
-transform = Transform3D(1, 3.25995e-06, 0.000286385, -3.26083e-06, 1.00001, 3.14087e-06, -0.000286384, -3.14182e-06, 1, 1, -0.0155668, -1.58754)
+transform = Transform3D(0.998941, -0.0303164, 0.0346025, 0.0303055, 0.999547, 0.000833072, -0.0346119, 0.000216458, 0.999401, 0.995767, 0.0449701, -1.6567)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine1_up"
@@ -171,7 +171,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine1_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="17"]
-transform = Transform3D(1, -3.58729e-06, -0.000315071, -3.58805e-06, -1.00001, -2.48419e-06, -0.000315071, 2.48533e-06, -1, 1, -0.0155668, -1.58754)
+transform = Transform3D(0.998941, 0.0303163, -0.0346024, 0.0303054, -0.999547, -0.000832417, -0.0346117, -0.000217106, -0.999401, 0.995767, 0.0449701, -1.6567)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine1_down"
@@ -179,7 +179,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine2_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="18"]
-transform = Transform3D(1, 2.05082e-08, 0.000302355, -2.1187e-08, 1.00001, 2.2454e-06, -0.000302355, -2.24542e-06, 1, 1, -0.0134305, -2.52092)
+transform = Transform3D(0.998941, -0.0303174, 0.0346006, 0.0303066, 0.999547, 0.000832152, -0.0346099, 0.000217354, 0.999401, 0.995767, 0.0471084, -2.59007)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine2_up"
@@ -187,7 +187,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine2_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="19"]
-transform = Transform3D(1, -2.09209e-08, -0.000306846, -2.16463e-08, -1.00001, -2.36461e-06, -0.000306846, 2.36463e-06, -1, 1, -0.0134305, -2.52092)
+transform = Transform3D(0.998941, 0.0303174, -0.0346006, 0.0303066, -0.999547, -0.000832274, -0.0346099, -0.000217234, -0.999401, 0.995767, 0.0471084, -2.59007)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine2_down"
@@ -195,7 +195,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine3_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="20"]
-transform = Transform3D(1, -1.27107e-05, -0.000257627, -3.97999e-06, 0.997912, -0.0646826, 0.000257909, 0.0646829, 0.997907, 1, 0.00325424, -3.43418)
+transform = Transform3D(0.998941, -0.0280187, 0.0364898, 0.0303096, 0.997506, -0.0638246, -0.0346103, 0.0648634, 0.997294, 0.995767, 0.0637988, -3.50335)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine3_up"
@@ -203,7 +203,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine3_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="21"]
-transform = Transform3D(1, 7.21666e-06, 0.000289632, -4.5199e-06, -0.999185, 0.0405018, 0.000289686, -0.040502, -0.99918, 1, 0.00325423, -3.43418)
+transform = Transform3D(0.998941, 0.0288925, -0.0357999, 0.0303081, -0.99876, 0.0396539, -0.0346096, -0.0406972, -0.998572, 0.995767, 0.063796, -3.50335)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine3_down"
@@ -211,7 +211,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine4_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="22"]
-transform = Transform3D(1, -6.52024e-06, 0.000303826, 2.04506e-05, 0.998953, -0.0458725, -0.000303207, 0.0458728, 0.998948, 1, 0.0442738, -4.28895)
+transform = Transform3D(0.998941, -0.0287032, 0.0359531, 0.0303115, 0.998532, -0.0450223, -0.0346078, 0.0460647, 0.998339, 0.995767, 0.104823, -4.35809)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine4_up"
@@ -219,7 +219,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine4_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="23"]
-transform = Transform3D(1, 5.71402e-06, -0.000297749, 1.98396e-05, -0.998879, 0.0474632, -0.000297142, -0.0474634, -0.998874, 1, 0.0442738, -4.28895)
+transform = Transform3D(0.998941, 0.0286378, -0.0360071, 0.0303038, -0.998459, 0.0466123, -0.0346165, -0.0476543, -0.998265, 0.995767, 0.104807, -4.35811)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine4_down"
@@ -227,7 +227,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine5_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="24"]
-transform = Transform3D(1, 3.71928e-05, 0.000290972, -2.15235e-05, 0.998565, -0.053667, -0.000292548, 0.0536673, 0.998559, 1, 0.0923217, -5.12844)
+transform = Transform3D(0.998941, -0.0284143, 0.0361816, 0.0303044, 0.99815, -0.0528136, -0.0346138, 0.0538544, 0.997949, 0.995767, 0.152856, -5.19759)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine5_up"
@@ -235,7 +235,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine5_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="25"]
-transform = Transform3D(1, -4.57277e-05, -0.000324095, -2.3783e-05, -0.997733, 0.0673893, -0.00032644, -0.0673896, -0.997728, 1, 0.0923217, -5.12844)
+transform = Transform3D(0.998941, 0.0279142, -0.0365687, 0.0303043, -0.99733, 0.0665302, -0.0346137, -0.0675683, -0.997115, 0.995767, 0.152856, -5.19759)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine5_down"
@@ -243,7 +243,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine6_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="26"]
-transform = Transform3D(1, 1.75484e-05, 0.00030125, -7.40392e-07, 0.998453, -0.0557034, -0.00030176, 0.0557037, 0.998448, 1, 0.135566, -5.99904)
+transform = Transform3D(0.998941, -0.0283383, 0.0362371, 0.0303021, 0.998041, -0.0548493, -0.0346115, 0.0558895, 0.997838, 0.995768, 0.196095, -6.06819)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine6_up"
@@ -251,7 +251,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine6_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="27"]
-transform = Transform3D(1, -1.39176e-05, -0.000302146, -7.22182e-07, -0.999054, 0.0436283, -0.000302466, -0.0436285, -0.999048, 1, 0.135566, -5.99904)
+transform = Transform3D(0.998941, 0.0287744, -0.0358921, 0.0303022, -0.998631, 0.0427792, -0.0346118, -0.0438217, -0.99844, 0.995768, 0.196095, -6.06819)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine6_down"
@@ -259,7 +259,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine7_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="28"]
-transform = Transform3D(1, 9.79199e-06, 0.000278633, 4.25425e-06, 0.998737, -0.0503666, -0.000278772, 0.0503668, 0.998731, 1, 0.178994, -6.92793)
+transform = Transform3D(0.998941, -0.0285297, 0.0360852, 0.0303002, 0.99832, -0.0495147, -0.0346117, 0.0505559, 0.998122, 0.995768, 0.239519, -6.99708)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine7_up"
@@ -267,7 +267,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine7_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="29"]
-transform = Transform3D(1, -1.64451e-05, -0.000283562, 4.34435e-06, -0.997326, 0.0731598, -0.000284005, -0.0731601, -0.997321, 1, 0.178994, -6.92793)
+transform = Transform3D(0.998941, 0.0276981, -0.0367272, 0.0303001, -0.996928, 0.0722986, -0.0346116, -0.0733352, -0.996707, 0.995768, 0.239519, -6.99708)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine7_down"
@@ -275,7 +275,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine8_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="30"]
-transform = Transform3D(1, -6.50204e-06, -0.000315513, -1.03101e-05, 0.998587, -0.0532558, 0.000315411, 0.0532561, 0.998582, 1, 0.231846, -7.9681)
+transform = Transform3D(0.998941, -0.0284319, 0.0361615, 0.0303066, 0.998172, -0.0524027, -0.0346052, 0.0534434, 0.997972, 0.995768, 0.292386, -8.03726)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine8_up"
@@ -283,7 +283,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine8_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="31"]
-transform = Transform3D(1, -1.05277e-05, -0.000299495, 9.68575e-06, -0.997731, 0.0674117, -0.000299523, -0.067412, -0.997726, 1, 0.231847, -7.96813)
+transform = Transform3D(0.998941, 0.0279011, -0.036575, 0.0302925, -0.997329, 0.0665528, -0.0346202, -0.0675906, -0.997113, 0.995767, 0.292357, -8.03729)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine8_down"
@@ -291,7 +291,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine9_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="32"]
-transform = Transform3D(1, 4.39022e-06, 0.000311736, 1.26393e-05, 0.998514, -0.0546068, -0.000311511, 0.0546071, 0.998508, 1, 0.279944, -9.05873)
+transform = Transform3D(0.998941, -0.028368, 0.0362132, 0.0302924, 0.9981, -0.0537532, -0.0346193, 0.0547936, 0.997898, 0.995768, 0.340456, -9.12793)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine9_up"
@@ -299,7 +299,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine9_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="33"]
-transform = Transform3D(1, 4.04349e-06, 0.000148627, -6.14013e-06, -0.99766, 0.0684543, 0.000148555, -0.0684546, -0.997655, 1, 0.279944, -9.05873)
+transform = Transform3D(0.998941, 0.027863, -0.0366036, 0.0302926, -0.997259, 0.067595, -0.0346196, -0.0686326, -0.997042, 0.995768, 0.340456, -9.12793)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine9_down"
@@ -307,7 +307,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine10_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="34"]
-transform = Transform3D(1, 2.78304e-06, -0.000300489, -1.2874e-05, 0.999442, -0.0335872, 0.000300226, 0.0335873, 0.999436, 1, 0.324719, -10.1074)
+transform = Transform3D(0.998942, -0.0291667, 0.0355646, 0.0303341, 0.999009, -0.0327424, -0.0345742, 0.0337867, 0.998831, 0.995769, 0.385314, -10.1765)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine10_up"
@@ -315,7 +315,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine10_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="35"]
-transform = Transform3D(1, 1.23239e-05, 0.000309697, -1.32862e-05, -0.996592, 0.0825581, 0.000309657, -0.0825585, -0.996587, 1, 0.324719, -10.1074)
+transform = Transform3D(0.998942, 0.0273877, -0.0369528, 0.0303342, -0.996202, 0.0816932, -0.0345749, -0.082728, -0.995973, 0.995769, 0.385314, -10.1765)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine10_down"
@@ -336,18 +336,18 @@ visible = false
 target_skeleton = NodePath("../../../eel_mesh/eel_armaturespine/Skeleton3D")
 
 [node name="Physical Bone head" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="5"]
-transform = Transform3D(1, -6.99837e-08, 6.07123e-06, 6.61888e-06, 0.130467, -0.991474, -8.70989e-07, 0.991454, 0.130469, 3.45402e-10, -0.000632964, -0.000136375)
+transform = Transform3D(1, -8.27568e-08, 5.96905e-06, 6.61888e-06, 0.130467, -0.991474, -8.70989e-07, 0.991454, 0.130469, 3.45402e-10, -0.000632964, -0.000136375)
 collision_layer = 36
 collision_mask = 20
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.45318e-10, -1.07655e-07, -1.50757e-08)
-body_offset = Transform3D(1, -6.99903e-08, -6.04791e-07, 3.29692e-12, 1, -8.79169e-07, -6.02185e-11, 8.79169e-07, 1, 3.45301e-10, 1.07655e-07, 1.50758e-08)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.45321e-10, -1.07655e-07, -1.50757e-08)
+body_offset = Transform3D(1, -8.27634e-08, -7.06976e-07, 3.29692e-12, 1, -8.79169e-07, -6.02185e-11, 8.79169e-07, 1, 3.45301e-10, 1.07655e-07, 1.50758e-08)
 
 [node name="Physical Bone jaw" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="6"]
-transform = Transform3D(1, -1.49396e-07, 3.57584e-06, 1.83934e-06, -0.857579, -0.514391, 3.06692e-06, 0.514385, -0.857559, -2.13415e-13, -0.000632933, -0.000136375)
+transform = Transform3D(1, -1.74942e-07, 3.57584e-06, 1.83934e-06, -0.857579, -0.514391, 3.06692e-06, 0.514385, -0.857559, -2.13415e-13, -0.000632933, -0.000136375)
 collision_layer = 36
 collision_mask = 20
-joint_offset = Transform3D(-3.61999e-06, 9.17733e-12, 1, 2.53518e-06, 1, 0, 1, -2.53518e-06, 3.61999e-06, 2.41207e-14, 3.92902e-09, -6.54836e-09)
-body_offset = Transform3D(1, -1.49386e-07, -4.46562e-10, -3.63798e-12, 1, 2.98023e-08, 9.09495e-13, -2.98023e-08, 1, -2.35367e-14, -3.92902e-09, 6.54836e-09)
+joint_offset = Transform3D(-3.61999e-06, 9.17733e-12, 1, 2.53518e-06, 1, 0, 1, -2.53518e-06, 3.61999e-06, 2.42211e-14, 3.92902e-09, -6.54836e-09)
+body_offset = Transform3D(1, -1.74932e-07, -4.46562e-10, -3.63798e-12, 1, 2.98023e-08, 9.09495e-13, -2.98023e-08, 1, -2.35367e-14, -3.92902e-09, 6.54836e-09)
 
 [node name="Physical Bone spine" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="7"]
 transform = Transform3D(0.999611, -2.52725e-07, -0.0238281, 0.000207035, 0.999024, 0.00867811, 0.0238268, -0.0086765, 0.998761, 0.0187884, -0.00861829, -0.778036)
@@ -370,11 +370,11 @@ body_offset = Transform3D(0.999995, 3.2792e-07, 7.567e-10, 1.31736e-07, 0.989586
 disabled = true
 
 [node name="Physical Bone spine3" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="9"]
-transform = Transform3D(1, -2.9785e-08, 6.07994e-09, 7.36132e-07, 0.0182681, 1.00057, -7.02919e-07, -1.00035, 0.0182596, 1.23492e-11, -0.0134323, -2.52091)
+transform = Transform3D(1, -2.9785e-08, 6.17973e-09, 7.36132e-07, 0.0182681, 1.00057, -7.02919e-07, -1.00035, 0.0182596, 1.23492e-11, -0.0134323, -2.52091)
 collision_layer = 36
 collision_mask = 20
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.81379e-11, -2.38295e-07, 7.44354e-09)
-body_offset = Transform3D(1, -2.9781e-08, 6.16041e-09, 7.1628e-07, 1.00052, 1.40518e-05, 7.23351e-07, -6.72787e-06, 1.00073, 1.81308e-11, 2.38419e-07, -7.45058e-09)
+body_offset = Transform3D(1, -2.9781e-08, 6.2602e-09, 7.1628e-07, 1.00052, 1.40518e-05, 7.23351e-07, -6.72787e-06, 1.00073, 1.81308e-11, 2.38419e-07, -7.45058e-09)
 
 [node name="Physical Bone spine4" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="10"]
 transform = Transform3D(1, -4.94538e-12, -7.94755e-11, -1.83988e-10, 0.047934, 0.998828, 3.20276e-11, -0.998834, 0.047928, -9.37916e-12, 0.00325182, -3.43419)
@@ -387,11 +387,11 @@ body_offset = Transform3D(1, 1.37265e-12, 7.83621e-13, 9.28511e-13, 0.999983, 2.
 disabled = true
 
 [node name="Physical Bone spine5" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="11"]
-transform = Transform3D(1, -1.75007e-11, -7.17586e-11, -1.8417e-10, 0.0571376, 0.998343, 3.29474e-11, -0.99834, 0.0571325, -1.47793e-11, 0.0442707, -4.28893)
+transform = Transform3D(1, -1.75007e-11, -7.01994e-11, -1.8417e-10, 0.0571376, 0.998343, 3.29474e-11, -0.99834, 0.0571325, -1.47793e-11, 0.0442707, -4.28893)
 collision_layer = 36
 collision_mask = 20
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38257e-15, 1.47264e-30, 8.30343e-30)
-body_offset = Transform3D(1, -1.04432e-11, 8.43889e-12, 1.06512e-15, 0.999974, 1.14366e-06, 6.00561e-15, -1.12504e-06, 0.999974, 1.38257e-15, 0, 0)
+body_offset = Transform3D(1, -1.04432e-11, 9.9981e-12, 1.06512e-15, 0.999974, 1.14366e-06, 6.00561e-15, -1.12504e-06, 0.999974, 1.38257e-15, 0, 0)
 
 [node name="Physical Bone spine6" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="12"]
 transform = Transform3D(1, 8.09928e-12, -8.19256e-11, -1.84154e-10, 0.0496088, 0.998759, 3.27915e-11, -0.998766, 0.0496049, -2.07194e-11, 0.092318, -5.12843)
@@ -411,28 +411,28 @@ joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55029e-14, 1.65278e-25, 
 body_offset = Transform3D(1, 3.46205e-12, 1.17546e-13, -4.65534e-12, 1, -2.83122e-07, -3.76661e-13, 0, 1, -3.55029e-14, 0, 0)
 
 [node name="Physical Bone spine8" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="14"]
-transform = Transform3D(1, -1.03278e-11, -6.19651e-11, -1.84209e-10, 0.0507442, 0.998715, 3.29475e-11, -0.998712, 0.0507392, -3.21165e-11, 0.178988, -6.92791)
+transform = Transform3D(1, -1.01329e-11, -5.88466e-11, -1.84209e-10, 0.0507442, 0.998715, 3.29475e-11, -0.998712, 0.0507392, -3.21165e-11, 0.178988, -6.92791)
 collision_layer = 36
 collision_mask = 20
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.33521e-15, -6.83568e-30, -2.1053e-28)
-body_offset = Transform3D(1, -3.78398e-12, 1.82781e-11, -1.079e-15, 1, 0, -3.32317e-14, 0, 1, 6.33521e-15, 0, 0)
+body_offset = Transform3D(1, -3.58907e-12, 2.13965e-11, -1.079e-15, 1, 0, -3.32317e-14, 0, 1, 6.33521e-15, 0, 0)
 
 [node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine8" index="0"]
 disabled = true
 
 [node name="Physical Bone spine9" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="15"]
-transform = Transform3D(1, -1.8531e-11, -8.95759e-11, -1.84175e-10, 0.0440528, 0.998991, 3.29479e-11, -0.998926, 0.044051, -3.89377e-11, 0.23184, -7.96811)
+transform = Transform3D(1, -1.8531e-11, -9.11351e-11, -1.84175e-10, 0.0440528, 0.998991, 3.29479e-11, -0.998926, 0.044051, -3.89377e-11, 0.23184, -7.96811)
 collision_layer = 36
 collision_mask = 20
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.29198e-16, 2.44558e-31, 7.26977e-31)
-body_offset = Transform3D(1, -1.2525e-11, -9.29413e-12, 2.94903e-16, 0.999897, -8.9407e-08, 8.76686e-16, -4.91738e-07, 0.999958, 8.29198e-16, 0, 0)
+body_offset = Transform3D(1, -1.2525e-11, -1.08533e-11, 2.94903e-16, 0.999897, -8.9407e-08, 8.76686e-16, -4.91738e-07, 0.999958, 8.29198e-16, 0, 0)
 
 [node name="Physical Bone spine10" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="16"]
-transform = Transform3D(1, -2.45981e-07, 1.08221e-09, 1.0289e-08, 0.042658, 0.999093, -2.45552e-07, -0.99912, 0.0426529, -4.52686e-11, 0.279938, -9.05876)
+transform = Transform3D(1, -2.45981e-07, 1.28179e-09, 1.0289e-08, 0.042658, 0.999093, -2.45552e-07, -0.99912, 0.0426529, -4.52686e-11, 0.279938, -9.05876)
 collision_layer = 36
 collision_mask = 20
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27374e-13, -5.8741e-24, 1.21566e-25)
-body_offset = Transform3D(1, -1.34065e-10, 1.14947e-09, -2.58353e-11, 1.00003, 0, 5.34683e-13, -1.19954e-06, 1, 2.27374e-13, 0, 0)
+body_offset = Transform3D(1, -1.34065e-10, 1.34905e-09, -2.58353e-11, 1.00003, 0, 5.34683e-13, -1.19954e-06, 1, 2.27374e-13, 0, 0)
 
 [node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine10" index="0"]
 disabled = true
@@ -1832,7 +1832,7 @@ shape = SubResource("CapsuleShape3D_nhuy5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.56252e-07, -3.57462)
-shape = SubResource("CapsuleShape3D_jfens")
+shape = SubResource("CapsuleShape3D_0aoyy")
 
 [connection signal="animation_finished" from="eel_mesh/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -149,4 +149,4 @@ mesh = SubResource("CylinderMesh_3vat2")
 skeleton = NodePath("../..")
 
 [node name="Eel" parent="." instance=ExtResource("5_g6smh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60588, 0, -29.0574)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.40114, 0.169798, -29.7964)
