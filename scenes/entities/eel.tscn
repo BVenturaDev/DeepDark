@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://58kf5k2qri3a"]
+[gd_scene load_steps=14 format=3 uid="uid://58kf5k2qri3a"]
 
 [ext_resource type="PackedScene" uid="uid://dkdkdm5lup5vo" path="res://assets/models/entities/eel/exports/eel.glb" id="1_5ojxd"]
 [ext_resource type="Script" path="res://src/entities/eel.gd" id="1_ptl88"]
@@ -21,7 +21,17 @@ _data = {
 "swim_2": ExtResource("8_ylmeh")
 }
 
-[node name="Eel" type="Node3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nhuy5"]
+radius = 0.73572
+height = 10.6717
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jfens"]
+radius = 0.73572
+height = 10.6717
+
+[node name="Eel" type="CharacterBody3D" groups=["eels"]]
+collision_layer = 133
+collision_mask = 133
 script = ExtResource("1_ptl88")
 
 [node name="eel_mesh" parent="." instance=ExtResource("1_5ojxd")]
@@ -66,16 +76,16 @@ bones/34/scale = Vector3(0.337303, 0.337303, 0.337296)
 bones/35/scale = Vector3(1, 0.777617, 1)
 
 [node name="eel_teeth_bottom" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="0"]
-transform = Transform3D(1, 1.20849e-10, -2.72848e-11, -1.45519e-10, -0.777635, -2.41399e-06, 6.753e-11, 2.71201e-06, 1, -2.13267e-15, 4.88944e-08, 2.76486e-08)
+transform = Transform3D(1, 1.19257e-10, -2.38742e-11, -1.47907e-10, -0.777635, -2.83122e-06, 6.34373e-11, 2.35438e-06, 1, -4.66857e-16, 4.88944e-08, 2.79251e-08)
 
 [node name="eel_eyes" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="1"]
-transform = Transform3D(0.337303, -2.27374e-12, -5.07043e-11, -5.02496e-11, 8.34465e-07, 0.337304, 1.12266e-11, -0.337303, -1.13621e-06, 2.35366e-14, -4.07454e-10, 1.17987e-07)
+transform = Transform3D(0.337303, -3.52429e-12, -5.00222e-11, -5.11591e-11, 9.79751e-07, 0.337304, 9.80549e-12, -0.337303, -9.98378e-07, 2.53129e-14, -5.23869e-10, 1.18249e-07)
 
 [node name="eel_teeth_top" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="2"]
-transform = Transform3D(1, -1.18689e-10, 1.50123e-10, -1.47793e-10, 0.777634, -2.5183e-06, -1.10049e-10, -2.60025e-06, 1, 2.35366e-14, -4.07454e-10, 1.17987e-07)
+transform = Transform3D(1, -1.17325e-10, 1.53761e-10, -1.50067e-10, 0.777634, -2.92063e-06, -1.14198e-10, -2.27243e-06, 1, 2.53129e-14, -5.23869e-10, 1.18249e-07)
 
 [node name="Jigglebone spine1" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="5"]
-transform = Transform3D(1, 2.98846e-11, 1.7377e-10, -1.73637e-10, -0.00436115, 0.999997, 3.06422e-11, -0.999991, -0.00436118, -1.59872e-13, -1.00173, -8.81834e-05)
+transform = Transform3D(1, 2.98846e-11, 1.7377e-10, -1.73637e-10, -0.00436115, 0.999997, 3.06422e-11, -0.999991, -0.00436118, -0.832215, -1.00173, -8.81834e-05)
 top_level = true
 script = ExtResource("9_bqeud")
 enabled = false
@@ -153,7 +163,7 @@ enabled = false
 bone_name = "spine11"
 
 [node name="Jigglebone spine1_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="16"]
-transform = Transform3D(1, 0.000310002, 4.64141e-06, -0.00031, 1.00001, 3.52061e-06, -4.64031e-06, -3.52207e-06, 1, 1, -0.0155673, -1.58755)
+transform = Transform3D(1, 3.25995e-06, 0.000286385, -3.26083e-06, 1.00001, 3.14087e-06, -0.000286384, -3.14182e-06, 1, 1, -0.0155668, -1.58754)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine1_up"
@@ -161,7 +171,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine1_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="17"]
-transform = Transform3D(1, -0.000254198, -3.84376e-06, -0.000254196, -1.00001, -2.86423e-06, -3.84303e-06, 2.86522e-06, -1, 1, -0.0155674, -1.58755)
+transform = Transform3D(1, -3.58729e-06, -0.000315071, -3.58805e-06, -1.00001, -2.48419e-06, -0.000315071, 2.48533e-06, -1, 1, -0.0155668, -1.58754)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine1_down"
@@ -169,7 +179,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine2_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="18"]
-transform = Transform3D(1, 0.00031694, -3.72459e-06, -0.000316938, 1.00001, 2.62479e-06, 3.72542e-06, -2.62363e-06, 1, 1, -0.0134315, -2.5209)
+transform = Transform3D(1, 2.05082e-08, 0.000302355, -2.1187e-08, 1.00001, 2.2454e-06, -0.000302355, -2.24542e-06, 1, 1, -0.0134305, -2.52092)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine2_up"
@@ -177,7 +187,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine2_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="19"]
-transform = Transform3D(1, -0.000320808, 6.31567e-07, -0.000320806, -1.00001, -2.74471e-06, 6.32447e-07, 2.74453e-06, -1, 1, -0.0134314, -2.5209)
+transform = Transform3D(1, -2.09209e-08, -0.000306846, -2.16463e-08, -1.00001, -2.36461e-06, -0.000306846, 2.36463e-06, -1, 1, -0.0134305, -2.52092)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine2_down"
@@ -185,7 +195,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine3_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="20"]
-transform = Transform3D(1, -0.000308583, 1.58141e-05, 0.000308958, 0.997912, -0.0646822, 4.17878e-06, 0.0646825, 0.997907, 1, 0.00325301, -3.43418)
+transform = Transform3D(1, -1.27107e-05, -0.000257627, -3.97999e-06, 0.997912, -0.0646826, 0.000257909, 0.0646829, 0.997907, 1, 0.00325424, -3.43418)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine3_up"
@@ -193,7 +203,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine3_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="21"]
-transform = Transform3D(1, 0.000322673, -8.23081e-06, 0.00032274, -0.999186, 0.0405014, 4.84458e-06, -0.0405016, -0.99918, 1, 0.00325299, -3.43418)
+transform = Transform3D(1, 7.21666e-06, 0.000289632, -4.5199e-06, -0.999185, 0.0405018, 0.000289686, -0.040502, -0.99918, 1, 0.00325423, -3.43418)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine3_down"
@@ -201,7 +211,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine4_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="22"]
-transform = Transform3D(1, -0.000276245, 4.68266e-06, 0.000276167, 0.998953, -0.0458721, 7.99412e-06, 0.0458724, 0.998948, 1, 0.0442725, -4.28892)
+transform = Transform3D(1, -6.52024e-06, 0.000303826, 2.04506e-05, 0.998953, -0.0458725, -0.000303207, 0.0458728, 0.998948, 1, 0.0442738, -4.28895)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine4_up"
@@ -209,7 +219,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine4_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="23"]
-transform = Transform3D(1, 0.000307618, -5.17265e-06, 0.000307515, -0.998879, 0.0474628, 9.43348e-06, -0.047463, -0.998874, 1, 0.0442725, -4.28892)
+transform = Transform3D(1, 5.71402e-06, -0.000297749, 1.98396e-05, -0.998879, 0.0474632, -0.000297142, -0.0474634, -0.998874, 1, 0.0442738, -4.28895)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine4_down"
@@ -217,7 +227,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine5_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="24"]
-transform = Transform3D(1, 0.000316523, 1.02058e-05, -0.000315517, 0.998565, -0.0536666, -2.71777e-05, 0.0536669, 0.998559, 1, 0.0923199, -5.12844)
+transform = Transform3D(1, 3.71928e-05, 0.000290972, -2.15235e-05, 0.998565, -0.053667, -0.000292548, 0.0536673, 0.998559, 1, 0.0923217, -5.12844)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine5_up"
@@ -225,7 +235,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine5_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="25"]
-transform = Transform3D(1, -0.000309902, -4.38197e-06, -0.0003089, -0.997733, 0.0673889, -2.52558e-05, -0.0673892, -0.997728, 1, 0.0923199, -5.12844)
+transform = Transform3D(1, -4.57277e-05, -0.000324095, -2.3783e-05, -0.997733, 0.0673893, -0.00032644, -0.0673896, -0.997728, 1, 0.0923217, -5.12844)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine5_down"
@@ -233,7 +243,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine6_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="26"]
-transform = Transform3D(1, -0.00029527, -3.3354e-05, 0.000292952, 0.998453, -0.055703, 4.97496e-05, 0.0557033, 0.998448, 1, 0.135564, -5.99901)
+transform = Transform3D(1, 1.75484e-05, 0.00030125, -7.40392e-07, 0.998453, -0.0557034, -0.00030176, 0.0557037, 0.998448, 1, 0.135566, -5.99904)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine6_up"
@@ -241,7 +251,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine6_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="27"]
-transform = Transform3D(1, 0.000306108, 3.93992e-05, 0.000304096, -0.999054, 0.0436279, 5.27164e-05, -0.0436281, -0.999048, 1, 0.135564, -5.99904)
+transform = Transform3D(1, -1.39176e-05, -0.000302146, -7.22182e-07, -0.999054, 0.0436283, -0.000302466, -0.0436285, -0.999048, 1, 0.135566, -5.99904)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine6_down"
@@ -249,7 +259,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine7_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="28"]
-transform = Transform3D(1, -0.000259975, 6.04794e-06, 0.000259948, 0.998737, -0.0503662, 7.05358e-06, 0.0503664, 0.998732, 1, 0.17899, -6.9279)
+transform = Transform3D(1, 9.79199e-06, 0.000278633, 4.25425e-06, 0.998737, -0.0503666, -0.000278772, 0.0503668, 0.998731, 1, 0.178994, -6.92793)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine7_up"
@@ -257,7 +267,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine7_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="29"]
-transform = Transform3D(1, 0.000259251, -1.2384e-05, 0.000259461, -0.997326, 0.0731594, 6.61572e-06, -0.0731598, -0.997321, 1, 0.17899, -6.9279)
+transform = Transform3D(1, -1.64451e-05, -0.000283562, 4.34435e-06, -0.997326, 0.0731598, -0.000284005, -0.0731601, -0.997321, 1, 0.178994, -6.92793)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine7_down"
@@ -265,7 +275,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine8_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="30"]
-transform = Transform3D(1, -0.000316013, 3.02235e-05, 0.000317172, 0.998587, -0.0532554, -1.33512e-05, 0.0532557, 0.998582, 1, 0.231843, -7.9681)
+transform = Transform3D(1, -6.50204e-06, -0.000315513, -1.03101e-05, 0.998587, -0.0532558, 0.000315411, 0.0532561, 0.998582, 1, 0.231846, -7.9681)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine8_up"
@@ -273,7 +283,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine8_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="31"]
-transform = Transform3D(1, 0.000289145, -3.12447e-05, 0.000290591, -0.997731, 0.0674113, -1.16821e-05, -0.0674116, -0.997726, 1, 0.231843, -7.9681)
+transform = Transform3D(1, -1.05277e-05, -0.000299495, 9.68575e-06, -0.997731, 0.0674117, -0.000299523, -0.067412, -0.997726, 1, 0.231847, -7.96813)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine8_down"
@@ -281,7 +291,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine9_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="32"]
-transform = Transform3D(1, -0.00029297, 1.5292e-06, 0.000292614, 0.998514, -0.0546064, 1.4471e-05, 0.0546067, 0.998509, 1, 0.279941, -9.05873)
+transform = Transform3D(1, 4.39022e-06, 0.000311736, 1.26393e-05, 0.998514, -0.0546068, -0.000311511, 0.0546071, 0.998508, 1, 0.279944, -9.05873)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine9_up"
@@ -289,7 +299,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine9_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="33"]
-transform = Transform3D(1, 0.000293803, -3.46782e-05, 0.000295486, -0.99766, 0.0684539, -1.44851e-05, -0.0684542, -0.997655, 1, 0.279941, -9.05879)
+transform = Transform3D(1, 4.04349e-06, 0.000148627, -6.14013e-06, -0.99766, 0.0684543, 0.000148555, -0.0684546, -0.997655, 1, 0.279944, -9.05873)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine9_down"
@@ -297,7 +307,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine10_up" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="34"]
-transform = Transform3D(1, -0.000301902, -3.02978e-05, 0.000300713, 0.999442, -0.0335868, 4.04205e-05, 0.0335869, 0.999436, 1, 0.324715, -10.1074)
+transform = Transform3D(1, 2.78304e-06, -0.000300489, -1.2874e-05, 0.999442, -0.0335872, 0.000300226, 0.0335873, 0.999436, 1, 0.324719, -10.1074)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine10_up"
@@ -305,7 +315,7 @@ stiffness = 0.1
 forward_axis = 0
 
 [node name="Jigglebone spine10_down" type="Node3D" parent="eel_mesh/eel_armaturespine/Skeleton3D" index="35"]
-transform = Transform3D(1, 0.000311896, 1.84774e-05, 0.000309304, -0.996592, 0.0825577, 4.41636e-05, -0.0825581, -0.996587, 1, 0.324717, -10.1074)
+transform = Transform3D(1, 1.23239e-05, 0.000309697, -1.32862e-05, -0.996592, 0.0825581, 0.000309657, -0.0825585, -0.996587, 1, 0.324719, -10.1074)
 top_level = true
 script = ExtResource("9_bqeud")
 bone_name = "spine10_down"
@@ -317,7 +327,7 @@ libraries = {
 "": SubResource("AnimationLibrary_r7nns")
 }
 autoplay = "default_pose"
-blend_times = [&"swim", &"swim", 0.75, &"swim", &"idle_2", 1.0, &"swim", &"swim_2", 0.75, &"swim", &"default_pose", 1.0, &"swim", &"attack", 1.0, &"swim", &"idle", 1.0, &"idle_2", &"swim", 1.0, &"idle_2", &"idle_2", 1.0, &"idle_2", &"swim_2", 1.0, &"idle_2", &"default_pose", 1.0, &"idle_2", &"attack", 1.0, &"idle_2", &"idle", 1.0, &"swim_2", &"swim", 0.75, &"swim_2", &"idle_2", 1.0, &"swim_2", &"swim_2", 0.75, &"swim_2", &"default_pose", 1.0, &"swim_2", &"attack", 1.0, &"swim_2", &"idle", 1.0, &"default_pose", &"swim", 1.0, &"default_pose", &"idle_2", 1.0, &"default_pose", &"swim_2", 1.0, &"default_pose", &"default_pose", 1.0, &"default_pose", &"attack", 1.0, &"default_pose", &"idle", 1.0, &"attack", &"swim", 1.0, &"attack", &"idle_2", 1.0, &"attack", &"swim_2", 1.0, &"attack", &"default_pose", 1.0, &"attack", &"attack", 1.0, &"attack", &"idle", 1.0, &"idle", &"swim", 1.0, &"idle", &"idle_2", 1.0, &"idle", &"swim_2", 1.0, &"idle", &"default_pose", 1.0, &"idle", &"attack", 1.0, &"idle", &"idle", 1.0]
+blend_times = [&"attack", &"attack", 1.0, &"attack", &"idle_2", 1.0, &"attack", &"swim", 1.0, &"attack", &"swim_2", 1.0, &"attack", &"default_pose", 1.0, &"attack", &"idle", 1.0, &"idle_2", &"attack", 1.0, &"idle_2", &"idle_2", 1.0, &"idle_2", &"swim", 1.0, &"idle_2", &"swim_2", 1.0, &"idle_2", &"default_pose", 1.0, &"idle_2", &"idle", 1.0, &"swim", &"attack", 1.0, &"swim", &"idle_2", 1.0, &"swim", &"swim", 0.75, &"swim", &"swim_2", 0.75, &"swim", &"default_pose", 1.0, &"swim", &"idle", 1.0, &"swim_2", &"attack", 1.0, &"swim_2", &"idle_2", 1.0, &"swim_2", &"swim", 0.75, &"swim_2", &"swim_2", 0.75, &"swim_2", &"default_pose", 1.0, &"swim_2", &"idle", 1.0, &"default_pose", &"attack", 1.0, &"default_pose", &"idle_2", 1.0, &"default_pose", &"swim", 1.0, &"default_pose", &"swim_2", 1.0, &"default_pose", &"default_pose", 1.0, &"default_pose", &"idle", 1.0, &"idle", &"attack", 1.0, &"idle", &"idle_2", 1.0, &"idle", &"swim", 1.0, &"idle", &"swim_2", 1.0, &"idle", &"default_pose", 1.0, &"idle", &"idle", 1.0]
 
 [node name="eel_ragdoll" parent="." instance=ExtResource("10_wyyd6")]
 visible = false
@@ -326,45 +336,1506 @@ visible = false
 target_skeleton = NodePath("../../../eel_mesh/eel_armaturespine/Skeleton3D")
 
 [node name="Physical Bone head" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="5"]
-transform = Transform3D(1, -3.30985e-10, 6.62953e-06, 6.61882e-06, 0.130467, -0.991474, -8.70979e-07, 0.991454, 0.130469, -1.40546e-19, -0.000632963, -0.000136484)
-body_offset = Transform3D(1, -3.37536e-10, -4.64924e-08, 5.96856e-12, 1, -8.79169e-07, -6.21014e-12, 8.79169e-07, 1, 0, 0, 0)
+transform = Transform3D(1, -6.1829e-08, 6.13647e-06, 6.61888e-06, 0.130467, -0.991474, -8.70989e-07, 0.991454, 0.130469, 3.02314e-10, -0.000632964, -0.000136375)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.02228e-10, -1.07655e-07, -1.50757e-08)
+body_offset = Transform3D(1, -6.18356e-08, -5.39554e-07, 3.29692e-12, 1, -8.79169e-07, -6.02185e-11, 8.79169e-07, 1, 3.02213e-10, 1.07655e-07, 1.50758e-08)
 
 [node name="Physical Bone jaw" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="6"]
-transform = Transform3D(1, -1.01177e-08, 3.57629e-06, 1.83934e-06, -0.857579, -0.514391, 3.06692e-06, 0.514385, -0.857559, -2.13297e-13, -0.000632933, -0.000136368)
-body_offset = Transform3D(1, -1.0108e-08, 4.54747e-13, -3.63798e-12, 1, 2.98023e-08, 9.09495e-13, -2.98023e-08, 1, 0, 0, 0)
+transform = Transform3D(1, -1.33086e-07, 3.57584e-06, 1.83934e-06, -0.857579, -0.514391, 3.06692e-06, 0.514385, -0.857559, -2.13415e-13, -0.000632933, -0.000136375)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(-3.61999e-06, 9.17733e-12, 1, 2.53518e-06, 1, 0, 1, -2.53518e-06, 3.61999e-06, 2.40567e-14, 3.92902e-09, -6.54836e-09)
+body_offset = Transform3D(1, -1.33077e-07, -4.46562e-10, -3.63798e-12, 1, 2.98023e-08, 9.09495e-13, -2.98023e-08, 1, -2.35367e-14, -3.92902e-09, 6.54836e-09)
 
 [node name="Physical Bone spine" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="7"]
-transform = Transform3D(0.999611, -2.52767e-07, -0.0238281, 0.000207033, 0.999024, 0.00867811, 0.0238269, -0.0086765, 0.998761, 0.0187884, -0.00861829, -0.782078)
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000131896, 9.18572e-05, 0.782964)
-body_offset = Transform3D(0.999611, -2.52839e-07, -0.0238281, -0.0238278, -3.56408e-05, -0.998798, -6.37985e-07, 0.999058, -2.6904e-05, 0.0187884, 0.78202, -7.07059e-05)
+transform = Transform3D(0.999611, -2.52725e-07, -0.0238281, 0.000207035, 0.999024, 0.00867811, 0.0238268, -0.0086765, 0.998761, 0.0187884, -0.00861829, -0.778036)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000228306, 0.000127009, 0.77892)
+body_offset = Transform3D(0.999611, -2.52797e-07, -0.0238281, -0.0238277, -3.56408e-05, -0.998798, -6.34973e-07, 0.999058, -2.6904e-05, 0.0187884, 0.777978, -0.000105933)
+
+[node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine" index="0"]
+disabled = true
 
 [node name="Physical Bone spine2" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="8"]
-transform = Transform3D(0.999995, 3.30295e-07, 6.76235e-10, 3.37904e-08, 0.00227548, 1, -1.32702e-07, -0.998089, 0.00228309, -3.31026e-12, -0.0155678, -1.58754)
-body_offset = Transform3D(0.999995, 3.30298e-07, 7.567e-10, 1.32812e-07, 0.998091, 5.12227e-09, 3.36707e-08, -8.14651e-06, 1, 0, 0, 0)
+transform = Transform3D(0.999995, 3.27917e-07, 6.76235e-10, 3.35273e-08, 0.0022602, 1, -1.31627e-07, -0.989583, 0.00228309, -3.31113e-12, -0.0155678, -1.58754)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.678e-16, -1.15524e-22, -2.89937e-23)
+body_offset = Transform3D(0.999995, 3.2792e-07, 7.567e-10, 1.31736e-07, 0.989586, 5.12227e-09, 3.341e-08, -3.96487e-06, 1, -8.67795e-16, 0, 0)
+
+[node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine2" index="0"]
+disabled = true
 
 [node name="Physical Bone spine3" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="9"]
-transform = Transform3D(1, -2.98062e-08, 5.5356e-09, 7.36132e-07, 0.0182681, 1.00057, -7.02913e-07, -1.00035, 0.0182596, -5.78155e-12, -0.0134323, -2.52091)
-body_offset = Transform3D(1, -2.98023e-08, 5.61608e-09, 7.16274e-07, 1.00052, 1.40481e-05, 7.23351e-07, -6.72787e-06, 1.00073, 0, 0, 0)
+transform = Transform3D(1, -2.9785e-08, 6.01623e-09, 7.36132e-07, 0.0182681, 1.00057, -7.02919e-07, -1.00035, 0.0182596, 1.23492e-11, -0.0134323, -2.52091)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.81379e-11, -2.38295e-07, 7.44354e-09)
+body_offset = Transform3D(1, -2.9781e-08, 6.09671e-09, 7.1628e-07, 1.00052, 1.40518e-05, 7.23351e-07, -6.72787e-06, 1.00073, 1.81308e-11, 2.38419e-07, -7.45058e-09)
+
+[node name="Physical Bone spine4" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="10"]
+transform = Transform3D(1, -4.94538e-12, -7.94755e-11, -1.83988e-10, 0.047934, 0.998828, 3.20276e-11, -0.998834, 0.047928, -9.37916e-12, 0.00325182, -3.43419)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0758e-15, -4.71302e-27, -7.28041e-28)
+body_offset = Transform3D(1, 1.37265e-12, 7.83621e-13, 9.28511e-13, 0.999983, 2.16067e-07, 1.4343e-13, 2.86847e-07, 0.999974, -5.0758e-15, 0, 0)
+
+[node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine4" index="0"]
+disabled = true
 
 [node name="Physical Bone spine5" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="11"]
-transform = Transform3D(1, -7.05798e-12, -8.02576e-11, -1.84175e-10, 0.0571376, 0.998343, 3.29481e-11, -0.99834, 0.0571325, -1.47807e-11, 0.0442707, -4.28893)
-body_offset = Transform3D(1, -5.41017e-16, -6.01203e-14, 5.20417e-17, 0.999974, 1.14366e-06, 1.26006e-15, -1.12876e-06, 0.999974, 0, 0, 0)
+transform = Transform3D(1, -1.75007e-11, -7.2754e-11, -1.8417e-10, 0.0571376, 0.998343, 3.29474e-11, -0.99834, 0.0571325, -1.47793e-11, 0.0442707, -4.28893)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38257e-15, 1.47264e-30, 8.30343e-30)
+body_offset = Transform3D(1, -1.04432e-11, 7.44344e-12, 1.06512e-15, 0.999974, 1.14366e-06, 6.00561e-15, -1.12504e-06, 0.999974, 1.38257e-15, 0, 0)
 
 [node name="Physical Bone spine6" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="12"]
-transform = Transform3D(1, -6.39183e-12, -8.08318e-11, -1.84176e-10, 0.0496088, 0.998759, 3.29481e-11, -0.998766, 0.0496049, -2.07153e-11, 0.092318, -5.12843)
-body_offset = Transform3D(1, 6.07984e-14, -5.82275e-13, -3.46945e-18, 0.999997, -1.51619e-06, -2.28767e-16, -9.68575e-08, 0.999987, 0, 0, 0)
+transform = Transform3D(1, 8.09928e-12, -8.19256e-11, -1.84154e-10, 0.0496088, 0.998759, 3.27915e-11, -0.998766, 0.0496049, -2.07194e-11, 0.092318, -5.12843)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16854e-15, -6.56341e-28, -5.71468e-29)
+body_offset = Transform3D(1, 1.45519e-11, -1.67609e-12, 1.5745e-13, 0.999997, -1.51619e-06, 1.37089e-14, -1.04308e-07, 0.999987, -4.16854e-15, 0, 0)
+
+[node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine6" index="0"]
+disabled = true
+
+[node name="Physical Bone spine7" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="13"]
+transform = Transform3D(1, -2.75691e-12, -8.01514e-11, -1.8477e-10, 0.0467005, 0.998913, 3.75808e-11, -0.998909, 0.0466958, -2.63753e-11, 0.135561, -5.99902)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55029e-14, 1.65278e-25, 1.33725e-26)
+body_offset = Transform3D(1, 3.46205e-12, 1.17546e-13, -4.65534e-12, 1, -2.83122e-07, -3.76661e-13, 0, 1, -3.55029e-14, 0, 0)
 
 [node name="Physical Bone spine8" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="14"]
-transform = Transform3D(1, -6.48306e-12, -7.92702e-11, -1.84177e-10, 0.0507442, 0.998715, 3.29463e-11, -0.998712, 0.0507392, -3.21229e-11, 0.178988, -6.92791)
-body_offset = Transform3D(1, 6.08088e-14, 9.72955e-13, 1.78677e-15, 1, 0, -1.09765e-15, 0, 1, 0, 0, 0)
+transform = Transform3D(1, -1.04523e-11, -6.3956e-11, -1.84209e-10, 0.0507442, 0.998715, 3.29475e-11, -0.998712, 0.0507392, -3.21165e-11, 0.178988, -6.92791)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.33521e-15, -6.83568e-30, -2.1053e-28)
+body_offset = Transform3D(1, -3.90841e-12, 1.62872e-11, -1.079e-15, 1, 0, -3.32317e-14, 0, 1, 6.33521e-15, 0, 0)
+
+[node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine8" index="0"]
+disabled = true
 
 [node name="Physical Bone spine9" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="15"]
-transform = Transform3D(1, -5.93533e-12, -8.07703e-11, -1.84175e-10, 0.0440528, 0.998991, 3.29482e-11, -0.998926, 0.044051, -3.89386e-11, 0.23184, -7.96811)
-body_offset = Transform3D(1, 7.05894e-14, -4.8849e-13, -4.51028e-17, 0.999897, -8.9407e-08, 6.55292e-16, -4.91738e-07, 0.999958, 0, 0, 0)
+transform = Transform3D(1, -1.8531e-11, -8.85805e-11, -1.84175e-10, 0.0440528, 0.998991, 3.29479e-11, -0.998926, 0.044051, -3.89377e-11, 0.23184, -7.96811)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.29198e-16, 2.44558e-31, 7.26977e-31)
+body_offset = Transform3D(1, -1.2525e-11, -8.29868e-12, 2.94903e-16, 0.999897, -8.9407e-08, 8.76686e-16, -4.91738e-07, 0.999958, 8.29198e-16, 0, 0)
 
 [node name="Physical Bone spine10" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="16"]
-transform = Transform3D(1, -2.46018e-07, -4.9862e-12, 1.02891e-08, 0.042658, 0.999093, -2.45562e-07, -0.99912, 0.0426529, -4.5496e-11, 0.279938, -9.05876)
-body_offset = Transform3D(1, -1.70218e-10, 6.22693e-11, -1.56319e-11, 1.00003, 0, 1.84741e-13, -1.19954e-06, 1, 0, 0, 0)
+transform = Transform3D(1, -2.45981e-07, 9.54793e-10, 1.0289e-08, 0.042658, 0.999093, -2.45552e-07, -0.99912, 0.0426529, -4.52686e-11, 0.279938, -9.05876)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27374e-13, -5.8741e-24, 1.21566e-25)
+body_offset = Transform3D(1, -1.34065e-10, 1.02205e-09, -2.58353e-11, 1.00003, 0, 5.34683e-13, -1.19954e-06, 1, 2.27374e-13, 0, 0)
+
+[node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine10" index="0"]
+disabled = true
+
+[node name="Physical Bone spine11" parent="eel_ragdoll/eel_armaturespine/Skeleton3D" index="17"]
+transform = Transform3D(1, -2.46016e-07, -9.70786e-10, 1.02894e-08, 0.038897, 0.999247, -2.45559e-07, -0.999274, 0.038892, -2.58077e-07, 0.324711, -10.1074)
+collision_layer = 36
+collision_mask = 20
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27374e-13, 4.27795e-24, -1.34896e-25)
+body_offset = Transform3D(1, -1.70218e-10, 2.18039e-11, -1.88152e-11, 1.00003, 0, 5.93303e-13, -1.19954e-06, 1, -2.27374e-13, 0, 0)
+
+[node name="CollisionShape3D" parent="eel_ragdoll/eel_armaturespine/Skeleton3D/Physical Bone spine11" index="0"]
+disabled = true
+
+[node name="Nav_RayCast3D" type="RayCast3D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="NavCasts" type="Node3D" parent="."]
+visible = false
+
+[node name="x" type="Node3D" parent="NavCasts"]
+
+[node name="RayCast3D" type="RayCast3D" parent="NavCasts/x"]
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D13" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -1, 7.45058e-08, 0, -7.45058e-08, -1, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z2" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z3" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z4" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z5" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z6" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z7" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z8" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z9" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z10" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="z11" type="Node3D" parent="NavCasts"]
+transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="NavCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -5, 0)
+collision_mask = 4
+
+[node name="Nav_Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.56252e-07, -3.57462)
+shape = SubResource("CapsuleShape3D_nhuy5")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.56252e-07, -3.57462)
+shape = SubResource("CapsuleShape3D_jfens")
+
+[connection signal="animation_finished" from="eel_mesh/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 
 [editable path="eel_mesh"]
 [editable path="eel_ragdoll"]

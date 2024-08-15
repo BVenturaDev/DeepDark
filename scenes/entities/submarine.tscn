@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=75 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
@@ -654,8 +654,15 @@ top_radius = 0.04
 bottom_radius = 0.04
 height = 0.02
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_rymwy"]
+radius = 100.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tq4ii"]
+radius = 20.0
+
 [node name="Submarine" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 17
 collision_mask = 17
 floor_stop_on_slope = false
 platform_floor_layers = 4294967042
@@ -2260,6 +2267,30 @@ collision_mask = 4
 transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
 target_position = Vector3(0, -20, 0)
 collision_mask = 4
+
+[node name="LightArea3D" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LightArea3D"]
+shape = SubResource("SphereShape3D_rymwy")
+
+[node name="AggroArea3D" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AggroArea3D"]
+shape = SubResource("SphereShape3D_tq4ii")
+
+[node name="Eel_Update_Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="body_entered" from="LightArea3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="LightArea3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="AggroArea3D" to="." method="_on_aggro_area_3d_body_entered"]
+[connection signal="body_exited" from="AggroArea3D" to="." method="_on_aggro_area_3d_body_exited"]
+[connection signal="timeout" from="Eel_Update_Timer" to="." method="_on_eel_update_timer_timeout"]
 
 [editable path="Interior/ScreenButtonPanel/NextCam_Button"]
 [editable path="Interior/Screen"]

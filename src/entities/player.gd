@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var InteractCast = $Camera3D/RayCast3D
+@onready var col = $CollisionShape3D
 
 const SPEED = 150.0
 const STOP_SPEED = 50.0
@@ -9,6 +10,8 @@ var mouse_drag_coords = Vector2()
 var mouse_clicked = false
 var interacting = false
 var last_target
+
+var no_clip = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -36,9 +39,13 @@ func _physics_process(delta):
 		interacting = false
 	
 	# Add the gravity.
-	if not is_on_floor():
+	if not is_on_floor() and not no_clip:
 		velocity.y -= gravity * delta
-
+	elif Input.is_action_pressed("flight_mode_up") and SystemGlobal.DEBUG_MODE and no_clip:
+		velocity.y = SPEED * delta
+	elif Input.is_action_pressed("flight_mode_down") and SystemGlobal.DEBUG_MODE and no_clip:
+		velocity.y = -SPEED * delta
+	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -49,6 +56,8 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, STOP_SPEED * delta)
 		velocity.z = move_toward(velocity.z, 0, STOP_SPEED * delta)
+		if no_clip:
+			velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)
 
 	move_and_slide()
 
@@ -82,6 +91,17 @@ func _input(event):
 			tilt.y = clampf(tilt.y, -1.0, 1.0)
 			last_target.tilt_controller(tilt)
 	
+	# Escape Key Changes Mouse Mode
+	if event.is_action_pressed("no_clip") and SystemGlobal.DEBUG_MODE:
+		if no_clip:
+			print("No Clip Off")
+			no_clip = false
+			col.disabled = false
+		else:
+			print("No Clip On")
+			no_clip = true
+			col.disabled = true
+		
 	# Escape Key Changes Mouse Mode
 	if event.is_action_pressed("ui_escape"):
 		if mouse_mode:

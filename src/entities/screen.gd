@@ -4,6 +4,7 @@ extends Node3D
 var cameras = []
 var camera_labels = ["Port", "Starboard", "Stern", "Floor", "Roof"]
 var cam_num = 0
+var is_light_on = false
 
 @onready var label = $SubViewport/ScreenControl/Label
 
@@ -40,6 +41,7 @@ func toggle_light():
 	if cameras[cam_num]:
 		# Toggle light
 		cameras[cam_num].get_child(0).set_visible(!cameras[cam_num].get_child(0).visible)
+		is_light_on = cameras[cam_num].get_child(0).visible
 
 func previous_cam():
 	# Turn off current camera
