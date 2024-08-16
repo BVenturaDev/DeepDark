@@ -37,7 +37,7 @@ func _ready():
 	timer.connect("timeout", _on_timer_timeout)
 	nav_timer.connect("timeout", _on_nav_timer_timeout)
 	_rand_growl_time()
-	start_pos = global_position
+	start_pos = global_transform
 	
 
 func _rand_growl_time():
@@ -50,7 +50,9 @@ func go_to_random_location(distance):
 	while not has_target:
 		count += 1
 		if count == 1000:
-			global_position = start_pos
+			global_transform = start_pos
+			just_attacked = false
+			timer.start()
 			break
 		var new_pos = Vector3()
 		new_pos.x = randf_range(global_position.x - distance, global_position.x + distance)
@@ -175,7 +177,8 @@ func _on_animation_player_animation_finished(anim_name):
 
 func _on_area_3d_body_entered(body):
 	if body == SystemGlobal.sub and is_hunting and not just_attacked:
-		_attack()
+		pass
+		#_attack()
 	#elif velocity.length() < 1.0:
 	#elif not is_hunting:
 		#go_to_random_location(SWIM_DISTANCE)

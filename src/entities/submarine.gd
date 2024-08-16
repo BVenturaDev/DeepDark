@@ -65,6 +65,11 @@ func _calc_leaks(delta):
 	water.position.y = (WATER_HEIGHT * water_level) - 1.0
 		
 func _physics_process(delta):
+	# Reset on checkpoint load
+	if SystemGlobal.checkpoint_load and SystemGlobal.checkpoints[SystemGlobal.last_checkpoint]:
+		global_transform = SystemGlobal.checkpoints[SystemGlobal.last_checkpoint].spawn_point.global_transform
+		SystemGlobal.checkpoint_load = false
+	
 	if SystemGlobal.DEBUG_MODE:
 		if Input.is_action_pressed("sub_left"):
 			rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta)

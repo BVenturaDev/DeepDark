@@ -2,11 +2,15 @@ extends CharacterBody3D
 
 @onready var InteractCast = $Camera3D/RayCast3D
 @onready var col = $CollisionShape3D
-@onready var water = $Water
-@onready var anim = $Water/AnimationPlayer
-@onready var lose_label = $Water/LoseLabel
+@onready var water = $WinLose_GUI/Water
+@onready var anim = $WinLose_GUI/Water/AnimationPlayer
+@onready var lose_label = $WinLose_GUI/Water/LoseLabel
 @onready var light = $Camera3D/SpotLight3D
 @onready var click_sfx = $ClickStreamPlayer
+@onready var sun = $WinLose_GUI/Sun
+@onready var sun_anim = $WinLose_GUI/Sun/WinAnimationPlayer
+@onready var win_label = $WinLose_GUI/Sun/WinLabel
+@onready var menu = $WinLose_GUI/Menu_Options
 
 const SPEED = 150.0
 const STOP_SPEED = 50.0
@@ -17,6 +21,7 @@ var interacting = false
 var last_target
 
 var dead = false
+var won = false
 
 var no_clip = false
 
@@ -27,6 +32,10 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var mouse_mode = true
 
 var is_under_water = false
+
+func win():
+	sun.visible = true
+	sun_anim.play("win_anim")
 
 func under_water():
 	if is_under_water:
@@ -93,7 +102,7 @@ func _physics_process(delta):
 		move_and_slide()
 
 func _input(event):
-	if not dead:
+	if not dead and not won:
 		# Handle Click
 		if Input.is_action_just_pressed("click"):
 			mouse_clicked = true
@@ -130,6 +139,7 @@ func _input(event):
 		
 		# Escape Key Changes Mouse Mode
 		if event.is_action_pressed("no_clip") and SystemGlobal.DEBUG_MODE:
+			light.visible = false
 			if no_clip:
 				print("No Clip Off")
 				no_clip = false
@@ -157,9 +167,21 @@ func _input(event):
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "die":
+		menu.visible = true
 		dead = true
 		lose_label.visible = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		mouse_mode = false
 		print("GAME OVER")
 		anim.play("dead")
+
+
+func _on_win_animation_player_animation_finished(anim_name):
+	if anim_name == "win_anim":
+		won = true
+		win_label.visible = true
+		menu.visible = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		mouse_mode = false
+		print("YOU WIN!")
+		anim.play("have_won")
