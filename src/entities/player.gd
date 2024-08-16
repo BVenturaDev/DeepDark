@@ -6,6 +6,7 @@ extends CharacterBody3D
 @onready var anim = $Water/AnimationPlayer
 @onready var lose_label = $Water/LoseLabel
 @onready var light = $Camera3D/SpotLight3D
+@onready var click_sfx = $ClickStreamPlayer
 
 const SPEED = 150.0
 const STOP_SPEED = 50.0
@@ -93,6 +94,7 @@ func _input(event):
 			if last_target and last_target.has_method("hold_button"):
 				last_target.hold_button()
 		elif Input.is_action_just_released("click"):
+			click_sfx.play()
 			mouse_clicked = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			if last_target and last_target.has_method("tilt_controller"):

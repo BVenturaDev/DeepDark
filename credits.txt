@@ -1,11 +1,24 @@
+- Shaders -
 https://godotshaders.com/shader/vhs-and-crt-monitor-effect/
 
 https://godotshaders.com/shader/radar-with-trace-blip/
 
 https://godotshaders.com/shader/pixel-perfect-outline-shader/
 
+https://godotshaders.com/shader/water-shader/
+
+- Sound Effects -
+https://www.zapsplat.com
+
+https://opengameart.org/content/dark-ambiance
+
+https://opengameart.org/content/dark-ambience-loop
+
+https://opengameart.org/content/car-engine-loop-96khz-4s
+
+- Code -
 https://github.com/godot-jolt/godot-jolt
 
-https://www.youtube.com/watch?v=0MHY2TDeMLM
+https://github.com/Bauxitedev/godot-jigglebones
 
-https://godotshaders.com/shader/water-shader/
+https://www.youtube.com/watch?v=0MHY2TDeMLM

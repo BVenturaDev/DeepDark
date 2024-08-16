@@ -44,7 +44,7 @@ void fragment() {
 	//	replacing all occurrences of 'current_beam_angle' with 'beam_angle'.
 	//	You should then manually set the shader's beam_angle parameter so you know where the beam is
 	//	and therefore when the blip is not visible and its position can be updated.
-	float current_beam_angle = mod(beam_angle * TIME, 1.0);
+	float current_beam_angle = mod(beam_angle * TIME * 2.5 - 0.45, 1.0);
 
 	a = a - 1.0 * greater_than(a, current_beam_angle);
 

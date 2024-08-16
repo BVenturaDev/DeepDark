@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ddf2i5yx54j38"]
+[gd_scene load_steps=14 format=3 uid="uid://ddf2i5yx54j38"]
 
 [ext_resource type="Script" path="res://src/entities/sonar.gd" id="1_ojl5k"]
 [ext_resource type="Material" uid="uid://cbij6u086jog0" path="res://materials/entities/submarine/sub_console.tres" id="2_xdl32"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dh7h03caf63rb" path="res://assets/img/gui/Submarine_Side_Profile3x.png" id="4_exb0p"]
 [ext_resource type="Texture2D" uid="uid://cjdbexfhb8efg" path="res://assets/img/gui/Submarine_Front3x.png" id="5_btjrk"]
 [ext_resource type="Texture2D" uid="uid://md74sl5epl34" path="res://assets/img/gui/Submarine_Top_View3x.png" id="6_xwuhb"]
+[ext_resource type="AudioStream" uid="uid://pjaoex1knenf" path="res://assets/audio/sfx/zapsplat_vehicles_submarine_sonar_ping_single_28800.mp3" id="8_g2u0f"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_lut70"]
 material = ExtResource("2_xdl32")
@@ -176,3 +177,7 @@ omni_range = 3.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="SonarStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_g2u0f")
+volume_db = -20.0

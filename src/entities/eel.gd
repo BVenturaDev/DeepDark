@@ -11,6 +11,10 @@ const ATTACK_SWIM_DISTANCE = 100.0
 @onready var nav_casts = $NavCasts
 @onready var timer = $Timer
 @onready var nav_timer = $Nav_Timer
+@onready var idle_sfx = $IdleStreamPlayer3D
+@onready var growl_timer = $Growl_Timer
+@onready var scream_sfx = $ScreamStreamPlayer3D
+@onready var attack_sfx = $AttackStreamPlayer3D
 
 var anim_states = ["idle", "swim", "attack"]
 var anim_state = 0
@@ -30,6 +34,12 @@ func _ready():
 	SystemGlobal.eels.append(self)
 	timer.connect("timeout", _on_timer_timeout)
 	nav_timer.connect("timeout", _on_nav_timer_timeout)
+	_rand_growl_time()
+	
+
+func _rand_growl_time():
+	growl_timer.wait_time = randf_range(8.0, 16.0)
+	growl_timer.start()
 
 func go_to_random_location(distance):
 	var has_target = false
@@ -84,6 +94,7 @@ func _has_arrived_at_target():
 
 func _attack():
 	print ("Attack")
+	attack_sfx.play()
 	look_at(global_transform.origin + (global_position - swim_target).normalized(), Vector3.UP)
 	just_attacked = true
 	set_anim_state(2)
@@ -159,3 +170,16 @@ func _on_area_3d_body_entered(body):
 	#elif velocity.length() < 1.0:
 	#elif not is_hunting:
 		#go_to_random_location(SWIM_DISTANCE)
+
+
+func _on_growl_timer_timeout():
+	if not is_hunting:
+		idle_sfx.play()
+	else:
+		scream_sfx.play()
+
+func _on_idle_stream_player_3d_finished():
+	pass # Replace with function body.
+
+func _on_scream_stream_player_3d_finished():
+	pass # Replace with function body.

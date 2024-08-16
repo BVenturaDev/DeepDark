@@ -5,6 +5,7 @@ extends Node3D
 @onready var timer = $Timer
 @onready var label = $SubViewport/ScreenControl/Label
 @onready var sub_gui = $SubViewport/ScreenControl/Center/GUIScale
+@onready var ping_sound = $SonarStreamPlayer
 
 var cur_pings = []
 var ping_distance = 20.0
@@ -22,10 +23,11 @@ func _ready():
 
 func _on_timer_timeout():
 	_ping_sonar()
-	timer.start()
 
 func _ping_sonar():
+	timer.start()
 	if SystemGlobal.sonar_casts:
+		ping_sound.play()
 		cur_pings.clear()
 		for node_group in SystemGlobal.sonar_casts.get_children():
 			for cast in node_group.get_children():

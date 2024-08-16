@@ -2,7 +2,7 @@
 extends Node3D
 
 var cameras = []
-var camera_labels = ["Port", "Starboard", "Stern", "Floor", "Roof"]
+var camera_labels = ["Left", "Right", "Back", "Down", "Up"]
 var cam_num = 0
 var is_light_on = false
 

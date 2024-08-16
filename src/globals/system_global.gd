@@ -6,5 +6,6 @@ var sub
 var sonar
 var sonar_casts
 var screen
+var engine
 var player
 var eels = []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=82 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
@@ -17,6 +17,10 @@
 [ext_resource type="Script" path="res://src/entities/buttons/prevview_button.gd" id="14_hg5x1"]
 [ext_resource type="PackedScene" uid="uid://dqt4kqokshrvb" path="res://scenes/entities/engine.tscn" id="15_02jxa"]
 [ext_resource type="Material" uid="uid://bncivlph843gf" path="res://materials/entities/submarine/sub_water.tres" id="16_4flog"]
+[ext_resource type="AudioStream" uid="uid://b47umapqibwd3" path="res://assets/audio/sfx/zapsplat_vehicles_ship_sinking_metal_scrape_vibrate_groaning_movement_internal_001_45987.mp3" id="18_20m7t"]
+[ext_resource type="AudioStream" uid="uid://25r81sjdciw7" path="res://assets/audio/sfx/zapsplat_vehicles_ship_large_scrape_rock_grounded_underwater_perspective_24867.mp3" id="18_ghmmf"]
+[ext_resource type="AudioStream" uid="uid://didjetm8r2k27" path="res://assets/audio/sfx/tom_chapman_transport_boat_sinking_ocean_liner_internal_ambience_alarm_twisting_creaking_metal_screaming_people__electrical_short_circuit_created.mp3" id="19_s71wi"]
+[ext_resource type="AudioStream" uid="uid://cejnilk26leo6" path="res://assets/audio/sfx/zapsplat_vehicles_ship_internal_metal_wall_floor_or_surface_vibrate_rumble_rattle_001_71418.mp3" id="21_t0dxg"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
 material = ExtResource("1_e21wt")
@@ -2297,6 +2301,20 @@ autostart = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1, 0)
 visible = false
 mesh = SubResource("QuadMesh_vw7sp")
+
+[node name="FloorStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_ghmmf")
+
+[node name="SinkingStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_20m7t")
+volume_db = -20.0
+
+[node name="LeakStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_s71wi")
+volume_db = -20.0
+
+[node name="RattleStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_t0dxg")
 
 [connection signal="body_entered" from="LightArea3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="LightArea3D" to="." method="_on_area_3d_body_exited"]
