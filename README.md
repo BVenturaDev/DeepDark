@@ -1,3 +1,4 @@
-#Deep Dark
-#- GodotWildJam72
- Godot WIld Jam #72 Submission
+Deep Dark
+
+Godot Wild Jam #72 Submission
+https://itch.io/jam/godot-wild-jam-72
