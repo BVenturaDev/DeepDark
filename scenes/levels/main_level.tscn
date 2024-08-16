@@ -7,12 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://dhbkb0cu0ud12" path="res://scenes/utilities/checkpoint.tscn" id="5_8gup4"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_rxqgl"]
-albedo = Color(0.0287281, 0.155102, 0.315422, 1)
+density = -8.0
+albedo = Color(0, 0, 0, 1)
 
 [node name="main_level" type="Node3D"]
 
 [node name="Checkpoint1" parent="." instance=ExtResource("5_8gup4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -335.216, 0.74936, -2.34885)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -288.525, 1.74936, -2.34885)
 checkpoint_id = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -35,5 +36,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0)
 
 [node name="FogVolume" type="FogVolume" parent="."]
+visible = false
 size = Vector3(600, 200, 200)
 material = SubResource("FogMaterial_rxqgl")

@@ -102,12 +102,12 @@ func _physics_process(delta):
 		if SystemGlobal.engine:
 			if not SystemGlobal.engine.ballast_sfx.playing:
 				SystemGlobal.engine.ballast_sfx.play()
+				velocity += transform.basis.y * ASCENT_SPEED * delta * ascent_normal
 	elif SystemGlobal.engine:
 		if SystemGlobal.engine.ballast_sfx.playing:
 			SystemGlobal.engine.ballast_sfx.stop()
 		
-		velocity += transform.basis.y * ASCENT_SPEED * delta * ascent_normal
-	else:
+	if not input_dir or ascent_normal != 0.0:
 		velocity.x = move_toward(velocity.x, 0, STOP_SPEED * delta)
 		velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)
 		velocity.z = move_toward(velocity.z, 0, STOP_SPEED * delta)

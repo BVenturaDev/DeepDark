@@ -9,4 +9,5 @@ func _ready():
 func _on_area_3d_body_entered(body):
 	if SystemGlobal.sub:
 		if body == SystemGlobal.sub:
-			SystemGlobal.active_checkpoint = checkpoint_id
+			SystemGlobal.last_checkpoint = checkpoint_id
+			SystemGlobal.next_checkpoint = checkpoint_id + 1

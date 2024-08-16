@@ -11,3 +11,4 @@ var player
 var eels = []
 var checkpoints = []
 var next_checkpoint = 0
+var last_checkpoint = -1

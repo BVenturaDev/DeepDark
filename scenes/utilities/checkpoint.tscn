@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/utilities/checkpoint.gd" id="1_1ssvc"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_maslb"]
-radius = 20.0
+radius = 40.0
 
 [node name="Checkpoint" type="Node3D"]
 script = ExtResource("1_1ssvc")
