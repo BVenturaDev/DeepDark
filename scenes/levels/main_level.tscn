@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://co3lx5m3o2ad0"]
+
+[ext_resource type="Environment" uid="uid://d0hatdbql1sul" path="res://environments/cave_environment.tres" id="1_7si6x"]
+[ext_resource type="PackedScene" uid="uid://c22ahfk2dg3k6" path="res://scenes/entities/submarine.tscn" id="2_0ugjn"]
+[ext_resource type="PackedScene" uid="uid://dp03helv6sgtr" path="res://scenes/props/caves/cave_01.tscn" id="3_5ph0q"]
+[ext_resource type="PackedScene" uid="uid://58kf5k2qri3a" path="res://scenes/entities/eel.tscn" id="3_ad8pp"]
+[ext_resource type="PackedScene" uid="uid://dhbkb0cu0ud12" path="res://scenes/utilities/checkpoint.tscn" id="5_8gup4"]
+
+[sub_resource type="FogMaterial" id="FogMaterial_rxqgl"]
+albedo = Color(0.0287281, 0.155102, 0.315422, 1)
+
+[node name="main_level" type="Node3D"]
+
+[node name="Checkpoint1" parent="." instance=ExtResource("5_8gup4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -335.216, 0.74936, -2.34885)
+checkpoint_id = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_7si6x")
+
+[node name="Submarine" parent="." instance=ExtResource("2_0ugjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 0)
+
+[node name="Eel" parent="." instance=ExtResource("3_ad8pp")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12.2331, -32.4032, -32.8222)
+
+[node name="caves" type="Node3D" parent="."]
+
+[node name="cave_01" parent="caves" instance=ExtResource("3_5ph0q")]
+
+[node name="cave_02" parent="caves" instance=ExtResource("3_5ph0q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 0)
+
+[node name="cave_03" parent="caves" instance=ExtResource("3_5ph0q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0)
+
+[node name="FogVolume" type="FogVolume" parent="."]
+size = Vector3(600, 200, 200)
+material = SubResource("FogMaterial_rxqgl")

@@ -9,3 +9,5 @@ var screen
 var engine
 var player
 var eels = []
+var checkpoints = []
+var next_checkpoint = 0

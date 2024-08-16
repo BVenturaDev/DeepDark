@@ -86,11 +86,11 @@ func _physics_process(delta):
 	if is_on_ceiling():
 		if not floor_sfx.playing:
 			floor_sfx.play()
-		velocity.z = -0.1
+		velocity.y += -0.1
 	elif is_on_floor():
 		if not floor_sfx.playing:
 			floor_sfx.play()
-		velocity.z = 0.1
+		velocity.y += 0.1
 	else:
 		if floor_sfx.playing:
 			floor_sfx.stop()

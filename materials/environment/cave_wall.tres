@@ -1,4 +1,20 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://bwnn2vmdsmpx8"]
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://bwnn2vmdsmpx8"]
+
+[ext_resource type="Texture2D" uid="uid://d37ipnyw7u8io" path="res://assets/img/textures/props/cave_wall/cavefloor2_Base_Color.png" id="1_g57m2"]
+[ext_resource type="Texture2D" uid="uid://k5paj6ivk7yr" path="res://assets/img/textures/props/cave_wall/cavefloor2_Height.png" id="2_mnpq5"]
+[ext_resource type="Texture2D" uid="uid://c8neosx67y85m" path="res://assets/img/textures/props/cave_wall/cavefloor2_Metallic.png" id="3_3cxjs"]
+[ext_resource type="Texture2D" uid="uid://1bn2jo8cya23" path="res://assets/img/textures/props/cave_wall/cavefloor2_Normal.png" id="4_7ydy4"]
+[ext_resource type="Texture2D" uid="uid://cemj4cow73p78" path="res://assets/img/textures/props/cave_wall/cavefloor2_Roughness.png" id="5_hekel"]
 
 [resource]
 albedo_color = Color(0.598225, 0.527222, 0.370647, 1)
+albedo_texture = ExtResource("1_g57m2")
+metallic = 1.0
+metallic_texture = ExtResource("3_3cxjs")
+roughness_texture = ExtResource("5_hekel")
+normal_enabled = true
+normal_texture = ExtResource("4_7ydy4")
+heightmap_enabled = true
+heightmap_texture = ExtResource("2_mnpq5")
+uv1_scale = Vector3(0.01, 0.01, 0.01)
+uv1_triplanar = true

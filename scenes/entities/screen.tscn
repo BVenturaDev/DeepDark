@@ -84,42 +84,42 @@ current = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DPort"]
 visible = false
-light_energy = 2.0
+light_energy = 20.0
 shadow_enabled = true
-spot_range = 400.0
+spot_range = 1000.0
 
 [node name="Camera3DStarboard" type="Camera3D" parent="SubViewport/Node3DCameras"]
 current = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DStarboard"]
 visible = false
-light_energy = 2.0
+light_energy = 20.0
 shadow_enabled = true
-spot_range = 400.0
+spot_range = 1000.0
 
 [node name="Camera3DStern" type="Camera3D" parent="SubViewport/Node3DCameras"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DStern"]
 visible = false
-light_energy = 2.0
+light_energy = 20.0
 shadow_enabled = true
-spot_range = 400.0
+spot_range = 1000.0
 
 [node name="Camera3DFloor" type="Camera3D" parent="SubViewport/Node3DCameras"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DFloor"]
 visible = false
-light_energy = 2.0
+light_energy = 20.0
 shadow_enabled = true
-spot_range = 400.0
+spot_range = 1000.0
 
 [node name="Camera3DRoof" type="Camera3D" parent="SubViewport/Node3DCameras"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Node3DCameras/Camera3DRoof"]
 visible = false
-light_energy = 2.0
+light_energy = 20.0
 shadow_enabled = true
-spot_range = 400.0
+spot_range = 1000.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.167091, 0, 0)

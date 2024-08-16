@@ -22,3 +22,6 @@ https://github.com/godot-jolt/godot-jolt
 https://github.com/Bauxitedev/godot-jigglebones
 
 https://www.youtube.com/watch?v=0MHY2TDeMLM
+
+- Textures -
+https://freepbr.com/product/cave-floor-pbr-material-2/

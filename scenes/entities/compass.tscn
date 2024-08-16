@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://di5gi722xmsap"]
+
+[ext_resource type="Script" path="res://src/entities/compass.gd" id="1_am3kl"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_2syly"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qitfl"]
+size = Vector3(0.1, 0.1, 0.25)
+
+[node name="compass" type="Node3D"]
+script = ExtResource("1_am3kl")
+
+[node name="dial" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="dial"]
+transform = Transform3D(0.25, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.25, -1.09278e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_2syly")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="dial"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.245271)
+mesh = SubResource("BoxMesh_qitfl")
