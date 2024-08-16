@@ -913,13 +913,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FirstLoad" type="Control" parent="WinLose_GUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="WinLose_GUI/FirstLoad"]
 layout_mode = 1
@@ -945,6 +945,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="WinLose_GUI/Water"]
 layout_mode = 1
@@ -988,6 +989,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="WinLose_GUI/Sun"]
 layout_mode = 1
@@ -1072,6 +1074,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CheckpointLabel" type="Label" parent="Checkpoint_GUI"]
 layout_mode = 1
