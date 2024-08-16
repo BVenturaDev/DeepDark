@@ -11,6 +11,7 @@ extends CharacterBody3D
 @onready var sun_anim = $WinLose_GUI/Sun/WinAnimationPlayer
 @onready var win_label = $WinLose_GUI/Sun/WinLabel
 @onready var menu = $WinLose_GUI/Menu_Options
+@onready var checkpoint_anim = $Checkpoint_GUI/CheckpointAnimationPlayer
 
 const SPEED = 150.0
 const STOP_SPEED = 50.0
@@ -173,7 +174,7 @@ func _on_animation_player_animation_finished(anim_name):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		mouse_mode = false
 		print("GAME OVER")
-		anim.play("dead")
+		#anim.play("dead")
 
 
 func _on_win_animation_player_animation_finished(anim_name):
@@ -184,4 +185,4 @@ func _on_win_animation_player_animation_finished(anim_name):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		mouse_mode = false
 		print("YOU WIN!")
-		anim.play("have_won")
+		#sun_anim.play("have_won")

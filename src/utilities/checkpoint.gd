@@ -8,8 +8,9 @@ func _ready():
 	SystemGlobal.checkpoints.append(self)
 
 func _on_area_3d_body_entered(body):
-	if SystemGlobal.sub:
+	if SystemGlobal.sub and SystemGlobal.next_checkpoint <= checkpoint_id:
 		if body == SystemGlobal.sub:
+			SystemGlobal.player.checkpoint_anim.play("checkpoint_anim")
 			if checkpoint_id == SystemGlobal.final_checkpoint:
 				if SystemGlobal.player:
 					SystemGlobal.player.win()

@@ -13,7 +13,11 @@ albedo = Color(0, 0, 0, 1)
 [node name="main_level" type="Node3D"]
 
 [node name="Checkpoint0" parent="." instance=ExtResource("5_8gup4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -288.525, 1.74936, -2.34885)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.5539, 1.74936, -2.34885)
+
+[node name="Checkpoint1" parent="." instance=ExtResource("5_8gup4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -291.858, 1.74936, -2.34885)
+checkpoint_id = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_7si6x")
