@@ -15,6 +15,8 @@ func change_targeted(is_targeted):
 		Stick.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
 		Stick2.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
 		Stick3.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
+		if not targeted:
+			tilt_controller(Vector2())
 
 func tilt_controller(pos):
 	anim.set("parameters/blend_position", pos.y)

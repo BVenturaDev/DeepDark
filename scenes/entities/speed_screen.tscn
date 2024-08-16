@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://ntkrya1s3uf"]
+[gd_scene load_steps=9 format=3 uid="uid://ntkrya1s3uf"]
 
 [ext_resource type="Material" uid="uid://gisbr8fpgcmb" path="res://materials/entities/submarine/screen_crt_shader.tres" id="1_puvtd"]
+[ext_resource type="Script" path="res://src/entities/speed_screen.gd" id="1_tbqrc"]
 [ext_resource type="Material" uid="uid://cbij6u086jog0" path="res://materials/entities/submarine/sub_console.tres" id="2_e0chl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ukdct"]
@@ -35,6 +36,19 @@ material = SubResource("ShaderMaterial_uu3t5")
 size = Vector2(0.175, 0.238)
 
 [node name="speed_screen" type="Node3D"]
+script = ExtResource("1_tbqrc")
+
+[node name="Screen" type="Node3D" parent="."]
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Screen"]
+transform = Transform3D(7.64274e-16, 1.74846e-08, 0.4, 0.4, -1.74846e-08, 0, 1.74846e-08, 0.4, -1.74846e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_ukdct")
+skeleton = NodePath("../..")
+
+[node name="MeshInstanceScreen" type="MeshInstance3D" parent="Screen"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, -1, 0, 4.37114e-08, 0, 0.0228599, 0)
+mesh = SubResource("PlaneMesh_j86eg")
+skeleton = NodePath("../..")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
@@ -77,15 +91,3 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Screen" type="Node3D" parent="."]
-
-[node name="MeshInstanceBase" type="MeshInstance3D" parent="Screen"]
-transform = Transform3D(7.64274e-16, 1.74846e-08, 0.4, 0.4, -1.74846e-08, 0, 1.74846e-08, 0.4, -1.74846e-08, 0, 0, 0)
-mesh = SubResource("BoxMesh_ukdct")
-skeleton = NodePath("../..")
-
-[node name="MeshInstanceScreen" type="MeshInstance3D" parent="Screen"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, -1, 0, 4.37114e-08, 0, 0.0228599, 0)
-mesh = SubResource("PlaneMesh_j86eg")
-skeleton = NodePath("../..")

@@ -47,18 +47,26 @@ func _physics_process(delta):
 		under_water()
 		
 		# Check for Interaction
-		if InteractCast.is_colliding() and InteractCast.get_collider() and not interacting:
+		if InteractCast.is_colliding() and InteractCast.get_collider():
 			var target = InteractCast.get_collider()
-			if target.is_in_group("interactable"):
+			if target.is_in_group("interactable") and not interacting:
 				if not target.targeted:
 					# Valid Target
+					mouse_drag_coords = get_viewport().get_mouse_position()
 					interacting = true
 					target.change_targeted(true)
 					last_target = target
-		else:
+			elif not target == last_target and interacting:
+				mouse_drag_coords = get_viewport().get_mouse_position()
+				last_target.change_targeted(false)
+				target.change_targeted(true)
+				last_target = target
+		elif interacting:
 			# No Valid target
 			if last_target:
+				mouse_drag_coords = get_viewport().get_mouse_position()
 				last_target.change_targeted(false)
+				last_target = null
 			interacting = false
 		
 		# Add the gravity.

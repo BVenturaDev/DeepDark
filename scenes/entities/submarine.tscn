@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=84 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
 [ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://di5gi722xmsap" path="res://scenes/entities/compass.tscn" id="8_b16k3"]
 [ext_resource type="Script" path="res://src/entities/buttons/camlights_button.gd" id="8_s51yn"]
 [ext_resource type="Script" path="res://src/entities/buttons/nextcam_button.gd" id="9_lmccr"]
+[ext_resource type="PackedScene" uid="uid://ntkrya1s3uf" path="res://scenes/entities/speed_screen.tscn" id="9_yev2q"]
 [ext_resource type="Script" path="res://src/entities/buttons/prevcam_button.gd" id="10_tj3o4"]
 [ext_resource type="Script" path="res://src/entities/buttons/nextview_button.gd" id="13_757uo"]
 [ext_resource type="Script" path="res://src/entities/buttons/prevview_button.gd" id="14_hg5x1"]
@@ -764,7 +765,10 @@ transform = Transform3D(-4.37114e-08, 0.880014, 0.474948, 0, 0.474948, -0.880014
 transform = Transform3D(0.226108, 0.445954, 0, -0.445954, 0.226108, 0, 0, 0, 0.5, 0.0213453, 0.368571, -0.159815)
 
 [node name="compass" parent="Interior/Node3DControlConsole" instance=ExtResource("8_b16k3")]
-transform = Transform3D(0.0486381, 0.0873747, 0, -0.0873747, 0.0486381, 0, 0, 0, 0.1, -0.0189614, 0.469103, -0.122735)
+transform = Transform3D(-4.37114e-09, 0.0873772, -0.0486335, 0, 0.0486335, 0.0873772, 0.1, 3.81938e-09, -2.12584e-09, -0.0189614, 0.469103, -0.122735)
+
+[node name="speed_screen" parent="Interior/Node3DControlConsole" instance=ExtResource("9_yev2q")]
+transform = Transform3D(-1.09278e-08, 0.218443, 0.121584, 0, 0.121584, -0.218443, -0.25, -9.54845e-09, -5.3146e-09, -0.0265962, 0.453287, 0.0603069)
 
 [node name="ScreenButtonPanel" type="StaticBody3D" parent="Interior"]
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -0.785964, 0, -1.02748)

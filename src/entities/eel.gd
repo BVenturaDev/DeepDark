@@ -29,12 +29,15 @@ var just_attacked = false
 
 var is_in_aggro_range = false
 
+var start_pos = Vector3()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SystemGlobal.eels.append(self)
 	timer.connect("timeout", _on_timer_timeout)
 	nav_timer.connect("timeout", _on_nav_timer_timeout)
 	_rand_growl_time()
+	start_pos = global_position
 	
 
 func _rand_growl_time():
@@ -43,7 +46,12 @@ func _rand_growl_time():
 
 func go_to_random_location(distance):
 	var has_target = false
+	var count = 0
 	while not has_target:
+		count += 1
+		if count == 1000:
+			global_position = start_pos
+			break
 		var new_pos = Vector3()
 		new_pos.x = randf_range(global_position.x - distance, global_position.x + distance)
 		new_pos.y = randf_range(global_position.y - distance, global_position.y + distance)
@@ -93,13 +101,14 @@ func _has_arrived_at_target():
 			timer.start()
 
 func _attack():
-	print ("Attack")
-	attack_sfx.play()
-	look_at(global_transform.origin + (global_position - swim_target).normalized(), Vector3.UP)
-	just_attacked = true
-	set_anim_state(2)
-	if SystemGlobal.sub:
-		SystemGlobal.sub.leaks += 1.0
+	if not just_attacked:
+		just_attacked = true
+		print ("Attack")
+		attack_sfx.play()
+		look_at(global_transform.origin + (global_position - swim_target).normalized(), Vector3.UP)
+		set_anim_state(2)
+		if SystemGlobal.sub:
+			SystemGlobal.sub.leaks += 1.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -8,12 +8,14 @@ extends StaticBody3D
 var targeted = false
 
 func change_targeted(is_targeted):
-	if targeted != is_targeted:
+	if not targeted == is_targeted:
 		targeted = is_targeted
 		Pad.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
 		Stick.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
 		Ball.get_active_material(0).next_pass.set("shader_parameter/is_targeted", targeted)
-
+		if not targeted:
+			tilt_controller(Vector2())
+		
 func tilt_controller(pos):
 	anim.set("parameters/blend_position", pos)
 	if SystemGlobal.sub:

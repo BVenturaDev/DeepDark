@@ -3,6 +3,7 @@ extends StaticBody3D
 const REPAIR_SPEED = 0.1
 const MOTOR_VOLUME_MULTIPLIER = 1.0
 
+@onready var screen = $Screen/MeshInstanceScreen
 @onready var engine  = $MeshInstanceEngine
 @onready var label = $SubViewport/ScreenControl/Label
 @onready var motor_sfx = $MotorStreamPlayer3D
@@ -15,6 +16,8 @@ var held_button = false
 
 func _ready():
 	SystemGlobal.engine = self
+	# Setup Screen
+	screen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
 
 func hold_button():
 	held_button = true

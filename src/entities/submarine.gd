@@ -91,6 +91,9 @@ func _physics_process(delta):
 		if not floor_sfx.playing:
 			floor_sfx.play()
 		velocity.y += 0.1
+	elif is_on_wall():
+		if not floor_sfx.playing:
+			floor_sfx.play()
 	else:
 		if floor_sfx.playing:
 			floor_sfx.stop()
@@ -98,20 +101,20 @@ func _physics_process(delta):
 	if input_dir:
 		rotate_object_local(Vector3(0.0, 1.0, 0.0), -TURN_SPEED * delta * input_dir.x)
 		velocity -= transform.basis.x * SPEED * delta * input_dir.y
-	if ascent_normal != 0.0:
+	if not ascent_normal == 0.0:
+		velocity += transform.basis.y * ASCENT_SPEED * delta * ascent_normal
 		if SystemGlobal.engine:
 			if not SystemGlobal.engine.ballast_sfx.playing:
 				SystemGlobal.engine.ballast_sfx.play()
-				velocity += transform.basis.y * ASCENT_SPEED * delta * ascent_normal
 	elif SystemGlobal.engine:
 		if SystemGlobal.engine.ballast_sfx.playing:
 			SystemGlobal.engine.ballast_sfx.stop()
 		
-	if not input_dir or ascent_normal != 0.0:
+	if not input_dir:
 		velocity.x = move_toward(velocity.x, 0, STOP_SPEED * delta)
-		velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)
 		velocity.z = move_toward(velocity.z, 0, STOP_SPEED * delta)
-	
+	if ascent_normal == 0.0:
+		velocity.y = move_toward(velocity.y, 0, STOP_SPEED * delta)
 	if water_level > 0:
 		if not is_on_floor():
 			if not sinking_sfx.playing:
