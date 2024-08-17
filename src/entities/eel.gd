@@ -31,14 +31,30 @@ var is_in_aggro_range = false
 
 var start_pos = Vector3()
 
+var is_active = false
+
+func activate():
+	_rand_growl_time()
+	timer.start()
+	is_active = true
+	SystemGlobal.sub.update_eels()
+
+func deactivate():
+	timer.stop()
+	growl_timer.stop()
+	is_active = false
+	anim.stop()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SystemGlobal.eels.append(self)
 	timer.connect("timeout", _on_timer_timeout)
 	nav_timer.connect("timeout", _on_nav_timer_timeout)
-	_rand_growl_time()
 	start_pos = global_transform
-	
+	if SystemGlobal.checkpoint_load:
+		_rand_growl_time()
+		timer.start()
+		is_active = true
 
 func _rand_growl_time():
 	growl_timer.wait_time = randf_range(8.0, 16.0)
@@ -114,40 +130,41 @@ func _attack():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not anim.is_playing():
-		_handle_anim_state()
-	
-	if (is_swimming or is_hunting) and swim_target != Vector3():
-		var tar_rot = Quaternion(basis.orthonormalized())
-		look_at(global_transform.origin + (global_position - swim_target).normalized(), Vector3.UP)
-		var rot = Quaternion(basis.orthonormalized())
-		rotation = tar_rot.slerp(rot, TURN_SPEED * delta).get_euler()
-	
-	if is_swimming:
-		if is_hunting and SystemGlobal.sub and not just_attacked:
-			swim_target = SystemGlobal.sub.global_position
-		velocity = (global_position.direction_to(swim_target) * SPEED * delta)
-		velocity += offset_dir * 50.0 * delta
-		_has_arrived_at_target()
-	else:
-		if not just_attacked:
-			velocity.x = move_toward(velocity.x, 0, SPEED * delta)
-			velocity.y = move_toward(velocity.y, 0, SPEED * delta)
-			velocity.z = move_toward(velocity.z, 0, SPEED * delta)
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED * 10.0 * delta)
-			velocity.y = move_toward(velocity.y, 0, SPEED * 10.0 * delta)
-			velocity.z = move_toward(velocity.z, 0, SPEED * 10.0 * delta)
+	if is_active:
+		if not anim.is_playing():
+			_handle_anim_state()
 		
-	if not just_attacked:
-		velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
-		velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
-		velocity.z = clampf(velocity.z, -MAX_SPEED, MAX_SPEED)
-	else:
-		velocity.x = clampf(velocity.x, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
-		velocity.y = clampf(velocity.y, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
-		velocity.z = clampf(velocity.z, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
-	move_and_slide()
+		if (is_swimming or is_hunting) and swim_target != Vector3():
+			var tar_rot = Quaternion(basis.orthonormalized())
+			look_at(global_transform.origin + (global_position - swim_target).normalized(), Vector3.UP)
+			var rot = Quaternion(basis.orthonormalized())
+			rotation = tar_rot.slerp(rot, TURN_SPEED * delta).get_euler()
+		
+		if is_swimming:
+			if is_hunting and SystemGlobal.sub and not just_attacked:
+				swim_target = SystemGlobal.sub.global_position
+			velocity = (global_position.direction_to(swim_target) * SPEED * delta)
+			velocity += offset_dir * 50.0 * delta
+			_has_arrived_at_target()
+		else:
+			if not just_attacked:
+				velocity.x = move_toward(velocity.x, 0, SPEED * delta)
+				velocity.y = move_toward(velocity.y, 0, SPEED * delta)
+				velocity.z = move_toward(velocity.z, 0, SPEED * delta)
+			else:
+				velocity.x = move_toward(velocity.x, 0, SPEED * 10.0 * delta)
+				velocity.y = move_toward(velocity.y, 0, SPEED * 10.0 * delta)
+				velocity.z = move_toward(velocity.z, 0, SPEED * 10.0 * delta)
+			
+		if not just_attacked:
+			velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
+			velocity.y = clampf(velocity.y, -MAX_SPEED, MAX_SPEED)
+			velocity.z = clampf(velocity.z, -MAX_SPEED, MAX_SPEED)
+		else:
+			velocity.x = clampf(velocity.x, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
+			velocity.y = clampf(velocity.y, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
+			velocity.z = clampf(velocity.z, -MAX_SPEED * 10.0, MAX_SPEED * 10.0)
+		move_and_slide()
 
 func _navcast():
 	var dist = 0.0
@@ -176,8 +193,8 @@ func _on_animation_player_animation_finished(anim_name):
 
 
 func _on_area_3d_body_entered(body):
-	if body == SystemGlobal.sub and is_hunting and not just_attacked:
-		pass
+	#if body == SystemGlobal.sub and is_hunting and not just_attacked:
+	pass
 		#_attack()
 	#elif velocity.length() < 1.0:
 	#elif not is_hunting:

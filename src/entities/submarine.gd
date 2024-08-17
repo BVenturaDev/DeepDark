@@ -30,6 +30,8 @@ var water_level = 0.0
 func _ready():
 	SystemGlobal.sub = self
 	SystemGlobal.sonar_casts = $SonarCasts
+	if SystemGlobal.checkpoint_load:
+		headlights.visible = false
 
 func _calc_leaks(delta):
 	if water_level > 0:

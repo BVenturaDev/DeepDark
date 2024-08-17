@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://co3lx5m3o2ad0"]
+[gd_scene load_steps=11 format=3 uid="uid://co3lx5m3o2ad0"]
 
+[ext_resource type="PackedScene" uid="uid://58kf5k2qri3a" path="res://scenes/entities/eel.tscn" id="1_5l05r"]
 [ext_resource type="Environment" uid="uid://d0hatdbql1sul" path="res://environments/cave_environment.tres" id="1_7si6x"]
 [ext_resource type="PackedScene" uid="uid://c22ahfk2dg3k6" path="res://scenes/entities/submarine.tscn" id="2_0ugjn"]
 [ext_resource type="PackedScene" uid="uid://dp03helv6sgtr" path="res://scenes/props/caves/cave_01.tscn" id="3_5ph0q"]
@@ -11,6 +12,15 @@
 [ext_resource type="PackedScene" uid="uid://btviixb2yc4ou" path="res://scenes/props/caves/cave_02.tscn" id="9_y14ds"]
 
 [node name="main_level" type="Node3D"]
+
+[node name="Eel" parent="." instance=ExtResource("1_5l05r")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -382.627, -34.425, -0.97958)
+
+[node name="Eel2" parent="." instance=ExtResource("1_5l05r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -832.166, -8.47169, -180.831)
+
+[node name="Eel3" parent="." instance=ExtResource("1_5l05r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1190.97, 118.194, -625.348)
 
 [node name="Checkpoint0" parent="." instance=ExtResource("5_8gup4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -127.823, 1.74936, -2.34885)

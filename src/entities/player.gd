@@ -170,22 +170,17 @@ func _input(event):
 		
 		if event.is_action_pressed("no_clip_light") and SystemGlobal.DEBUG_MODE and no_clip:
 			light.visible = !light.visible
+			
 		# Escape Key Changes Mouse Mode
-		if event.is_action_pressed("ui_escape"):
-			if has_turned and not has_paused:
-				has_paused = true
-				tut.complete_step(3)
-			if mouse_mode:
-				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-				mouse_mode = false
-				pause_menu.visible = true
-				get_tree().paused = true
-			else:
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-				mouse_mode = true
-				pause_menu.visible = false
-				get_tree().paused = false
-
+	if event.is_action_pressed("ui_escape"):
+		if SystemGlobal.player.has_turned and not SystemGlobal.player.has_paused:
+			SystemGlobal.player.has_paused = true
+			SystemGlobal.player.tut.complete_step(3)
+		if SystemGlobal.player.mouse_mode and not get_tree().paused:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			SystemGlobal.player.mouse_mode = false
+			SystemGlobal.player.pause_menu.visible = true
+			get_tree().paused = true
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "die":

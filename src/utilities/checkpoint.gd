@@ -16,6 +16,7 @@ func _on_area_3d_body_entered(body):
 			if checkpoint_id == 0:
 				SystemGlobal.player.tut.complete_step(4)
 				SystemGlobal.player.tut.step_5.visible = true
+				SystemGlobal.activate_eels()
 			if checkpoint_id == SystemGlobal.final_checkpoint:
 				if SystemGlobal.player:
 					SystemGlobal.player.win()

@@ -1160,6 +1160,9 @@ size_flags_vertical = 3
 text = "Menu
 "
 
+[node name="PauseTimer" type="Timer" parent="Pause_Menu"]
+wait_time = 0.1
+
 [connection signal="animation_finished" from="WinLose_GUI/Water/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="WinLose_GUI/Sun/WinAnimationPlayer" to="." method="_on_win_animation_player_animation_finished"]
 [connection signal="pressed" from="WinLose_GUI/Menu_Options/VBoxContainer/ReloadButton" to="WinLose_GUI/Menu_Options" method="_on_reload_button_pressed"]
