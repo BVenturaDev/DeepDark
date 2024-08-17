@@ -19,3 +19,8 @@ mesh = SubResource("PrismMesh_2syly")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="dial"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.245271)
 mesh = SubResource("BoxMesh_qitfl")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

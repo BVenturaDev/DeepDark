@@ -12,3 +12,5 @@ build/
 # Mono-specific ignores
 .mono/
 data_*/
+
+bin/

@@ -14,6 +14,6 @@ fog_light_color = Color(0.0406919, 0.106947, 0.20332, 1)
 fog_sun_scatter = 1.0
 fog_density = 0.1504
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.025
+volumetric_fog_density = 0.01
 volumetric_fog_albedo = Color(0.0093692, 0.10755, 0.202062, 1)
 volumetric_fog_emission_energy = 0.0

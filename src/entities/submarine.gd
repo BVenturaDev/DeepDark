@@ -96,9 +96,9 @@ func _physics_process(delta):
 		if not floor_sfx.playing:
 			floor_sfx.play()
 		velocity.y += 0.1
-	#elif is_on_wall():
-		#if not floor_sfx.playing:
-			#floor_sfx.play()
+	elif is_on_wall():
+		if not floor_sfx.playing:
+			floor_sfx.play()
 	else:
 		if floor_sfx.playing:
 			floor_sfx.stop()

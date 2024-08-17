@@ -70,19 +70,19 @@ func _physics_process(delta):
 			if target.is_in_group("interactable") and not interacting:
 				if not target.targeted:
 					# Valid Target
-					mouse_drag_coords = get_viewport().get_mouse_position()
+					#mouse_drag_coords = get_viewport().get_mouse_position()
 					interacting = true
 					target.change_targeted(true)
 					last_target = target
 			elif not target == last_target and interacting:
-				mouse_drag_coords = get_viewport().get_mouse_position()
+				#mouse_drag_coords = get_viewport().get_mouse_position()
 				last_target.change_targeted(false)
 				target.change_targeted(true)
 				last_target = target
 		elif interacting:
 			# No Valid target
 			if last_target:
-				mouse_drag_coords = get_viewport().get_mouse_position()
+				#mouse_drag_coords = get_viewport().get_mouse_position()
 				last_target.change_targeted(false)
 				last_target = null
 			interacting = false

@@ -7,6 +7,7 @@ var sonar
 var sonar_casts
 var screen
 var engine
+var compass
 var player
 var eels = []
 var checkpoints = []

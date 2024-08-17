@@ -3,14 +3,17 @@ extends Node3D
 const TURN_SPEED = 1.0
 
 @onready var dial = $dial
+@onready var timer = $Timer
+
+var is_paused = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	SystemGlobal.compass = self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if SystemGlobal.checkpoints.size() > SystemGlobal.next_checkpoint:
+	if SystemGlobal.checkpoints.size() > SystemGlobal.next_checkpoint and not is_paused:
 		if SystemGlobal.checkpoints[SystemGlobal.next_checkpoint]:
 			var tar = SystemGlobal.checkpoints[SystemGlobal.next_checkpoint]
 			var tar_rot = Quaternion(dial.basis.orthonormalized())
@@ -19,3 +22,7 @@ func _process(delta):
 			dial.rotation = tar_rot.slerp(rot, TURN_SPEED * delta).get_euler()
 			dial.rotation.x = 0.0
 			dial.rotation.z = 0.0
+
+
+func _on_timer_timeout():
+	is_paused = false
