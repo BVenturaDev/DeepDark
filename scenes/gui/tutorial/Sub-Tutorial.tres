@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bk3vcts1xuss5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6qv7"]
+bg_color = Color(0.215686, 0.215686, 0.215686, 0.470588)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0gjnq"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[resource]
+default_font_size = 24
+Label/colors/font_color = Color(0.905882, 0.905882, 0.905882, 1)
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_k6qv7")
+SmallPanelContainer/base_type = &"PanelContainer"
+SmallPanelContainer/styles/panel = SubResource("StyleBoxFlat_0gjnq")

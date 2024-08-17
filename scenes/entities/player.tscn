@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://ilhuhfajpb2p"]
+[gd_scene load_steps=23 format=3 uid="uid://ilhuhfajpb2p"]
 
 [ext_resource type="Script" path="res://src/entities/player.gd" id="1_86lpj"]
 [ext_resource type="AudioStream" uid="uid://cf183ri7u8gq1" path="res://assets/audio/music/Socapex - Dark ambiance.wav" id="2_cc5bj"]
 [ext_resource type="AudioStream" uid="uid://cprslvx6m8vj" path="res://assets/audio/sfx/zapsplat_multimedia_game_sound_menu_click_001_76687.mp3" id="3_3pexd"]
 [ext_resource type="Script" path="res://src/gui/win_lose_menu.gd" id="4_3grsb"]
+[ext_resource type="PackedScene" uid="uid://c7wuuko4gj1jk" path="res://scenes/gui/tutorial/SubTutorial.tscn" id="5_2kctl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5uafi"]
 radius = 0.35
@@ -1102,8 +1103,15 @@ libraries = {
 autoplay = "finished"
 next/checkpoint_anim = &"finished"
 
+[node name="SubTutorial" parent="." instance=ExtResource("5_2kctl")]
+
+[node name="MarginContainer5" parent="SubTutorial/PanelContainer/MarginContainer/VBoxContainer" index="5"]
+visible = false
+
 [connection signal="animation_finished" from="WinLose_GUI/Water/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="WinLose_GUI/Sun/WinAnimationPlayer" to="." method="_on_win_animation_player_animation_finished"]
 [connection signal="pressed" from="WinLose_GUI/Menu_Options/VBoxContainer/ReloadButton" to="WinLose_GUI/Menu_Options" method="_on_reload_button_pressed"]
 [connection signal="pressed" from="WinLose_GUI/Menu_Options/VBoxContainer/RestartButton" to="WinLose_GUI/Menu_Options" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="WinLose_GUI/Menu_Options/VBoxContainer/MenuButton" to="WinLose_GUI/Menu_Options" method="_on_menu_button_pressed"]
+
+[editable path="SubTutorial"]

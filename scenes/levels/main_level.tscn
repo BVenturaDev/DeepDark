@@ -25,11 +25,11 @@ checkpoint_id = 2
 
 [node name="Checkpoint3" parent="." instance=ExtResource("5_8gup4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1291.78, 246.177, -717.742)
-checkpoint_id = 2
+checkpoint_id = 3
 
 [node name="Checkpoint4" parent="." instance=ExtResource("5_8gup4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1488.87, 505.682, -647.043)
-checkpoint_id = 3
+checkpoint_id = 4
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_7si6x")

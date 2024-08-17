@@ -34,6 +34,12 @@ var mouse_mode = true
 
 var is_under_water = false
 
+var has_moved = false
+var has_turned = false
+var has_pause = false
+var checkpoint_reached = false
+var lights_turned_off = false
+
 func win():
 	sun.visible = true
 	sun_anim.play("win_anim")
