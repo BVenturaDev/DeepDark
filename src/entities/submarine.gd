@@ -148,6 +148,9 @@ func _input(event):
 		toggle_headlights()
 
 func toggle_headlights():
+	if SystemGlobal.player:
+		if SystemGlobal.player.tut.step_5.visible:
+			SystemGlobal.player.tut.complete_step(5)
 	headlights.set_visible(!headlights.visible)
 	if not headlights.visible:
 		update_eels()

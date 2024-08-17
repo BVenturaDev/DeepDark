@@ -12,6 +12,8 @@ extends CharacterBody3D
 @onready var win_label = $WinLose_GUI/Sun/WinLabel
 @onready var menu = $WinLose_GUI/Menu_Options
 @onready var checkpoint_anim = $Checkpoint_GUI/CheckpointAnimationPlayer
+@onready var tut = $SubTutorial
+@onready var pause_menu = $Pause_Menu
 
 const SPEED = 150.0
 const STOP_SPEED = 50.0
@@ -25,6 +27,7 @@ var dead = false
 var won = false
 
 var no_clip = false
+var paused = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -36,8 +39,7 @@ var is_under_water = false
 
 var has_moved = false
 var has_turned = false
-var has_pause = false
-var checkpoint_reached = false
+var has_paused = false
 var lights_turned_off = false
 
 func win():
@@ -59,7 +61,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 func _physics_process(delta):
-	if not dead:
+	if not dead and not won:
 		under_water()
 		
 		# Check for Interaction
@@ -98,6 +100,9 @@ func _physics_process(delta):
 		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 		var direction = (global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if direction:
+			if not has_moved:
+				has_moved = true
+				tut.complete_step(1)
 			velocity.x = direction.x * SPEED * delta
 			velocity.z = direction.z * SPEED * delta
 		else:
@@ -129,6 +134,9 @@ func _input(event):
 				last_target.release_button()
 		# Handle Mouse Move
 		if event is InputEventMouseMotion and mouse_mode and not mouse_clicked:
+			if has_moved and not has_turned:
+				has_turned = true
+				tut.complete_step(2)
 			rotation.y -= event.relative.x * mouse_sens
 			$Camera3D.rotation.x -= event.relative.y * mouse_sens
 			$Camera3D.rotation.x = clamp($Camera3D.rotation.x, deg_to_rad(-60.0), deg_to_rad(60.0))
@@ -164,12 +172,19 @@ func _input(event):
 			light.visible = !light.visible
 		# Escape Key Changes Mouse Mode
 		if event.is_action_pressed("ui_escape"):
+			if has_turned and not has_paused:
+				has_paused = true
+				tut.complete_step(3)
 			if mouse_mode:
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				mouse_mode = false
+				pause_menu.visible = true
+				get_tree().paused = true
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				mouse_mode = true
+				pause_menu.visible = false
+				get_tree().paused = false
 
 
 func _on_animation_player_animation_finished(anim_name):
@@ -192,3 +207,10 @@ func _on_win_animation_player_animation_finished(anim_name):
 		mouse_mode = false
 		print("YOU WIN!")
 		#sun_anim.play("have_won")
+
+
+func _on_resume_button_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	mouse_mode = true
+	pause_menu.visible = false
+	get_tree().paused = false

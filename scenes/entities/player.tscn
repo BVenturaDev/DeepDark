@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/entities/player.gd" id="1_86lpj"]
 [ext_resource type="AudioStream" uid="uid://cf183ri7u8gq1" path="res://assets/audio/music/Socapex - Dark ambiance.wav" id="2_cc5bj"]
 [ext_resource type="AudioStream" uid="uid://cprslvx6m8vj" path="res://assets/audio/sfx/zapsplat_multimedia_game_sound_menu_click_001_76687.mp3" id="3_3pexd"]
-[ext_resource type="Script" path="res://src/gui/win_lose_menu.gd" id="4_3grsb"]
+[ext_resource type="Script" path="res://src/gui/pause_menu.gd" id="4_ft27o"]
 [ext_resource type="PackedScene" uid="uid://c7wuuko4gj1jk" path="res://scenes/gui/tutorial/SubTutorial.tscn" id="5_2kctl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5uafi"]
@@ -897,6 +897,7 @@ light_energy = 10.0
 spot_range = 400.0
 
 [node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("2_cc5bj")
 volume_db = 5.0
 autoplay = true
@@ -1034,7 +1035,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_3grsb")
+script = ExtResource("4_ft27o")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WinLose_GUI/Menu_Options"]
 layout_mode = 1
@@ -1105,13 +1106,69 @@ next/checkpoint_anim = &"finished"
 
 [node name="SubTutorial" parent="." instance=ExtResource("5_2kctl")]
 
-[node name="MarginContainer5" parent="SubTutorial/PanelContainer/MarginContainer/VBoxContainer" index="5"]
+[node name="Pause_Menu" type="Control" parent="."]
+process_mode = 3
 visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_ft27o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause_Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 50.0
+offset_right = 100.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+
+[node name="ResumeButton" type="Button" parent="Pause_Menu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Resume"
+
+[node name="ReloadButton" type="Button" parent="Pause_Menu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Reload Last
+Checkpoint"
+
+[node name="RestartButton" type="Button" parent="Pause_Menu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Restart"
+
+[node name="OptionsButton" type="Button" parent="Pause_Menu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Options
+"
+
+[node name="MenuButton" type="Button" parent="Pause_Menu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Menu
+"
 
 [connection signal="animation_finished" from="WinLose_GUI/Water/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="WinLose_GUI/Sun/WinAnimationPlayer" to="." method="_on_win_animation_player_animation_finished"]
 [connection signal="pressed" from="WinLose_GUI/Menu_Options/VBoxContainer/ReloadButton" to="WinLose_GUI/Menu_Options" method="_on_reload_button_pressed"]
 [connection signal="pressed" from="WinLose_GUI/Menu_Options/VBoxContainer/RestartButton" to="WinLose_GUI/Menu_Options" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="WinLose_GUI/Menu_Options/VBoxContainer/MenuButton" to="WinLose_GUI/Menu_Options" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Pause_Menu/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Pause_Menu/VBoxContainer/ReloadButton" to="Pause_Menu" method="_on_reload_button_pressed"]
+[connection signal="pressed" from="Pause_Menu/VBoxContainer/RestartButton" to="Pause_Menu" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Pause_Menu/VBoxContainer/OptionsButton" to="Pause_Menu" method="_on_options_button_pressed"]
+[connection signal="pressed" from="Pause_Menu/VBoxContainer/MenuButton" to="Pause_Menu" method="_on_menu_button_pressed"]
 
 [editable path="SubTutorial"]

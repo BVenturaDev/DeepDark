@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7wuuko4gj1jk"]
+[gd_scene load_steps=6 format=3 uid="uid://c7wuuko4gj1jk"]
 
 [ext_resource type="Theme" uid="uid://bk3vcts1xuss5" path="res://scenes/gui/tutorial/Sub-Tutorial.tres" id="1_faqut"]
+[ext_resource type="Script" path="res://src/gui/sub_tutorial.gd" id="1_vqhm1"]
 [ext_resource type="FontFile" uid="uid://b11ioo1hyx5jc" path="res://scenes/gui/tutorial/Anta-Regular copy.ttf" id="2_khbpg"]
 [ext_resource type="Texture2D" uid="uid://buar6atra5iq6" path="res://scenes/gui/tutorial/Check circle outline@3x.png" id="3_8epvc"]
 
@@ -17,6 +18,7 @@ offset_bottom = 432.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
+script = ExtResource("1_vqhm1")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -74,6 +76,9 @@ texture = ExtResource("3_8epvc")
 expand_mode = 2
 stretch_mode = 4
 
+[node name="Timer1" type="Timer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+wait_time = 3.0
+
 [node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = -8
@@ -105,6 +110,9 @@ texture = ExtResource("3_8epvc")
 expand_mode = 2
 stretch_mode = 4
 
+[node name="Timer2" type="Timer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+wait_time = 3.0
+
 [node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = -8
@@ -135,6 +143,9 @@ layout_mode = 2
 texture = ExtResource("3_8epvc")
 expand_mode = 2
 stretch_mode = 4
+
+[node name="Timer3" type="Timer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer3"]
+wait_time = 3.0
 
 [node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -175,6 +186,9 @@ texture = ExtResource("3_8epvc")
 expand_mode = 2
 stretch_mode = 4
 
+[node name="Timer4" type="Timer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer4"]
+wait_time = 3.0
+
 [node name="MarginContainer5" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
@@ -210,7 +224,17 @@ theme_override_colors/font_color = Color(1, 0.109804, 0.176471, 1)
 text = "WARNING: The lights will attract creatures to you"
 
 [node name="TextureRect5" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer5/SmallPanelContainer/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("3_8epvc")
 expand_mode = 2
 stretch_mode = 4
+
+[node name="Timer5" type="Timer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer5"]
+wait_time = 3.0
+
+[connection signal="timeout" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/Timer1" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/Timer2" to="." method="_on_timer_2_timeout"]
+[connection signal="timeout" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer3/Timer3" to="." method="_on_timer_3_timeout"]
+[connection signal="timeout" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer4/Timer4" to="." method="_on_timer_4_timeout"]
+[connection signal="timeout" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer5/Timer5" to="." method="_on_timer_5_timeout"]
