@@ -53,7 +53,7 @@ func go_to_random_location(distance):
 			global_transform = start_pos
 			just_attacked = false
 			timer.start()
-			break
+			return
 		var new_pos = Vector3()
 		new_pos.x = randf_range(global_position.x - distance, global_position.x + distance)
 		new_pos.y = randf_range(global_position.y - distance, global_position.y + distance)
@@ -65,7 +65,7 @@ func go_to_random_location(distance):
 			print(new_pos)
 			has_target = true
 			swim_to_pos(new_pos)
-			break
+			return
 			
 func swim_to_pos(target_pos):
 	swim_target = target_pos

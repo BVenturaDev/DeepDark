@@ -1,23 +1,35 @@
-[gd_scene load_steps=7 format=3 uid="uid://co3lx5m3o2ad0"]
+[gd_scene load_steps=10 format=3 uid="uid://co3lx5m3o2ad0"]
 
 [ext_resource type="Environment" uid="uid://d0hatdbql1sul" path="res://environments/cave_environment.tres" id="1_7si6x"]
 [ext_resource type="PackedScene" uid="uid://c22ahfk2dg3k6" path="res://scenes/entities/submarine.tscn" id="2_0ugjn"]
 [ext_resource type="PackedScene" uid="uid://dp03helv6sgtr" path="res://scenes/props/caves/cave_01.tscn" id="3_5ph0q"]
-[ext_resource type="PackedScene" uid="uid://58kf5k2qri3a" path="res://scenes/entities/eel.tscn" id="3_ad8pp"]
+[ext_resource type="PackedScene" uid="uid://dxkyo52iotjmj" path="res://scenes/props/caves/cave_03.tscn" id="4_dxpud"]
 [ext_resource type="PackedScene" uid="uid://dhbkb0cu0ud12" path="res://scenes/utilities/checkpoint.tscn" id="5_8gup4"]
-
-[sub_resource type="FogMaterial" id="FogMaterial_rxqgl"]
-density = -8.0
-albedo = Color(0, 0, 0, 1)
+[ext_resource type="PackedScene" uid="uid://j8g7efinx67s" path="res://scenes/props/obstacles/cave_plug.tscn" id="5_w6rqq"]
+[ext_resource type="PackedScene" uid="uid://bedsvfkndx6qo" path="res://scenes/props/obstacles/pillar.tscn" id="6_8htmk"]
+[ext_resource type="PackedScene" uid="uid://cryuvxir1k3f5" path="res://scenes/props/obstacles/spike.tscn" id="7_jhgfg"]
+[ext_resource type="PackedScene" uid="uid://btviixb2yc4ou" path="res://scenes/props/caves/cave_02.tscn" id="9_y14ds"]
 
 [node name="main_level" type="Node3D"]
 
 [node name="Checkpoint0" parent="." instance=ExtResource("5_8gup4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.5539, 1.74936, -2.34885)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -127.823, 1.74936, -2.34885)
 
 [node name="Checkpoint1" parent="." instance=ExtResource("5_8gup4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -291.858, 1.74936, -2.34885)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -679.802, 1.74936, -2.34885)
 checkpoint_id = 1
+
+[node name="Checkpoint2" parent="." instance=ExtResource("5_8gup4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1078.46, 0, -400)
+checkpoint_id = 2
+
+[node name="Checkpoint3" parent="." instance=ExtResource("5_8gup4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1291.78, 246.177, -717.742)
+checkpoint_id = 2
+
+[node name="Checkpoint4" parent="." instance=ExtResource("5_8gup4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1488.87, 505.682, -647.043)
+checkpoint_id = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_7si6x")
@@ -25,20 +37,84 @@ environment = ExtResource("1_7si6x")
 [node name="Submarine" parent="." instance=ExtResource("2_0ugjn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 0)
 
-[node name="Eel" parent="." instance=ExtResource("3_ad8pp")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12.2331, -32.4032, -32.8222)
-
 [node name="caves" type="Node3D" parent="."]
 
-[node name="cave_01" parent="caves" instance=ExtResource("3_5ph0q")]
+[node name="Cave03_1" parent="caves" instance=ExtResource("4_dxpud")]
 
-[node name="cave_02" parent="caves" instance=ExtResource("3_5ph0q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 0)
+[node name="CavePlug" parent="caves/Cave03_1" instance=ExtResource("5_w6rqq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.2356, 0, 0)
 
-[node name="cave_03" parent="caves" instance=ExtResource("3_5ph0q")]
+[node name="Pillar" parent="caves/Cave03_1" instance=ExtResource("6_8htmk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3095, 0, 0)
+
+[node name="Spike" parent="caves/Cave03_1" instance=ExtResource("7_jhgfg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.975, 7.6034, 33.8892)
+
+[node name="Spike2" parent="caves/Cave03_1" instance=ExtResource("7_jhgfg")]
+transform = Transform3D(1, 0, 0, 0, -0.582747, -0.812654, 0, 0.812654, -0.582747, -34.1198, -7.89583, 11.8916)
+
+[node name="cave_01_1" parent="caves" instance=ExtResource("3_5ph0q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0)
 
-[node name="FogVolume" type="FogVolume" parent="."]
-visible = false
-size = Vector3(600, 200, 200)
-material = SubResource("FogMaterial_rxqgl")
+[node name="cave_01_2" parent="caves" instance=ExtResource("3_5ph0q")]
+transform = Transform3D(1, 0, 0, 0, 0.797994, 0.602665, 0, -0.602665, 0.797994, -400, 0, 0)
+
+[node name="Spike" parent="caves/cave_01_2" instance=ExtResource("7_jhgfg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49683, -16.2614, -23.6014)
+
+[node name="cave_01_4" parent="caves" instance=ExtResource("3_5ph0q")]
+transform = Transform3D(1, 0, 0, 0, 0.797994, 0.602665, 0, -0.602665, 0.797994, -1000, 0, -400)
+
+[node name="Spike" parent="caves/cave_01_4" instance=ExtResource("7_jhgfg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49683, -16.2614, -23.6014)
+
+[node name="cave_01_3" parent="caves" instance=ExtResource("3_5ph0q")]
+transform = Transform3D(1, 0, 0, 0, -0.982522, -0.186147, 0, 0.186147, -0.982522, -600, 0, 0)
+
+[node name="Pillar" parent="caves/cave_01_3" instance=ExtResource("6_8htmk")]
+transform = Transform3D(0.287508, -1.14245e-08, 0.692704, 2.98023e-08, 0.75, 1.77636e-15, -0.692704, 2.75256e-08, 0.287508, 51.9879, -13.8081, -4.02834)
+
+[node name="Cave02_1" parent="caves" instance=ExtResource("9_y14ds")]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -800, 0, 0)
+
+[node name="Cave03_2" parent="caves" instance=ExtResource("4_dxpud")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -800, 0, -200)
+
+[node name="Pillar" parent="caves/Cave03_2" instance=ExtResource("6_8htmk")]
+transform = Transform3D(0.243254, 0, 1.98515, 0, 2, 0, -1.98515, 0, 0.243254, 12.3267, -6.30597, 1.51044)
+
+[node name="Cave02_2" parent="caves" instance=ExtResource("9_y14ds")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -800, 0, -400)
+
+[node name="Tilt1" type="Node3D" parent="caves"]
+transform = Transform3D(1, 0, 0, 0, 0.856582, -0.51601, 0, 0.51601, 0.856582, -1100, 0, -400)
+
+[node name="Cave02" parent="caves/Tilt1" instance=ExtResource("9_y14ds")]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, 1, 1, 4.37114e-08, -4.37114e-08, -100, 0, 0)
+
+[node name="cave_01" parent="caves/Tilt1" instance=ExtResource("3_5ph0q")]
+transform = Transform3D(-4.37114e-08, -0.864389, 0.502824, 0, 0.502824, 0.864389, -1, 0, 0, -100, -1.52588e-05, -200)
+
+[node name="Tilt2" type="Node3D" parent="caves/Tilt1"]
+transform = Transform3D(0.895106, 0.445854, 0, -0.445854, 0.895106, 0, 0, 0, 1, -100, 0, -400)
+
+[node name="Cave02" parent="caves/Tilt1/Tilt2" instance=ExtResource("9_y14ds")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="cave_01" parent="caves/Tilt1/Tilt2" instance=ExtResource("3_5ph0q")]
+transform = Transform3D(1, 2.98023e-08, -5.96046e-08, -1.49012e-08, -0.847381, 0.530985, 0, -0.530984, -0.847382, -200, 0.00012207, 6.10352e-05)
+
+[node name="Tilt3" type="Node3D" parent="caves/Tilt1/Tilt2"]
+transform = Transform3D(0.99998, 0.00596996, -0.00185215, -0.00458363, 0.901801, 0.432127, 0.0042499, -0.43211, 0.901811, -400, 0.000366211, -6.10352e-05)
+
+[node name="Cave02" parent="caves/Tilt1/Tilt2/Tilt3" instance=ExtResource("9_y14ds")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Cave03" parent="caves/Tilt1/Tilt2/Tilt3/Cave02" instance=ExtResource("4_dxpud")]
+transform = Transform3D(1, 1.86265e-09, 3.72529e-09, -3.72529e-09, 1, 0, 7.45058e-09, 0, 1, -200, 0, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="caves/Tilt1/Tilt2/Tilt3"]
+transform = Transform3D(1, -2.08616e-07, 7.07805e-08, -6.51926e-09, -0.315152, 0.949041, 0, -0.949041, -0.315152, 0.000732422, 407.298, -52.7424)
+light_energy = 20.0
+shadow_enabled = true
+spot_range = 1000.0

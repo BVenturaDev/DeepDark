@@ -25,3 +25,6 @@ https://www.youtube.com/watch?v=0MHY2TDeMLM
 
 - Textures -
 https://freepbr.com/product/cave-floor-pbr-material-2/
+
+- Fonts -
+https://fonts.google.com/specimen/Anta?stroke=Sans+Serif&subset=latin

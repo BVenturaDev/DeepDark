@@ -914,7 +914,6 @@ libraries = {
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)
 
 [node name="Headlights" type="Node3D" parent="."]
-visible = false
 
 [node name="SpotLight3DHeadlight" type="SpotLight3D" parent="Headlights"]
 transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, -2.1, 1.029, 0)
@@ -2317,7 +2316,7 @@ stream = ExtResource("18_ghmmf")
 
 [node name="SinkingStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_20m7t")
-volume_db = -20.0
+volume_db = -10.0
 
 [node name="LeakStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_s71wi")
