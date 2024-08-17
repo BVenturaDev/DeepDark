@@ -1,7 +1,5 @@
 extends Control
 
-@onready var pause_timer = $PauseTimer
-
 func _on_restart_button_pressed():
 	SystemGlobal.restart_game()
 

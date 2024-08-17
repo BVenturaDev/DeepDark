@@ -191,16 +191,6 @@ func _on_animation_player_animation_finished(anim_name):
 		is_hunting = false
 		go_to_random_location(ATTACK_SWIM_DISTANCE)
 
-
-func _on_area_3d_body_entered(body):
-	#if body == SystemGlobal.sub and is_hunting and not just_attacked:
-	pass
-		#_attack()
-	#elif velocity.length() < 1.0:
-	#elif not is_hunting:
-		#go_to_random_location(SWIM_DISTANCE)
-
-
 func _on_growl_timer_timeout():
 	if not is_hunting:
 		idle_sfx.play()
