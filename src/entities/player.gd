@@ -14,6 +14,8 @@ extends CharacterBody3D
 @onready var checkpoint_anim = $Checkpoint_GUI/CheckpointAnimationPlayer
 @onready var tut = $SubTutorial
 @onready var pause_menu = $Pause_Menu
+@onready var line1 = $Line1AudioStreamPlayer
+@onready var line2 = $Line2AudioStreamPlayer
 
 const SPEED = 150.0
 const STOP_SPEED = 50.0
@@ -59,6 +61,8 @@ func under_water():
 func _ready():
 	SystemGlobal.player = self
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if SystemGlobal.checkpoint_load:
+		line1.stop()
 	
 func _physics_process(delta):
 	if not dead and not won:
@@ -209,3 +213,7 @@ func _on_resume_button_pressed():
 	mouse_mode = true
 	pause_menu.visible = false
 	get_tree().paused = false
+
+func play_line_2():
+	line1.stop()
+	line2.play()

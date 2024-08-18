@@ -1,6 +1,6 @@
 extends Node
 
-const DEBUG_MODE = true
+const DEBUG_MODE = false
 
 var sub
 var sonar

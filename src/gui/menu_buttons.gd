@@ -2,6 +2,7 @@ extends Control
 
 @onready var slider = $SettingsPanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/HSlider
 
+
 func _ready():
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -20 + (slider.value - slider.max_value))
 
