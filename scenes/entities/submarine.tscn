@@ -1,11 +1,11 @@
-[gd_scene load_steps=84 format=3 uid="uid://c22ahfk2dg3k6"]
+[gd_scene load_steps=80 format=3 uid="uid://c22ahfk2dg3k6"]
 
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="1_0nxjb"]
-[ext_resource type="Material" uid="uid://cxcsdj6qq0kfx" path="res://materials/entities/submarine/sub_hull.tres" id="1_e21wt"]
 [ext_resource type="Material" uid="uid://bcy3miek1y1dy" path="res://materials/entities/submarine/sub_glass.tres" id="2_qn868"]
-[ext_resource type="Material" uid="uid://cbij6u086jog0" path="res://materials/entities/submarine/sub_console.tres" id="3_mvo7a"]
+[ext_resource type="Material" uid="uid://dv2tjwtu3qix8" path="res://materials/entities/submarine/sub_exterior.tres" id="4_demp7"]
 [ext_resource type="PackedScene" uid="uid://bts1wjevjq4hc" path="res://scenes/entities/control_stick.tscn" id="5_51deg"]
 [ext_resource type="PackedScene" uid="uid://ilhuhfajpb2p" path="res://scenes/entities/player.tscn" id="5_hxsbj"]
+[ext_resource type="Material" uid="uid://bwc2kyxsfqvf6" path="res://materials/entities/submarine/sub_interior.tres" id="5_j430t"]
 [ext_resource type="PackedScene" uid="uid://dedrie567uqc2" path="res://scenes/entities/screen.tscn" id="5_s7gew"]
 [ext_resource type="PackedScene" uid="uid://bahc3m2a6mh32" path="res://scenes/entities/ascent_control.tscn" id="6_8pn0w"]
 [ext_resource type="PackedScene" uid="uid://ddf2i5yx54j38" path="res://scenes/entities/sonar.tscn" id="6_8w5aq"]
@@ -16,36 +16,19 @@
 [ext_resource type="PackedScene" uid="uid://ntkrya1s3uf" path="res://scenes/entities/speed_screen.tscn" id="9_yev2q"]
 [ext_resource type="Script" path="res://src/entities/buttons/prevcam_button.gd" id="10_tj3o4"]
 [ext_resource type="Script" path="res://src/entities/buttons/nextview_button.gd" id="13_757uo"]
+[ext_resource type="Texture2D" uid="uid://b42hdv2ugjb6n" path="res://assets/img/gui/Lightbulb.png" id="14_ga240"]
 [ext_resource type="Script" path="res://src/entities/buttons/prevview_button.gd" id="14_hg5x1"]
 [ext_resource type="PackedScene" uid="uid://dqt4kqokshrvb" path="res://scenes/entities/engine.tscn" id="15_02jxa"]
 [ext_resource type="Material" uid="uid://bncivlph843gf" path="res://materials/entities/submarine/sub_water.tres" id="16_4flog"]
+[ext_resource type="Texture2D" uid="uid://dmokql6d55lpo" path="res://assets/img/gui/Arrow_Grunge_Icon.png" id="17_ij8g3"]
 [ext_resource type="AudioStream" uid="uid://b47umapqibwd3" path="res://assets/audio/sfx/zapsplat_vehicles_ship_sinking_metal_scrape_vibrate_groaning_movement_internal_001_45987.mp3" id="18_20m7t"]
 [ext_resource type="AudioStream" uid="uid://25r81sjdciw7" path="res://assets/audio/sfx/zapsplat_vehicles_ship_large_scrape_rock_grounded_underwater_perspective_24867.mp3" id="18_ghmmf"]
 [ext_resource type="AudioStream" uid="uid://didjetm8r2k27" path="res://assets/audio/sfx/tom_chapman_transport_boat_sinking_ocean_liner_internal_ambience_alarm_twisting_creaking_metal_screaming_people__electrical_short_circuit_created.mp3" id="19_s71wi"]
 [ext_resource type="AudioStream" uid="uid://cejnilk26leo6" path="res://assets/audio/sfx/zapsplat_vehicles_ship_internal_metal_wall_floor_or_surface_vibrate_rumble_rattle_001_71418.mp3" id="21_t0dxg"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_47y4j"]
-material = ExtResource("1_e21wt")
-flip_faces = true
-cap_top = false
-cap_bottom = false
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_dthu4"]
-material = ExtResource("1_e21wt")
-cap_top = false
-cap_bottom = false
-
-[sub_resource type="SphereMesh" id="SphereMesh_i6t8q"]
-material = ExtResource("2_qn868")
-height = 0.5
-is_hemisphere = true
-
-[sub_resource type="SphereMesh" id="SphereMesh_xjcyq"]
-material = ExtResource("1_e21wt")
-height = 0.5
-is_hemisphere = true
+[ext_resource type="PackedScene" uid="uid://cylmrh6qy1t52" path="res://assets/models/entities/submarine/exports/submarine.glb" id="24_7p7ja"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3e0nu"]
+radius = 0.6
 height = 3.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8dfk3"]
@@ -54,20 +37,8 @@ size = Vector3(2.03418, 0.0556641, 1.00694)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nqfmp"]
 size = Vector3(1.12193, 0.0556641, 1.00694)
 
-[sub_resource type="BoxMesh" id="BoxMesh_bklx0"]
-material = ExtResource("3_mvo7a")
-size = Vector3(0.1, 0.3, 0.1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_xlp7x"]
-material = ExtResource("3_mvo7a")
-size = Vector3(0.1, 0.3, 0.4)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_x6j71"]
 size = Vector3(0.304871, 0.567078, 0.431992)
-
-[sub_resource type="BoxMesh" id="BoxMesh_0yeuf"]
-material = ExtResource("3_mvo7a")
-size = Vector3(0.2, 0.5, 0.6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_whfks"]
 size = Vector3(0.155548, 0.295837, 0.313721)
@@ -681,30 +652,26 @@ platform_floor_layers = 4294967042
 platform_wall_layers = 2
 script = ExtResource("1_0nxjb")
 
-[node name="Node3DMeshes" type="Node3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+[node name="submarine_meshes" parent="." instance=ExtResource("24_7p7ja")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="MeshInstanteTube" type="MeshInstance3D" parent="Node3DMeshes"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
-ignore_occlusion_culling = true
-mesh = SubResource("CylinderMesh_47y4j")
-skeleton = NodePath("../..")
+[node name="sub_window" parent="submarine_meshes" index="0"]
+material_override = ExtResource("2_qn868")
 
-[node name="MeshInstanteHull" type="MeshInstance3D" parent="Node3DMeshes"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
-ignore_occlusion_culling = true
-mesh = SubResource("CylinderMesh_dthu4")
-skeleton = NodePath("../..")
+[node name="sub_exterior" parent="submarine_meshes" index="1"]
+material_override = ExtResource("4_demp7")
 
-[node name="MeshInstanceGlass" type="MeshInstance3D" parent="Node3DMeshes"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.99, 0, 0)
-mesh = SubResource("SphereMesh_i6t8q")
-skeleton = NodePath("../..")
+[node name="sub_propeller" parent="submarine_meshes" index="2"]
+material_override = ExtResource("4_demp7")
 
-[node name="MeshInstanceRear" type="MeshInstance3D" parent="Node3DMeshes"]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.99, 0, 0)
-mesh = SubResource("SphereMesh_xjcyq")
-skeleton = NodePath("../..")
+[node name="sub_interior" parent="submarine_meshes" index="3"]
+material_override = ExtResource("5_j430t")
+
+[node name="sub_stand" parent="submarine_meshes" index="4"]
+material_override = ExtResource("5_j430t")
+
+[node name="sub_screen_stand" parent="submarine_meshes" index="5"]
+material_override = ExtResource("5_j430t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0, 2, 0, 0, 0)
@@ -723,7 +690,7 @@ transform = Transform3D(-8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0, 2, -2.048
 shape = SubResource("BoxShape3D_nqfmp")
 
 [node name="CollisionShapeStern" type="CollisionShape3D" parent="Interior"]
-transform = Transform3D(-8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0, 2, 2.04652, 0, 3.64328e-08)
+transform = Transform3D(-8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0, 2, 0.827172, -5.32994e-08, 3.64328e-08)
 shape = SubResource("BoxShape3D_nqfmp")
 
 [node name="CollisionShapeRoof" type="CollisionShape3D" parent="Interior"]
@@ -739,17 +706,9 @@ transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 
 shape = SubResource("BoxShape3D_8dfk3")
 
 [node name="Node3DControlConsole" type="StaticBody3D" parent="Interior"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -1.66931, -0.970406, 7.2968e-08)
+transform = Transform3D(1.99015, -0.198257, 0, 0.198257, 1.99015, 0, 0, 0, 2, -1.72133, -0.91983, 1.30521e-07)
 collision_layer = 2
 collision_mask = 2
-
-[node name="MeshInstanceConsolePost" type="MeshInstance3D" parent="Interior/Node3DControlConsole"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000600696, 0.134641, -2.62581e-11)
-mesh = SubResource("BoxMesh_bklx0")
-
-[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/Node3DControlConsole"]
-transform = Transform3D(0.891007, -0.453991, 0, 0.453991, 0.891007, 0, 0, 0, 1, -0.0254803, 0.345574, 1.11378e-09)
-mesh = SubResource("BoxMesh_xlp7x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/Node3DControlConsole"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.237898, 0)
@@ -765,27 +724,46 @@ transform = Transform3D(-4.37114e-08, 0.880014, 0.474948, 0, 0.474948, -0.880014
 transform = Transform3D(0.226108, 0.445954, 0, -0.445954, 0.226108, 0, 0, 0, 0.5, 0.0213453, 0.368571, -0.159815)
 
 [node name="compass" parent="Interior/Node3DControlConsole" instance=ExtResource("8_b16k3")]
-transform = Transform3D(-4.37114e-09, 0.0873772, -0.0486335, 0, 0.0486335, 0.0873772, 0.1, 3.81938e-09, -2.12584e-09, -0.0189614, 0.469103, -0.122735)
+transform = Transform3D(-4.37114e-09, 0.0873772, -0.0486335, 0, 0.0486335, 0.0873772, 0.1, 3.81938e-09, -2.12584e-09, -0.0299165, 0.463006, -0.122735)
 
 [node name="speed_screen" parent="Interior/Node3DControlConsole" instance=ExtResource("9_yev2q")]
 transform = Transform3D(-1.09278e-08, 0.218443, 0.121584, 0, 0.121584, -0.218443, -0.25, -9.54845e-09, -5.3146e-09, -0.0265962, 0.453287, 0.0603069)
 
+[node name="Screen" parent="Interior" instance=ExtResource("5_s7gew")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Node3DCameras" parent="Interior/Screen/SubViewport" index="1"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Camera3DPort" parent="Interior/Screen/SubViewport/Node3DCameras" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.01, 0, 0.654)
+
+[node name="Camera3DStarboard" parent="Interior/Screen/SubViewport/Node3DCameras" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.01, 0, 0.654)
+
+[node name="Camera3DStern" parent="Interior/Screen/SubViewport/Node3DCameras" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.60597)
+
+[node name="Camera3DFloor" parent="Interior/Screen/SubViewport/Node3DCameras" index="3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.23516e-22, -1.22834, 5.36922e-08)
+
+[node name="Camera3DRoof" parent="Interior/Screen/SubViewport/Node3DCameras" index="4"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -4.55693e-15, 1.19249, -5.21252e-08)
+
+[node name="SonarScreen" parent="Interior" instance=ExtResource("6_8w5aq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
 [node name="ScreenButtonPanel" type="StaticBody3D" parent="Interior"]
-transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -0.785964, 0, -1.02748)
+transform = Transform3D(-1.359, -0.22011, 1.45075, -0.319762, 1.97427, 0, -1.43209, -0.231947, -1.37671, -1.625, -0.102, -0.724)
 collision_layer = 2
 collision_mask = 2
 
-[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/ScreenButtonPanel"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("BoxMesh_0yeuf")
-skeleton = NodePath("../..")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/ScreenButtonPanel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024826, 0, 0)
+transform = Transform3D(1, 7.45058e-09, 0, 7.45058e-09, 1, 7.45058e-09, 2.98023e-08, 0, 1, 0.025, 0.1, 0)
 shape = SubResource("BoxShape3D_whfks")
 
 [node name="CamLightButton" type="StaticBody3D" parent="Interior/ScreenButtonPanel" groups=["interactable"]]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.0513291, -2.24367e-09, 0)
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.0513291, -2.24367e-09, 0)
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("8_s51yn")
@@ -797,6 +775,11 @@ mesh = SubResource("CylinderMesh_nofn3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
 mesh = SubResource("CylinderMesh_y5jo7")
 
+[node name="Decal" type="Decal" parent="Interior/ScreenButtonPanel/CamLightButton/MeshInstanceButton"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.015596, 0)
+size = Vector3(0.075, 0.075, 0.075)
+texture_albedo = ExtResource("14_ga240")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/ScreenButtonPanel/CamLightButton"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
 shape = SubResource("CylinderShape3D_tm4yu")
@@ -807,7 +790,7 @@ libraries = {
 }
 
 [node name="NextCam_Button" parent="Interior/ScreenButtonPanel" instance=ExtResource("7_ebixw")]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.0513291, -2.24367e-09, 0.095367)
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.0513291, -2.24367e-09, 0.095367)
 script = ExtResource("9_lmccr")
 
 [node name="MeshInstanceBase" parent="Interior/ScreenButtonPanel/NextCam_Button" index="0"]
@@ -816,8 +799,12 @@ mesh = SubResource("CylinderMesh_1sye5")
 [node name="MeshInstanceButton" parent="Interior/ScreenButtonPanel/NextCam_Button" index="1"]
 mesh = SubResource("CylinderMesh_lwh3m")
 
+[node name="Decal" parent="Interior/ScreenButtonPanel/NextCam_Button/MeshInstanceButton" index="0"]
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_ij8g3")
+
 [node name="PrevioustCam_Button" type="StaticBody3D" parent="Interior/ScreenButtonPanel" groups=["interactable"]]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.051, 0, -0.095)
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.051, 0, -0.095)
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("10_tj3o4")
@@ -829,6 +816,11 @@ mesh = SubResource("CylinderMesh_lxj3d")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
 mesh = SubResource("CylinderMesh_et26b")
 
+[node name="Decal" type="Decal" parent="Interior/ScreenButtonPanel/PrevioustCam_Button/MeshInstanceButton"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.015596, 0)
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_ij8g3")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/ScreenButtonPanel/PrevioustCam_Button"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
 shape = SubResource("CylinderShape3D_tm4yu")
@@ -838,46 +830,17 @@ libraries = {
 "": SubResource("AnimationLibrary_ka5ia")
 }
 
-[node name="Screen" parent="Interior" instance=ExtResource("5_s7gew")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.22734e-08, 0, -0.967103)
-
-[node name="Node3DCameras" parent="Interior/Screen/SubViewport" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.967103, 0, 2.4869e-14)
-
-[node name="Camera3DPort" parent="Interior/Screen/SubViewport/Node3DCameras" index="0"]
-transform = Transform3D(4.37114e-08, 0, 1, 0, 1, 0, 1, 0, -4.37114e-08, -2.01, 0, 0)
-
-[node name="Camera3DStarboard" parent="Interior/Screen/SubViewport/Node3DCameras" index="1"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.10028, 0, 4.38336e-09)
-
-[node name="Camera3DStern" parent="Interior/Screen/SubViewport/Node3DCameras" index="2"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.970696, 0, 3.11236)
-
-[node name="Camera3DFloor" parent="Interior/Screen/SubViewport/Node3DCameras" index="3"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.971, -1.03799, 4.53718e-08)
-
-[node name="Camera3DRoof" parent="Interior/Screen/SubViewport/Node3DCameras" index="4"]
-transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -0.971, 1.038, 0)
-
-[node name="SonarScreen" parent="Interior" instance=ExtResource("6_8w5aq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0.967)
-
 [node name="SonarButtonPanel" type="StaticBody3D" parent="Interior"]
-transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -0.786, 0, 1.027)
+transform = Transform3D(-1.3601, -0.220628, -1.44964, -0.320245, 1.97419, 0, 1.43094, 0.23212, -1.37787, -1.62467, -0.102044, 0.724034)
 collision_layer = 2
 collision_mask = 2
 
-[node name="MeshInstanceConsole" type="MeshInstance3D" parent="Interior/SonarButtonPanel"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("BoxMesh_0yeuf")
-skeleton = NodePath("../..")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/SonarButtonPanel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024826, 0, 0)
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0.025, 0.1, 0)
 shape = SubResource("BoxShape3D_whfks")
 
 [node name="NextView_Button" parent="Interior/SonarButtonPanel" instance=ExtResource("7_ebixw")]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.051, 0, 0.075)
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.051, 0, 0.075)
 script = ExtResource("13_757uo")
 
 [node name="MeshInstanceBase" parent="Interior/SonarButtonPanel/NextView_Button" index="0"]
@@ -886,8 +849,12 @@ mesh = SubResource("CylinderMesh_2sw6d")
 [node name="MeshInstanceButton" parent="Interior/SonarButtonPanel/NextView_Button" index="1"]
 mesh = SubResource("CylinderMesh_ttd0f")
 
+[node name="Decal" parent="Interior/SonarButtonPanel/NextView_Button/MeshInstanceButton" index="0"]
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_ij8g3")
+
 [node name="PrevioustView_Button" type="StaticBody3D" parent="Interior/SonarButtonPanel" groups=["interactable"]]
-transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, -0.051, 0, -0.075)
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.051, 0, -0.075)
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("14_hg5x1")
@@ -899,6 +866,11 @@ mesh = SubResource("CylinderMesh_85hun")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
 mesh = SubResource("CylinderMesh_d6cng")
 
+[node name="Decal" type="Decal" parent="Interior/SonarButtonPanel/PrevioustView_Button/MeshInstanceButton"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.015596, 0)
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_ij8g3")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interior/SonarButtonPanel/PrevioustView_Button"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
 shape = SubResource("CylinderShape3D_tm4yu")
@@ -909,14 +881,15 @@ libraries = {
 }
 
 [node name="Engine" parent="Interior" instance=ExtResource("15_02jxa")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Player" parent="." instance=ExtResource("5_hxsbj")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.238117, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.586658, -0.238117, 2.56436e-08)
 
 [node name="Headlights" type="Node3D" parent="."]
 
 [node name="SpotLight3DHeadlight" type="SpotLight3D" parent="Headlights"]
-transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, -2.1, 1.029, 0)
+transform = Transform3D(-4.37114e-08, 0.0152711, 0.999883, 0, 0.999883, -0.0152711, -1, -6.67522e-10, -4.37063e-08, -2.2425, 1.12743, 6.22895e-09)
 light_energy = 20.0
 shadow_enabled = true
 spot_range = 1000.0
@@ -2331,6 +2304,7 @@ stream = ExtResource("21_t0dxg")
 [connection signal="body_exited" from="AggroArea3D" to="." method="_on_aggro_area_3d_body_exited"]
 [connection signal="timeout" from="Eel_Update_Timer" to="." method="_on_eel_update_timer_timeout"]
 
-[editable path="Interior/ScreenButtonPanel/NextCam_Button"]
+[editable path="submarine_meshes"]
 [editable path="Interior/Screen"]
+[editable path="Interior/ScreenButtonPanel/NextCam_Button"]
 [editable path="Interior/SonarButtonPanel/NextView_Button"]

@@ -18,7 +18,7 @@ func _ready():
 	SystemGlobal.sonar = self
 	
 	# Setup Screen
-	$MeshInstanceScreen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
+	$sub_sonar_screen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
 	timer.connect("timeout", _on_timer_timeout)
 
 func _on_timer_timeout():

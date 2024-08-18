@@ -13,7 +13,7 @@ func _ready():
 		SystemGlobal.screen = self
 		
 		# Setup Screen
-		$MeshInstanceScreen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
+		$sub_screen.get_active_material(0).set("shader_parameter/screen_tex", $SubViewport.get_texture())
 		
 		# Activate Cameras
 		cameras.append_array($SubViewport/Node3DCameras.get_children())

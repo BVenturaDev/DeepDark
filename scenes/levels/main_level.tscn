@@ -45,7 +45,7 @@ checkpoint_id = 4
 environment = ExtResource("1_7si6x")
 
 [node name="Submarine" parent="." instance=ExtResource("2_0ugjn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.9999, -0.283936, 0.00547791)
 
 [node name="caves" type="Node3D" parent="."]
 

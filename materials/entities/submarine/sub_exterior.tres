@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://dv2tjwtu3qix8"]
+
+[ext_resource type="Texture2D" uid="uid://m1synfoopl75" path="res://assets/models/entities/submarine/exports/textures/M_SubExterior_Base_color.png" id="1_ypve4"]
+[ext_resource type="Texture2D" uid="uid://88cwdqqm1fhe" path="res://assets/models/entities/submarine/exports/textures/M_SubExterior_Mixed_AO.png" id="2_dewfp"]
+[ext_resource type="Texture2D" uid="uid://djgc67exxr20f" path="res://assets/models/entities/submarine/exports/textures/M_SubExterior_Metallic.png" id="3_i4a1d"]
+[ext_resource type="Texture2D" uid="uid://embhevyhkumm" path="res://assets/models/entities/submarine/exports/textures/M_SubExterior_Normal_OpenGL.png" id="4_85ki6"]
+[ext_resource type="Texture2D" uid="uid://csullcbdccay8" path="res://assets/models/entities/submarine/exports/textures/M_SubExterior_Roughness.png" id="5_d72ge"]
+
+[resource]
+albedo_texture = ExtResource("1_ypve4")
+metallic = 1.0
+metallic_texture = ExtResource("3_i4a1d")
+roughness_texture = ExtResource("5_d72ge")
+normal_enabled = true
+normal_texture = ExtResource("4_85ki6")
+ao_enabled = true
+ao_texture = ExtResource("2_dewfp")

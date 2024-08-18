@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://daedlhkk5touc"]
+[gd_scene load_steps=16 format=3 uid="uid://daedlhkk5touc"]
 
 [ext_resource type="Script" path="res://src/entities/buttons/headlights_button.gd" id="1_snmkk"]
+[ext_resource type="Texture2D" uid="uid://b42hdv2ugjb6n" path="res://assets/img/gui/Lightbulb.png" id="2_lr8lm"]
 
 [sub_resource type="Shader" id="Shader_xkl1j"]
 code = "shader_type spatial;
@@ -227,6 +228,11 @@ mesh = SubResource("CylinderMesh_pl67x")
 [node name="MeshInstanceButton" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
 mesh = SubResource("CylinderMesh_xl247")
+
+[node name="Decal" type="Decal" parent="MeshInstanceButton"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.015596, 0)
+size = Vector3(0.075, 0.075, 0.075)
+texture_albedo = ExtResource("2_lr8lm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)

@@ -3,8 +3,8 @@ extends StaticBody3D
 const REPAIR_SPEED = 0.1
 const MOTOR_VOLUME_MULTIPLIER = 1.0
 
-@onready var screen = $Screen/MeshInstanceScreen
-@onready var engine  = $MeshInstanceEngine
+@onready var screen = $submarine_engine_screen/sub_engine_screen
+@onready var engine  = $submarine_engine/sub_engine
 @onready var label = $SubViewport/ScreenControl/Label
 @onready var motor_sfx = $MotorStreamPlayer3D
 @onready var pump_sfx = $PumpStreamPlayer3D
