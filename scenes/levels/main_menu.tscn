@@ -1,7 +1,686 @@
-[gd_scene load_steps=6 format=3 uid="uid://bafn431jcehgh"]
+[gd_scene load_steps=86 format=3 uid="uid://bafn431jcehgh"]
 
 [ext_resource type="Environment" uid="uid://d0hatdbql1sul" path="res://environments/cave_environment.tres" id="1_tqa0m"]
-[ext_resource type="PackedScene" uid="uid://c22ahfk2dg3k6" path="res://scenes/entities/submarine.tscn" id="2_nt6cn"]
+[ext_resource type="Script" path="res://src/entities/submarine.gd" id="2_5j76o"]
+[ext_resource type="PackedScene" uid="uid://cylmrh6qy1t52" path="res://assets/models/entities/submarine/exports/submarine.glb" id="3_g2cf2"]
+[ext_resource type="Material" uid="uid://bcy3miek1y1dy" path="res://materials/entities/submarine/sub_glass.tres" id="4_judbu"]
+[ext_resource type="Material" uid="uid://dv2tjwtu3qix8" path="res://materials/entities/submarine/sub_exterior.tres" id="5_yj8yi"]
+[ext_resource type="Material" uid="uid://bwc2kyxsfqvf6" path="res://materials/entities/submarine/sub_interior.tres" id="6_03djs"]
+[ext_resource type="PackedScene" uid="uid://bts1wjevjq4hc" path="res://scenes/entities/control_stick.tscn" id="7_jg4dh"]
+[ext_resource type="PackedScene" uid="uid://bahc3m2a6mh32" path="res://scenes/entities/ascent_control.tscn" id="8_le6n3"]
+[ext_resource type="PackedScene" uid="uid://daedlhkk5touc" path="res://scenes/entities/button.tscn" id="9_6rdgb"]
+[ext_resource type="PackedScene" uid="uid://di5gi722xmsap" path="res://scenes/entities/compass.tscn" id="10_7n7yp"]
+[ext_resource type="PackedScene" uid="uid://ntkrya1s3uf" path="res://scenes/entities/speed_screen.tscn" id="11_781o3"]
+[ext_resource type="PackedScene" uid="uid://dedrie567uqc2" path="res://scenes/entities/screen.tscn" id="12_exm68"]
+[ext_resource type="PackedScene" uid="uid://ddf2i5yx54j38" path="res://scenes/entities/sonar.tscn" id="13_77lfk"]
+[ext_resource type="Script" path="res://src/entities/buttons/camlights_button.gd" id="14_qbxos"]
+[ext_resource type="Texture2D" uid="uid://b42hdv2ugjb6n" path="res://assets/img/gui/Lightbulb.png" id="15_qmkr2"]
+[ext_resource type="Script" path="res://src/entities/buttons/nextcam_button.gd" id="16_q6y5p"]
+[ext_resource type="Texture2D" uid="uid://dmokql6d55lpo" path="res://assets/img/gui/Arrow_Grunge_Icon.png" id="17_mheud"]
+[ext_resource type="Script" path="res://src/entities/buttons/prevcam_button.gd" id="18_u0eat"]
+[ext_resource type="Script" path="res://src/entities/buttons/nextview_button.gd" id="19_mebc1"]
+[ext_resource type="Script" path="res://src/entities/buttons/prevview_button.gd" id="20_ghe0x"]
+[ext_resource type="PackedScene" uid="uid://dqt4kqokshrvb" path="res://scenes/entities/engine.tscn" id="21_xnyw7"]
+[ext_resource type="Material" uid="uid://bncivlph843gf" path="res://materials/entities/submarine/sub_water.tres" id="22_4x0ot"]
+[ext_resource type="AudioStream" uid="uid://25r81sjdciw7" path="res://assets/audio/sfx/zapsplat_vehicles_ship_large_scrape_rock_grounded_underwater_perspective_24867.mp3" id="23_2lk56"]
+[ext_resource type="AudioStream" uid="uid://b47umapqibwd3" path="res://assets/audio/sfx/zapsplat_vehicles_ship_sinking_metal_scrape_vibrate_groaning_movement_internal_001_45987.mp3" id="24_7w04g"]
+[ext_resource type="AudioStream" uid="uid://didjetm8r2k27" path="res://assets/audio/sfx/tom_chapman_transport_boat_sinking_ocean_liner_internal_ambience_alarm_twisting_creaking_metal_screaming_people__electrical_short_circuit_created.mp3" id="25_oqt3v"]
+[ext_resource type="AudioStream" uid="uid://cejnilk26leo6" path="res://assets/audio/sfx/zapsplat_vehicles_ship_internal_metal_wall_floor_or_surface_vibrate_rumble_rattle_001_71418.mp3" id="26_rd3mc"]
+[ext_resource type="PackedScene" uid="uid://o7mjjrpl4fb" path="res://assets/models/entities/submarine/exports/duck.glb" id="27_tq8i8"]
+[ext_resource type="Material" uid="uid://clag8f52kmeky" path="res://materials/entities/duck.tres" id="28_5sxyg"]
+[ext_resource type="PackedScene" uid="uid://xfg1y1po7lwy" path="res://scenes/gui/menu/Menu_Buttons.tscn" id="29_b4p1o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3e0nu"]
+radius = 0.6
+height = 3.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8dfk3"]
+size = Vector3(2.03418, 0.0556641, 1.00694)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nqfmp"]
+size = Vector3(1.12193, 0.0556641, 1.00694)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x6j71"]
+size = Vector3(0.304871, 0.567078, 0.431992)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_whfks"]
+size = Vector3(0.155548, 0.295837, 0.313721)
+
+[sub_resource type="Shader" id="Shader_ywm1y"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gitln"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_ywm1y")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_43vuj"]
+next_pass = SubResource("ShaderMaterial_gitln")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nofn3"]
+material = SubResource("StandardMaterial3D_43vuj")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="Shader" id="Shader_nardv"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ll4tr"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_nardv")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bccxk"]
+next_pass = SubResource("ShaderMaterial_ll4tr")
+albedo_color = Color(0.12, 0.8, 0.29, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_y5jo7"]
+material = SubResource("StandardMaterial3D_bccxk")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tm4yu"]
+height = 0.1
+radius = 0.1
+
+[sub_resource type="Animation" id="Animation_6op6v"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstanceButton:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstanceButton:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.00746092, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstanceButton:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_ftxsj"]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstanceButton:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstanceButton:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.0220212, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstanceButton:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_0c26v"]
+resource_name = "press_button"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstanceButton:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4, 0.6, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstanceButton:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0.0220212, -0.25, 0, 0.25, 0, 0.00746092, -0.25, 0, 0.25, 0, 0.00746092, -0.25, 0, 0.25, 0, 0.022, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4, 0.6, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstanceButton:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.4, 0.6, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ka5ia"]
+_data = {
+"RESET": SubResource("Animation_6op6v"),
+"idle": SubResource("Animation_ftxsj"),
+"press_button": SubResource("Animation_0c26v")
+}
+
+[sub_resource type="Shader" id="Shader_ai08m"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dra2t"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_ai08m")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qv0y"]
+next_pass = SubResource("ShaderMaterial_dra2t")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1sye5"]
+material = SubResource("StandardMaterial3D_7qv0y")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="Shader" id="Shader_isfv7"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hj6v6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_isfv7")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36k8r"]
+next_pass = SubResource("ShaderMaterial_hj6v6")
+albedo_color = Color(1.19364e-05, 0.733223, 0.937206, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lwh3m"]
+material = SubResource("StandardMaterial3D_36k8r")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
+
+[sub_resource type="Shader" id="Shader_yjaj8"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jouks"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_yjaj8")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v24qn"]
+next_pass = SubResource("ShaderMaterial_jouks")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lxj3d"]
+material = SubResource("StandardMaterial3D_v24qn")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="Shader" id="Shader_86sl6"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x8j8k"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_86sl6")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e183v"]
+next_pass = SubResource("ShaderMaterial_x8j8k")
+albedo_color = Color(1.19364e-05, 0.733223, 0.937206, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_et26b"]
+material = SubResource("StandardMaterial3D_e183v")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
+
+[sub_resource type="Shader" id="Shader_gpsr2"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6f3c0"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_gpsr2")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6k7n1"]
+next_pass = SubResource("ShaderMaterial_6f3c0")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2sw6d"]
+material = SubResource("StandardMaterial3D_6k7n1")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="Shader" id="Shader_h31pt"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0v3q"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_h31pt")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7pwo"]
+next_pass = SubResource("ShaderMaterial_t0v3q")
+albedo_color = Color(1.19364e-05, 0.733223, 0.937206, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ttd0f"]
+material = SubResource("StandardMaterial3D_h7pwo")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
+
+[sub_resource type="Shader" id="Shader_wovxk"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dgu5v"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_wovxk")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrtu7"]
+next_pass = SubResource("ShaderMaterial_dgu5v")
+albedo_color = Color(0.166119, 0.211287, 0.251321, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_85hun"]
+material = SubResource("StandardMaterial3D_nrtu7")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.025
+
+[sub_resource type="Shader" id="Shader_4iyrq"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 4.0;
+uniform bool is_targeted;
+
+void vertex() {
+	if (is_targeted)
+	{
+		vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+		
+		vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+		
+		clip_position.xy += offset;
+		
+		POSITION = clip_position;
+	}
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7txuk"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_4iyrq")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/is_targeted = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rl2vs"]
+next_pass = SubResource("ShaderMaterial_7txuk")
+albedo_color = Color(1.19364e-05, 0.733223, 0.937206, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_d6cng"]
+material = SubResource("StandardMaterial3D_rl2vs")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.02
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rymwy"]
+radius = 200.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tq4ii"]
+radius = 20.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_vw7sp"]
+material = ExtResource("22_4x0ot")
+size = Vector2(3.99, 2)
+
+[sub_resource type="Animation" id="Animation_c0ft6"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraPivot:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraPivot:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CameraPivot:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_80et8"]
 resource_name = "rotatie"
@@ -41,42 +720,6 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 6, 12)
 }
 
-[sub_resource type="Animation" id="Animation_c0ft6"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CameraPivot:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CameraPivot:rotation:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CameraPivot:rotation:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_12ikx"]
 _data = {
 "RESET": SubResource("Animation_c0ft6"),
@@ -88,32 +731,1693 @@ _data = {
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_tqa0m")
 
-[node name="Submarine" parent="." instance=ExtResource("2_nt6cn")]
+[node name="Submarine" type="CharacterBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 17
+collision_mask = 17
+floor_stop_on_slope = false
+platform_floor_layers = 4294967042
+platform_wall_layers = 2
+script = ExtResource("2_5j76o")
+
+[node name="submarine_meshes" parent="Submarine" instance=ExtResource("3_g2cf2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="sub_window" parent="Submarine/submarine_meshes" index="0"]
+material_override = ExtResource("4_judbu")
+
+[node name="sub_exterior" parent="Submarine/submarine_meshes" index="1"]
+material_override = ExtResource("5_yj8yi")
+
+[node name="sub_propeller" parent="Submarine/submarine_meshes" index="2"]
+material_override = ExtResource("5_yj8yi")
+
+[node name="sub_interior" parent="Submarine/submarine_meshes" index="3"]
+material_override = ExtResource("6_03djs")
+
+[node name="sub_stand" parent="Submarine/submarine_meshes" index="4"]
+material_override = ExtResource("6_03djs")
+
+[node name="sub_screen_stand" parent="Submarine/submarine_meshes" index="5"]
+material_override = ExtResource("6_03djs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine"]
+transform = Transform3D(-8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_3e0nu")
+
+[node name="Interior" type="StaticBody3D" parent="Submarine"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShapeFloor" type="CollisionShape3D" parent="Submarine/Interior"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1.05437, 0)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="CollisionShapeBow" type="CollisionShape3D" parent="Submarine/Interior"]
+transform = Transform3D(-8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0, 2, -2.04808, 0, -1.74509e-09)
+shape = SubResource("BoxShape3D_nqfmp")
+
+[node name="CollisionShapeStern" type="CollisionShape3D" parent="Submarine/Interior"]
+transform = Transform3D(-8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0, 2, 0.827172, -5.32994e-08, 3.64328e-08)
+shape = SubResource("BoxShape3D_nqfmp")
+
+[node name="CollisionShapeRoof" type="CollisionShape3D" parent="Submarine/Interior"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.07701, -0.00991344)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="CollisionShapePort" type="CollisionShape3D" parent="Submarine/Interior"]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 1.064)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="CollisionShapeStarboard" type="CollisionShape3D" parent="Submarine/Interior"]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, -1.058)
+shape = SubResource("BoxShape3D_8dfk3")
+
+[node name="Node3DControlConsole" type="StaticBody3D" parent="Submarine/Interior"]
+transform = Transform3D(1.99015, -0.198257, 0, 0.198257, 1.99015, 0, 0, 0, 2, -1.72133, -0.91983, 1.30521e-07)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/Interior/Node3DControlConsole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.237898, 0)
+shape = SubResource("BoxShape3D_x6j71")
+
+[node name="ControlStick" parent="Submarine/Interior/Node3DControlConsole" instance=ExtResource("7_jg4dh")]
+transform = Transform3D(0.474611, 0.880196, 0, -0.880196, 0.474611, 0, 0, 0, 1, 0.00857186, 0.359963, 0.121063)
+
+[node name="AscentControl" parent="Submarine/Interior/Node3DControlConsole" instance=ExtResource("8_le6n3")]
+transform = Transform3D(-4.37114e-08, 0.880014, 0.474948, 0, 0.474948, -0.880014, -1, -3.84666e-08, -2.07607e-08, 0.00800002, 0.361, -0.0379669)
+
+[node name="Button" parent="Submarine/Interior/Node3DControlConsole" instance=ExtResource("9_6rdgb")]
+transform = Transform3D(0.226108, 0.445954, 0, -0.445954, 0.226108, 0, 0, 0, 0.5, 0.0213453, 0.368571, -0.159815)
+
+[node name="compass" parent="Submarine/Interior/Node3DControlConsole" instance=ExtResource("10_7n7yp")]
+transform = Transform3D(-4.37114e-09, 0.0873772, -0.0486335, 0, 0.0486335, 0.0873772, 0.1, 3.81938e-09, -2.12584e-09, -0.0299165, 0.463006, -0.122735)
+
+[node name="speed_screen" parent="Submarine/Interior/Node3DControlConsole" instance=ExtResource("11_781o3")]
+transform = Transform3D(-1.09278e-08, 0.218443, 0.121584, 0, 0.121584, -0.218443, -0.25, -9.54845e-09, -5.3146e-09, -0.0265962, 0.453287, 0.0603069)
+
+[node name="Screen" parent="Submarine/Interior" instance=ExtResource("12_exm68")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Node3DCameras" parent="Submarine/Interior/Screen/SubViewport" index="1"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Camera3DPort" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.01, 0, 0.654)
 
 [node name="SpotLight3D" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras/Camera3DPort" index="0"]
 visible = true
 
+[node name="Camera3DStarboard" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.01, 0, 0.654)
+
 [node name="SpotLight3D" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras/Camera3DStarboard" index="0"]
 visible = true
+
+[node name="Camera3DStern" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.60597)
 
 [node name="SpotLight3D" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras/Camera3DStern" index="0"]
 visible = true
 
+[node name="Camera3DFloor" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras" index="3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.23516e-22, -1.22834, 5.36922e-08)
+
 [node name="SpotLight3D" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras/Camera3DFloor" index="0"]
 visible = true
+
+[node name="Camera3DRoof" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras" index="4"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -4.55693e-15, 1.19249, -5.21252e-08)
 
 [node name="SpotLight3D" parent="Submarine/Interior/Screen/SubViewport/Node3DCameras/Camera3DRoof" index="0"]
 visible = true
 
+[node name="SonarScreen" parent="Submarine/Interior" instance=ExtResource("13_77lfk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="ScreenButtonPanel" type="StaticBody3D" parent="Submarine/Interior"]
+transform = Transform3D(-1.359, -0.22011, 1.45075, -0.319762, 1.97427, 0, -1.43209, -0.231947, -1.37671, -1.625, -0.102, -0.724)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/Interior/ScreenButtonPanel"]
+transform = Transform3D(1, 7.45058e-09, 0, 7.45058e-09, 1, 7.45058e-09, 2.98023e-08, 0, 1, 0.025, 0.1, 0)
+shape = SubResource("BoxShape3D_whfks")
+
+[node name="CamLightButton" type="StaticBody3D" parent="Submarine/Interior/ScreenButtonPanel" groups=["interactable"]]
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.0513291, -2.24367e-09, 0)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("14_qbxos")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Submarine/Interior/ScreenButtonPanel/CamLightButton"]
+mesh = SubResource("CylinderMesh_nofn3")
+
+[node name="MeshInstanceButton" type="MeshInstance3D" parent="Submarine/Interior/ScreenButtonPanel/CamLightButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
+mesh = SubResource("CylinderMesh_y5jo7")
+
+[node name="Decal" type="Decal" parent="Submarine/Interior/ScreenButtonPanel/CamLightButton/MeshInstanceButton"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.015596, 0)
+size = Vector3(0.075, 0.075, 0.075)
+texture_albedo = ExtResource("15_qmkr2")
+texture_emission = ExtResource("15_qmkr2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/Interior/ScreenButtonPanel/CamLightButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
+shape = SubResource("CylinderShape3D_tm4yu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Submarine/Interior/ScreenButtonPanel/CamLightButton"]
+libraries = {
+"": SubResource("AnimationLibrary_ka5ia")
+}
+
+[node name="NextCam_Button" parent="Submarine/Interior/ScreenButtonPanel" instance=ExtResource("9_6rdgb")]
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.0513291, -2.24367e-09, 0.095367)
+script = ExtResource("16_q6y5p")
+
+[node name="MeshInstanceBase" parent="Submarine/Interior/ScreenButtonPanel/NextCam_Button" index="0"]
+mesh = SubResource("CylinderMesh_1sye5")
+
+[node name="MeshInstanceButton" parent="Submarine/Interior/ScreenButtonPanel/NextCam_Button" index="1"]
+mesh = SubResource("CylinderMesh_lwh3m")
+
+[node name="Decal" parent="Submarine/Interior/ScreenButtonPanel/NextCam_Button/MeshInstanceButton" index="0"]
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_mheud")
+texture_emission = ExtResource("17_mheud")
+
+[node name="PrevioustCam_Button" type="StaticBody3D" parent="Submarine/Interior/ScreenButtonPanel" groups=["interactable"]]
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.051, 0, -0.095)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("18_u0eat")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Submarine/Interior/ScreenButtonPanel/PrevioustCam_Button"]
+mesh = SubResource("CylinderMesh_lxj3d")
+
+[node name="MeshInstanceButton" type="MeshInstance3D" parent="Submarine/Interior/ScreenButtonPanel/PrevioustCam_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
+mesh = SubResource("CylinderMesh_et26b")
+
+[node name="Decal" type="Decal" parent="Submarine/Interior/ScreenButtonPanel/PrevioustCam_Button/MeshInstanceButton"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.015596, 0)
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_mheud")
+texture_emission = ExtResource("17_mheud")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/Interior/ScreenButtonPanel/PrevioustCam_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
+shape = SubResource("CylinderShape3D_tm4yu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Submarine/Interior/ScreenButtonPanel/PrevioustCam_Button"]
+libraries = {
+"": SubResource("AnimationLibrary_ka5ia")
+}
+
+[node name="SonarButtonPanel" type="StaticBody3D" parent="Submarine/Interior"]
+transform = Transform3D(-1.3601, -0.220628, -1.44964, -0.320245, 1.97419, 0, 1.43094, 0.23212, -1.37787, -1.62467, -0.102044, 0.724034)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/Interior/SonarButtonPanel"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0.025, 0.1, 0)
+shape = SubResource("BoxShape3D_whfks")
+
+[node name="NextView_Button" parent="Submarine/Interior/SonarButtonPanel" instance=ExtResource("9_6rdgb")]
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.051, 0, 0.075)
+script = ExtResource("19_mebc1")
+
+[node name="MeshInstanceBase" parent="Submarine/Interior/SonarButtonPanel/NextView_Button" index="0"]
+mesh = SubResource("CylinderMesh_2sw6d")
+
+[node name="MeshInstanceButton" parent="Submarine/Interior/SonarButtonPanel/NextView_Button" index="1"]
+mesh = SubResource("CylinderMesh_ttd0f")
+
+[node name="Decal" parent="Submarine/Interior/SonarButtonPanel/NextView_Button/MeshInstanceButton" index="0"]
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_mheud")
+texture_emission = ExtResource("17_mheud")
+
+[node name="PrevioustView_Button" type="StaticBody3D" parent="Submarine/Interior/SonarButtonPanel" groups=["interactable"]]
+transform = Transform3D(-2.18557e-08, -0.5, 0, -0.5, 2.18557e-08, 4.37114e-08, -4.37114e-08, 1.91069e-15, -0.5, -0.051, 0, -0.075)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("20_ghe0x")
+
+[node name="MeshInstanceBase" type="MeshInstance3D" parent="Submarine/Interior/SonarButtonPanel/PrevioustView_Button"]
+mesh = SubResource("CylinderMesh_85hun")
+
+[node name="MeshInstanceButton" type="MeshInstance3D" parent="Submarine/Interior/SonarButtonPanel/PrevioustView_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00746092, 0)
+mesh = SubResource("CylinderMesh_d6cng")
+
+[node name="Decal" type="Decal" parent="Submarine/Interior/SonarButtonPanel/PrevioustView_Button/MeshInstanceButton"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.015596, 0)
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("17_mheud")
+texture_emission = ExtResource("17_mheud")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/Interior/SonarButtonPanel/PrevioustView_Button"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)
+shape = SubResource("CylinderShape3D_tm4yu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Submarine/Interior/SonarButtonPanel/PrevioustView_Button"]
+libraries = {
+"": SubResource("AnimationLibrary_ka5ia")
+}
+
+[node name="Engine" parent="Submarine/Interior" instance=ExtResource("21_xnyw7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Headlights" type="Node3D" parent="Submarine"]
+
+[node name="SpotLight3DHeadlight" type="SpotLight3D" parent="Submarine/Headlights"]
+transform = Transform3D(-4.37114e-08, 0.0152711, 0.999883, 0, 0.999883, -0.0152711, -1, -6.67522e-10, -4.37063e-08, -2.2425, 1.12743, 6.22895e-09)
+light_energy = 20.0
+shadow_enabled = true
+spot_range = 1000.0
+
+[node name="SonarCasts" type="Node3D" parent="Submarine"]
+visible = false
+
+[node name="x" type="Node3D" parent="Submarine/SonarCasts"]
+
+[node name="RayCast3D" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D13" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -1, 7.45058e-08, 0, -7.45058e-08, -1, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/x"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z2" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z2"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z3" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z3"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z4" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z4"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z5" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z5"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z6" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z6"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z7" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z7"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z8" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z8"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z9" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z9"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z10" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z10"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="z11" type="Node3D" parent="Submarine/SonarCasts"]
+transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D3" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D4" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D5" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D6" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D7" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 1.49012e-08, -1, 0, 1, 1.49012e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D8" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, -0.965926, 0, 0.965926, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D9" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D10" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D11" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D12" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, -0.258819, 0, 0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D14" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.965925, 0.258819, 0, -0.258819, -0.965925, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D15" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D16" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.707106, 0.707106, 0, -0.707106, -0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D17" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D18" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D19" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 4.47035e-08, 0.999999, 0, -0.999999, 4.47035e-08, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D20" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965925, 0, -0.965925, 0.258819, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D21" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D22" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D23" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="RayCast3D24" type="RayCast3D" parent="Submarine/SonarCasts/z11"]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 1, 3, -1)
+target_position = Vector3(0, -20, 0)
+collision_mask = 4
+
+[node name="LightArea3D" type="Area3D" parent="Submarine"]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/LightArea3D"]
+shape = SubResource("SphereShape3D_rymwy")
+
+[node name="AggroArea3D" type="Area3D" parent="Submarine"]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Submarine/AggroArea3D"]
+shape = SubResource("SphereShape3D_tq4ii")
+
+[node name="Eel_Update_Timer" type="Timer" parent="Submarine"]
+wait_time = 3.0
+autostart = true
+
+[node name="Water" type="MeshInstance3D" parent="Submarine"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1, 0)
+visible = false
+mesh = SubResource("QuadMesh_vw7sp")
+
+[node name="FloorStreamPlayer" type="AudioStreamPlayer" parent="Submarine"]
+stream = ExtResource("23_2lk56")
+
+[node name="SinkingStreamPlayer" type="AudioStreamPlayer" parent="Submarine"]
+stream = ExtResource("24_7w04g")
+volume_db = -10.0
+
+[node name="LeakStreamPlayer" type="AudioStreamPlayer" parent="Submarine"]
+stream = ExtResource("25_oqt3v")
+volume_db = -20.0
+
+[node name="RattleStreamPlayer" type="AudioStreamPlayer" parent="Submarine"]
+stream = ExtResource("26_rd3mc")
+
+[node name="duck" parent="Submarine" instance=ExtResource("27_tq8i8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="DUCK" parent="Submarine/duck" index="0"]
+material_override = ExtResource("28_5sxyg")
+
 [node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.80164, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.05579, 0, 1.01565e-07)
 current = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, -2.58096e-08, 0.5, -0.411156, 0.569036, 0.712144, -0.284518, -0.822313, 0.492799, 0, 9.81557, 3.54614)
+transform = Transform3D(0.53601, 0.0224318, 0.843914, 0.786342, 0.350471, -0.508759, -0.30718, 0.936305, 0.170217, -1.42727, 9.33888, 5.58531)
 light_energy = 0.05
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -122,7 +2426,14 @@ libraries = {
 }
 autoplay = "rotatie"
 
-[editable path="Submarine"]
+[node name="menu" parent="." instance=ExtResource("29_b4p1o")]
+
+[connection signal="body_entered" from="Submarine/LightArea3D" to="Submarine" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Submarine/LightArea3D" to="Submarine" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="Submarine/AggroArea3D" to="Submarine" method="_on_aggro_area_3d_body_entered"]
+[connection signal="body_exited" from="Submarine/AggroArea3D" to="Submarine" method="_on_aggro_area_3d_body_exited"]
+[connection signal="timeout" from="Submarine/Eel_Update_Timer" to="Submarine" method="_on_eel_update_timer_timeout"]
+
 [editable path="Submarine/submarine_meshes"]
 [editable path="Submarine/Interior/Screen"]
 [editable path="Submarine/Interior/ScreenButtonPanel/NextCam_Button"]

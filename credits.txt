@@ -1,3 +1,9 @@
+* DEEP DARK*
+https://github.com/BVenturaDev/DeepDark
+
+- Programming and Art - Ben Ventura 
+- GUI and UX - Khiara Zhang
+
 - Shaders -
 https://godotshaders.com/shader/vhs-and-crt-monitor-effect/
 
