@@ -233,6 +233,7 @@ mesh = SubResource("CylinderMesh_xl247")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.015596, 0)
 size = Vector3(0.075, 0.075, 0.075)
 texture_albedo = ExtResource("2_lr8lm")
+texture_emission = ExtResource("2_lr8lm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0351856, 0)

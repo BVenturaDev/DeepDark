@@ -187,7 +187,7 @@ grow_vertical = 2
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.594958, 0.0970723, 1.4522)
 light_color = Color(0.686275, 1, 0.686275, 1)
-light_energy = 0.01
+light_energy = 0.005
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 1.0

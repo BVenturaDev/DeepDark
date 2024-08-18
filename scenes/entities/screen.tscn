@@ -142,7 +142,7 @@ spot_range = 1000.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.518994, 0.132906, 1.43791)
-light_energy = 0.01
+light_energy = 0.005
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 1.0
