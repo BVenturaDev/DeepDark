@@ -55,7 +55,12 @@ func restart_game():
 	
 func main_menu():
 	_reset_vars()
+	get_tree().change_scene_to_file("res://scenes/levels/main_menu.tscn")
 	
+func play_game():
+	_reset_vars()
+	get_tree().change_scene_to_file("res://scenes/levels/main_level.tscn")
+
 func activate_eels():
 	for eel in eels:
 		eel.activate()

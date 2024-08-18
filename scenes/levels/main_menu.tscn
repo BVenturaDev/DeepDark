@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://bafn431jcehgh"]
+[gd_scene load_steps=87 format=3 uid="uid://bafn431jcehgh"]
 
 [ext_resource type="Environment" uid="uid://d0hatdbql1sul" path="res://environments/cave_environment.tres" id="1_tqa0m"]
 [ext_resource type="Script" path="res://src/entities/submarine.gd" id="2_5j76o"]
@@ -29,6 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://o7mjjrpl4fb" path="res://assets/models/entities/submarine/exports/duck.glb" id="27_tq8i8"]
 [ext_resource type="Material" uid="uid://clag8f52kmeky" path="res://materials/entities/duck.tres" id="28_5sxyg"]
 [ext_resource type="PackedScene" uid="uid://xfg1y1po7lwy" path="res://scenes/gui/menu/Menu_Buttons.tscn" id="29_b4p1o"]
+[ext_resource type="AudioStream" uid="uid://dirvyl5hxooh5" path="res://assets/audio/music/second stand.mp3" id="30_dagk0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3e0nu"]
 radius = 0.6
@@ -2427,6 +2428,10 @@ libraries = {
 autoplay = "rotatie"
 
 [node name="menu" parent="." instance=ExtResource("29_b4p1o")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("30_dagk0")
+autoplay = true
 
 [connection signal="body_entered" from="Submarine/LightArea3D" to="Submarine" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Submarine/LightArea3D" to="Submarine" method="_on_area_3d_body_exited"]

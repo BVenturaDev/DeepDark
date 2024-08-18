@@ -10,7 +10,6 @@ const WATER_SPEED = 0.025
 const SINK_SPEED = 5.0
 const SINK_SFX_MULTIPLIER = 0.0
 
-@onready var player = $Player
 @onready var headlights = $Headlights
 @onready var eel_timer = $Eel_Update_Timer
 @onready var water = $Water

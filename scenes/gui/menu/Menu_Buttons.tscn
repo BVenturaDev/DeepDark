@@ -100,6 +100,8 @@ size_flags_vertical = 3
 [node name="HSlider" type="HSlider" parent="SettingsPanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+max_value = 30.0
+value = 15.0
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
